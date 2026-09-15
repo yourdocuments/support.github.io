@@ -1,4 +1,4 @@
-```javascript
+
 // ============================================================
 // USHA AI — Secure Serverless Backend
 // SNK IT Institute
