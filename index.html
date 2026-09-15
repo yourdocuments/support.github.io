@@ -1,1 +1,165 @@
-#
+<!-- =========================================================
+     1.4 — USHA AI FULL HTML COMPONENT
+     ========================================================= -->
+
+<!-- USHA Floating Button -->
+<button
+  class="usha-button"
+  id="ushaButton"
+  type="button"
+  aria-label="Open USHA AI"
+  title="USHA AI"
+>
+  <img
+    src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+    alt="USHA AI"
+  >
+</button>
+
+
+<!-- USHA CHATBOT -->
+<div
+  class="chatbot"
+  id="chatbot"
+  role="dialog"
+  aria-modal="false"
+  aria-label="USHA AI Chatbot"
+>
+
+  <!-- Chat Header -->
+  <div class="chat-header">
+
+    <img
+      class="chat-avatar"
+      src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+      alt="USHA"
+    >
+
+    <div class="chat-head-info">
+      <h3>USHA AI</h3>
+
+      <div class="online">
+        ● Online
+      </div>
+    </div>
+
+    <button
+      class="close-chat"
+      id="closeChat"
+      type="button"
+      aria-label="Close USHA AI"
+      title="Close"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <!-- Chat Messages -->
+  <div
+    class="chat-messages"
+    id="chatMessages"
+    aria-live="polite"
+  >
+
+    <div class="message bot-message">
+
+      👋 আসসালামু আলাইকুম!
+
+      <br><br>
+
+      আমি <strong>USHA AI</strong>।
+
+      <br><br>
+
+      আপনাকে Free Course, Paid Course,
+      Live Class, Zoom, WhatsApp এবং
+      Shopping সম্পর্কে সাহায্য করতে পারি।
+
+      <br><br>
+
+      কী জানতে চান? 😊
+
+    </div>
+
+  </div>
+
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+
+    <button
+      type="button"
+      onclick="quickQuestion('Free course কোথায়?')"
+    >
+      🎓 Free Course
+    </button>
+
+    <button
+      type="button"
+      onclick="quickQuestion('Paid course কোথায়?')"
+    >
+      💎 Paid Course
+    </button>
+
+    <button
+      type="button"
+      onclick="quickQuestion('Live class কীভাবে join করবো?')"
+    >
+      📹 Live Class
+    </button>
+
+    <button
+      type="button"
+      onclick="quickQuestion('Zoom class কীভাবে join করবো?')"
+    >
+      🔵 Zoom
+    </button>
+
+    <button
+      type="button"
+      onclick="quickQuestion('WhatsApp support চাই')"
+    >
+      💬 WhatsApp
+    </button>
+
+    <button
+      type="button"
+      onclick="quickQuestion('Shopping discount আছে?')"
+    >
+      🛍️ Shopping
+    </button>
+
+  </div>
+
+
+  <!-- Chat Input -->
+  <form
+    class="chat-input-area"
+    id="chatForm"
+    autocomplete="off"
+  >
+
+    <input
+      type="text"
+      id="chatInput"
+      class="chat-input"
+      placeholder="USHA-কে কিছু জিজ্ঞেস করুন..."
+      aria-label="Message USHA"
+      autocomplete="off"
+      spellcheck="false"
+    >
+
+    <button
+      class="send-btn"
+      type="submit"
+      aria-label="Send message"
+      title="Send"
+    >
+      ➤
+    </button>
+
+  </form>
+
+</div>
