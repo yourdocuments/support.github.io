@@ -1,4962 +1,2622 @@
 <!DOCTYPE html>
 <html lang="bn">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color" content="#05070c">
-
-    <meta name="description"
-        content="SNK IT Institute - Live Classes, Free Courses, Recorded Classes and USHA AI Student Support">
-
-    <title>SNK IT Institute | USHA AI Support Mentor</title>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <style>
-
-        /* =====================================================
-           GLOBAL
-        ===================================================== */
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: "Hind Siliguri", "Inter", sans-serif;
-            background: #05070c;
-            color: #ffffff;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        input {
-            font-family: inherit;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        .container {
-            width: min(1180px, calc(100% - 32px));
-            margin: auto;
-        }
-
-
-        /* =====================================================
-           PROMO
-        ===================================================== */
-
-        .promo-bar {
-            background: #f4c400;
-            color: #080808;
-            overflow: hidden;
-        }
-
-        .promo-inner {
-            min-height: 46px;
-            width: min(1180px, calc(100% - 24px));
-            margin: auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .discount-badge {
-            background: #111;
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            white-space: nowrap;
-        }
-
-        .promo-code strong {
-            background: #111;
-            color: #f4c400;
-            padding: 3px 7px;
-            border-radius: 5px;
-        }
-
-        .promo-button {
-            background: #111;
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 7px;
-            white-space: nowrap;
-        }
-
-
-        /* =====================================================
-           HEADER
-        ===================================================== */
-
-        .site-header {
-            width: min(1180px, calc(100% - 32px));
-            margin: auto;
-
-            min-height: 78px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 25px;
-        }
-
-        .logo {
-            width: 150px;
-            display: block;
-            flex-shrink: 0;
-        }
-
-        .logo img {
-            width: 100%;
-            display: block;
-        }
-
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .nav a {
-            padding: 9px 11px;
-            border-radius: 8px;
-            color: #d7d7d7;
-            font-size: 14px;
-            font-weight: 600;
-            transition: .2s ease;
-        }
-
-        .nav a:hover {
-            color: #fff;
-            background: rgba(255,255,255,.07);
-        }
-
-        .nav-live {
-            background: #f4c400 !important;
-            color: #050505 !important;
-        }
-
-        .nav-usha {
-            border: 1px solid #0aad4b;
-            color: #45e982 !important;
-        }
-
-
-        /* =====================================================
-           USHA BANNER
-        ===================================================== */
-
-        .usha-banner {
-            width: min(1180px, calc(100% - 32px));
-            margin: 18px auto 0;
-
-            border: 1px solid rgba(10,173,75,.3);
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(10,173,75,.13),
-                    rgba(255,255,255,.025)
-                );
-
-            position: relative;
-            overflow: hidden;
-        }
-
-        .usha-banner::before {
-            content: "";
-            position: absolute;
-
-            width: 180px;
-            height: 180px;
-
-            right: -70px;
-            top: -90px;
-
-            border-radius: 50%;
-
-            background: rgba(10,173,75,.08);
-
-            animation: bannerGlow 5s ease-in-out infinite;
-        }
-
-        @keyframes bannerGlow {
-
-            0%,
-            100% {
-                transform: scale(1);
-                opacity: .6;
-            }
-
-            50% {
-                transform: scale(1.25);
-                opacity: 1;
-            }
-
-        }
-
-        .usha-banner-inner {
-            min-height: 100px;
-            padding: 18px 22px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-
-            position: relative;
-            z-index: 2;
-        }
-
-        .usha-banner-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .usha-mini-icon {
-            width: 55px;
-            height: 55px;
-            flex-shrink: 0;
-            padding: 3px;
-            border-radius: 50%;
-            background: #fff;
-
-            box-shadow:
-                0 0 0 4px rgba(10,173,75,.08),
-                0 0 25px rgba(10,173,75,.12);
-        }
-
-        .usha-mini-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .usha-banner-text h3 {
-            font-size: 19px;
-            margin-bottom: 2px;
-        }
-
-        .usha-banner-text p {
-            color: #aaa;
-            font-size: 13px;
-        }
-
-        .usha-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-top: 3px;
-            color: #45e982;
-            font-size: 11px;
-        }
-
-        .usha-tag i {
-            font-size: 7px;
-        }
-
-        .chat-banner-btn {
-            border: none;
-            cursor: pointer;
-
-            padding: 11px 17px;
-            border-radius: 10px;
-
-            background: #0aad4b;
-            color: #fff;
-
-            font-weight: 700;
-            font-size: 14px;
-
-            transition: .2s ease;
-
-            box-shadow:
-                0 6px 20px rgba(10,173,75,.15);
-        }
-
-        .chat-banner-btn:hover {
-            background: #078c3e;
-            transform: translateY(-2px);
-        }
-
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .hero {
-            width: min(1180px, calc(100% - 32px));
-            min-height: 500px;
-            margin: auto;
-
-            display: grid;
-            grid-template-columns: 1.05fr .95fr;
-
-            align-items: center;
-            gap: 35px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 7px 12px;
-
-            border: 1px solid rgba(244,196,0,.35);
-            border-radius: 30px;
-
-            color: #f4c400;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .hero h1 {
-            margin-top: 18px;
-
-            font-family: "Inter", sans-serif;
-            font-size: clamp(48px, 7vw, 82px);
-            line-height: .98;
-            letter-spacing: -4px;
-        }
-
-        .hero h1 span {
-            color: #f4c400;
-        }
-
-        .hero-description {
-            max-width: 600px;
-            margin-top: 22px;
-
-            color: #aeb4bd;
-            font-size: 17px;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 28px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            min-height: 48px;
-            padding: 12px 18px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            transition: .2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .btn-yellow {
-            background: #f4c400;
-            color: #050505;
-        }
-
-        .btn-outline {
-            border: 1px solid #444;
-            color: #fff;
-        }
-
-        .btn-outline:hover {
-            border-color: #f4c400;
-        }
-
-        .hero-cover {
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-cover img {
-            width: min(470px, 100%);
-            filter: drop-shadow(0 25px 45px rgba(0,0,0,.45));
-
-            animation:
-                heroFloat 5s ease-in-out infinite;
-        }
-
-        @keyframes heroFloat {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-9px);
-            }
-
-        }
-
-
-        /* =====================================================
-           SECTION
-        ===================================================== */
-
-        .section {
-            padding: 75px 0;
-        }
-
-        .section-heading {
-            margin-bottom: 30px;
-        }
-
-        .section-heading h2 {
-            font-family: "Inter", sans-serif;
-            font-size: 30px;
-            letter-spacing: -1px;
-        }
-
-        .section-heading p {
-            color: #9299a4;
-            margin-top: 3px;
-            font-size: 14px;
-        }
-
-
-        /* =====================================================
-           QUICK GRID
-        ===================================================== */
-
-        .quick-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-        }
-
-        .quick-card {
-            min-height: 230px;
-            padding: 22px;
-
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            border: 1px solid #1d222b;
-            border-radius: 16px;
-
-            background: #0a0d13;
-
-            transition: .25s ease;
-        }
-
-        .quick-card:hover {
-            transform: translateY(-5px);
-            border-color: #343b47;
-        }
-
-        .quick-icon {
-            width: 44px;
-            height: 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 12px;
-            margin-bottom: 16px;
-
-            font-size: 18px;
-        }
-
-        .quick-icon.red {
-            background: rgba(255,55,55,.12);
-            color: #ff5d5d;
-        }
-
-        .quick-icon.green {
-            background: rgba(10,173,75,.12);
-            color: #45e982;
-        }
-
-        .quick-icon.purple {
-            background: rgba(145,80,255,.12);
-            color: #b18cff;
-        }
-
-        .quick-icon.yellow {
-            background: rgba(244,196,0,.12);
-            color: #f4c400;
-        }
-
-        .quick-card h3 {
-            font-size: 19px;
-        }
-
-        .quick-card p {
-            color: #9299a4;
-            font-size: 13px;
-            margin-top: 5px;
-        }
-
-        .quick-link {
-            color: #f4c400;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-
-        /* =====================================================
-           LIVE
-        ===================================================== */
-
-        .class-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-        }
-
-        .class-card {
-            border: 1px solid #262c35;
-            border-radius: 17px;
-            overflow: hidden;
-            background: #0a0d13;
-        }
-
-        .class-card.live {
-            border-color: rgba(244,196,0,.25);
-        }
-
-        .class-top {
-            padding: 17px 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            border-bottom: 1px solid #1c2128;
-        }
-
-        .class-top h3 {
-            font-size: 17px;
-        }
-
-        .class-top h3 i {
-            color: #f4c400;
-            margin-right: 7px;
-        }
-
-        .status {
-            padding: 4px 9px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 800;
-        }
-
-        .status-live {
-            background: rgba(10,173,75,.12);
-            color: #45e982;
-        }
-
-        .class-inner {
-            padding: 25px;
-        }
-
-        .class-inner h4 {
-            font-size: 22px;
-        }
-
-        .class-inner p {
-            max-width: 700px;
-            color: #9299a4;
-            margin-top: 7px;
-        }
-
-        .class-meta {
-            display: flex;
-            gap: 18px;
-            flex-wrap: wrap;
-            margin-top: 18px;
-            color: #b7bdc6;
-            font-size: 12px;
-        }
-
-        .class-meta i {
-            color: #f4c400;
-            margin-right: 4px;
-        }
-
-        .class-button {
-            margin-top: 22px;
-
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 11px 17px;
-            border-radius: 9px;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            background: #f4c400;
-            color: #050505;
-        }
-
-
-        /* =====================================================
-           RECORDED
-        ===================================================== */
-
-        .recorded-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-        .recorded-card {
-            padding: 27px;
-
-            border: 1px solid #1f252e;
-            border-radius: 17px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #0d1118,
-                    #080a0f
-                );
-        }
-
-        .recorded-card h3 {
-            font-size: 20px;
-        }
-
-        .recorded-card h3 i {
-            color: #ff4242;
-            margin-right: 7px;
-        }
-
-        .recorded-card.paid h3 i {
-            color: #f4c400;
-        }
-
-        .recorded-card p {
-            color: #9299a4;
-            font-size: 14px;
-            margin: 9px 0 20px;
-        }
-
-        .recorded-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 10px 15px;
-
-            border-radius: 9px;
-
-            background: #fff;
-            color: #050505;
-
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-
-        /* =====================================================
-           SUPPORT
-        ===================================================== */
-
-        .support-box {
-            padding: 30px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-
-            border: 1px solid rgba(10,173,75,.25);
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    120deg,
-                    rgba(10,173,75,.1),
-                    rgba(255,255,255,.02)
-                );
-        }
-
-        .support-box h2 {
-            font-size: 27px;
-        }
-
-        .support-box p {
-            color: #9299a4;
-            font-size: 14px;
-            margin-top: 3px;
-        }
-
-        .whatsapp-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 12px 18px;
-
-            border-radius: 10px;
-
-            background: #0aad4b;
-            color: #fff;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            white-space: nowrap;
-        }
-
-
-        /* =====================================================
-           SOCIAL
-        ===================================================== */
-
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 13px;
-        }
-
-        .social-card {
-            min-height: 105px;
-            padding: 17px;
-
-            display: flex;
-            align-items: center;
-            gap: 12px;
-
-            border: 1px solid #1e242d;
-            border-radius: 14px;
-
-            background: #0a0d13;
-
-            transition: .2s ease;
-        }
-
-        .social-card:hover {
-            transform: translateY(-3px);
-            border-color: #3b424e;
-        }
-
-        .social-icon {
-            width: 40px;
-            height: 40px;
-
-            flex-shrink: 0;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 10px;
-
-            background: #151a21;
-        }
-
-        .social-card.facebook .social-icon {
-            color: #4c8dff;
-        }
-
-        .social-card.youtube .social-icon {
-            color: #ff3b3b;
-        }
-
-        .social-card.whatsapp .social-icon {
-            color: #28df6b;
-        }
-
-        .social-card.shopping .social-icon {
-            color: #f4c400;
-        }
-
-        .social-card strong,
-        .social-card span {
-            display: block;
-        }
-
-        .social-card strong {
-            font-size: 14px;
-        }
-
-        .social-card span {
-            color: #7e8793;
-            font-size: 11px;
-        }
-
-        .social-arrow {
-            margin-left: auto;
-            color: #69717d;
-            font-size: 11px;
-        }
-
-        .join-now-wrap {
-            display: flex;
-            justify-content: center;
-            margin-top: 28px;
-        }
-
-        .join-now-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-
-            padding: 13px 23px;
-
-            background: #f4c400;
-            color: #050505;
-
-            border-radius: 10px;
-
-            font-size: 13px;
-            font-weight: 800;
-        }
-
-
-        /* =====================================================
-           FOOTER
-        ===================================================== */
-
-        footer {
-            padding: 45px 20px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
-
-            border-top: 1px solid #171b22;
-
-            color: #727984;
-            font-size: 12px;
-
-            text-align: center;
-        }
-
-        .footer-logo {
-            width: 120px;
-        }
-
-        .footer-logo img {
-            display: block;
-            width: 100%;
-        }
-
-
-        /* =====================================================
-           USHA FLOATING BUTTON
-        ===================================================== */
-
-        .usha-button,
-        .chatbot,
-        .chatbot *,
-        .usha-button * {
-            box-sizing: border-box;
-        }
-
-        .usha-button {
-            position: fixed;
-
-            right: 20px;
-            bottom: 20px;
-
-            width: 64px;
-            height: 64px;
-
-            padding: 4px;
-
-            border: none;
-            border-radius: 50%;
-
-            background: #fff;
-
-            cursor: pointer;
-
-            z-index: 99990;
-
-            box-shadow:
-                0 8px 30px rgba(0,0,0,.35);
-
-            transition: .25s ease;
-
-            animation: ushaPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes ushaPulse {
-
-            0%,
-            100% {
-                box-shadow:
-                    0 8px 30px rgba(0,0,0,.35),
-                    0 0 0 0 rgba(10,173,75,0);
-            }
-
-            50% {
-                box-shadow:
-                    0 10px 35px rgba(0,0,0,.40),
-                    0 0 0 9px rgba(10,173,75,.08);
-            }
-
-        }
-
-        .usha-button:hover {
-            transform: scale(1.08);
-        }
-
-        .usha-button:active {
-            transform: scale(.96);
-        }
-
-        .usha-button img {
-            display: block;
-
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-
-            border-radius: 50%;
-        }
-
-
-        /* =====================================================
-           CHATBOT
-        ===================================================== */
-
-        .chatbot {
-            position: fixed;
-
-            right: 20px;
-            bottom: 96px;
-
-            width: 395px;
-            max-width: calc(100vw - 24px);
-
-            height: 610px;
-            max-height: calc(100vh - 115px);
-
-            display: none;
-            flex-direction: column;
-
-            overflow: hidden;
-
-            background: #fff;
-
-            border: 1px solid rgba(0,0,0,.08);
-            border-radius: 20px;
-
-            box-shadow:
-                0 20px 70px rgba(0,0,0,.42);
-
-            z-index: 99989;
-
-            font-family:
-                Arial,
-                "Noto Sans Bengali",
-                sans-serif;
-        }
-
-        .chatbot.show {
-            display: flex;
-            animation: ushaChatOpen .25s ease;
-        }
-
-        @keyframes ushaChatOpen {
-
-            from {
-                opacity: 0;
-                transform: translateY(18px) scale(.96);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-
-        }
-
-
-        /* =====================================================
-           CHAT HEADER
-        ===================================================== */
-
-        .chat-header {
-            min-height: 75px;
-            padding: 12px 14px;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #111,
-                    #202020
-                );
-
-            color: #fff;
-
-            position: relative;
-        }
-
-        .chat-header::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            bottom: 0;
-
-            width: 100%;
-            height: 2px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #0aad4b,
-                    #45e982,
-                    #0aad4b
-                );
-
-            background-size: 200% 100%;
-
-            animation: headerLine 4s linear infinite;
-        }
-
-        @keyframes headerLine {
-
-            from {
-                background-position: 0 0;
-            }
-
-            to {
-                background-position: 200% 0;
-            }
-
-        }
-
-        .chat-avatar {
-            width: 45px;
-            height: 45px;
-
-            flex: 0 0 45px;
-
-            padding: 0;
-
-            border: 2px solid rgba(255,255,255,.85);
-            border-radius: 50%;
-
-            overflow: hidden;
-            background: #fff;
-
-            box-shadow:
-                0 0 0 3px rgba(10,173,75,.12);
-        }
-
-        .chat-avatar img {
-            width: 100%;
-            height: 100%;
-
-            display: block;
-
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .chat-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .chat-info h3 {
-            margin: 0 0 2px;
-
-            font-size: 17px;
-            line-height: 1.2;
-        }
-
-        .chat-info p {
-            margin: 0;
-
-            color: #45e982;
-
-            font-size: 11px;
-        }
-
-        .chat-status {
-            color: #9ba2ab;
-            font-size: 9px;
-            margin-top: 1px;
-        }
-
-        .header-tool-btn {
-            width: 34px;
-            height: 34px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border: 1px solid rgba(255,255,255,.12);
-            border-radius: 9px;
-
-            background: rgba(255,255,255,.05);
-            color: #ddd;
-
-            cursor: pointer;
-
-            font-size: 13px;
-
-            transition: .2s ease;
-        }
-
-        .header-tool-btn:hover {
-            background: rgba(255,255,255,.12);
-            color: #fff;
-        }
-
-        .close-chat {
-            width: 38px;
-            height: 38px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0;
-
-            border: none;
-            border-radius: 50%;
-
-            background: transparent;
-            color: #fff;
-
-            font-size: 28px;
-            line-height: 1;
-
-            cursor: pointer;
-
-            transition: .2s ease;
-        }
-
-        .close-chat:hover {
-            background: rgba(255,255,255,.12);
-            transform: rotate(90deg);
-        }
-
-
-        /* =====================================================
-           CHAT MEMORY BAR
-        ===================================================== */
-
-        .chat-memory {
-            min-height: 28px;
-
-            padding: 5px 11px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-
-            background: #f8fafb;
-
-            border-bottom: 1px solid #edf0f2;
-
-            color: #78818b;
-
-            font-size: 10px;
-        }
-
-        .memory-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .memory-dot {
-            width: 6px;
-            height: 6px;
-
-            border-radius: 50%;
-
-            background: #0aad4b;
-
-            box-shadow:
-                0 0 0 3px rgba(10,173,75,.08);
-        }
-
-
-        /* =====================================================
-           MESSAGES
-        ===================================================== */
-
-        .chat-messages {
-            flex: 1;
-            min-height: 0;
-
-            overflow-y: auto;
-
-            padding: 15px;
-
-            background:
-                radial-gradient(
-                    circle at top right,
-                    rgba(10,173,75,.035),
-                    transparent 35%
-                ),
-                #f4f6f8;
-
-            scroll-behavior: smooth;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #c8cdd2;
-            border-radius: 20px;
-        }
-
-        .message {
-            width: fit-content;
-            max-width: 88%;
-
-            margin-bottom: 10px;
-            padding: 10px 13px;
-
-            border-radius: 15px;
-
-            font-size: 14px;
-            line-height: 1.6;
-
-            word-break: break-word;
-
-            animation: messageIn .22s ease;
-        }
-
-        @keyframes messageIn {
-
-            from {
-                opacity: 0;
-                transform: translateY(5px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        }
-
-        .bot-message {
-            margin-right: auto;
-
-            color: #17202a;
-            background: #fff;
-
-            border-top-left-radius: 4px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,.06);
-        }
-
-        .user-message {
-            margin-left: auto;
-
-            color: #fff;
-            background: #0aad4b;
-
-            border-top-right-radius: 4px;
-
-            box-shadow:
-                0 2px 7px rgba(10,173,75,.15);
-        }
-
-        .message-time {
-            display: block;
-
-            margin-top: 3px;
-
-            font-size: 8px;
-            opacity: .55;
-
-            text-align: right;
-        }
-
-
-        /* =====================================================
-           AI RESPONSE LINKS
-        ===================================================== */
-
-        .usha-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-top: 8px;
-            padding: 8px 13px;
-
-            border-radius: 22px;
-
-            background: #0aad4b;
-            color: #fff !important;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            text-decoration: none;
-
-            transition: .2s ease;
-        }
-
-        .usha-link:hover {
-            background: #078c3e;
-            transform: translateY(-1px);
-        }
-
-        .usha-link.blue {
-            background: #2563eb;
-        }
-
-        .usha-link.blue:hover {
-            background: #1d4ed8;
-        }
-
-        .usha-link.dark {
-            background: #111;
-        }
-
-        .usha-link.dark:hover {
-            background: #000;
-        }
-
-
-        /* =====================================================
-           SUGGESTED QUESTIONS
-        ===================================================== */
-
-        .quick-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-
-            padding: 9px 10px;
-
-            background: #fff;
-
-            border-top: 1px solid #eee;
-
-            max-height: 91px;
-            overflow-y: auto;
-        }
-
-        .quick-actions button {
-            min-height: 31px;
-
-            padding: 6px 10px;
-
-            border: 1px solid #0aad4b;
-            border-radius: 20px;
-
-            background: #fff;
-            color: #087b37;
-
-            font-size: 11px;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: .2s ease;
-        }
-
-        .quick-actions button:hover {
-            background: #0aad4b;
-            color: #fff;
-            transform: translateY(-1px);
-        }
-
-
-        /* =====================================================
-           CHAT INPUT
-        ===================================================== */
-
-        .chat-input-area {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-
-            padding: 10px;
-
-            background: #fff;
-
-            border-top: 1px solid #eee;
-        }
-
-        .chat-input {
-            flex: 1;
-            min-width: 0;
-
-            height: 44px;
-
-            padding: 9px 14px;
-
-            border: 1px solid #ddd;
-            border-radius: 24px;
-
-            outline: none;
-
-            background: #fff;
-            color: #222;
-
-            font-size: 14px;
-        }
-
-        .chat-input:focus {
-            border-color: #0aad4b;
-
-            box-shadow:
-                0 0 0 3px rgba(10,173,75,.10);
-        }
-
-        .send-btn {
-            width: 44px;
-            height: 44px;
-
-            flex: 0 0 44px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0;
-
-            border: none;
-            border-radius: 50%;
-
-            background: #0aad4b;
-            color: #fff;
-
-            font-size: 18px;
-
-            cursor: pointer;
-
-            transition: .2s ease;
-        }
-
-        .send-btn:hover {
-            background: #078c3e;
-            transform: scale(1.05);
-        }
-
-
-        /* =====================================================
-           TYPING
-        ===================================================== */
-
-        .typing-message {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-
-            min-height: 34px;
-        }
-
-        .typing-message span {
-            width: 7px;
-            height: 7px;
-
-            border-radius: 50%;
-
-            background: #777;
-
-            animation: ushaTyping 1s infinite;
-        }
-
-        .typing-message span:nth-child(2) {
-            animation-delay: .15s;
-        }
-
-        .typing-message span:nth-child(3) {
-            animation-delay: .30s;
-        }
-
-        @keyframes ushaTyping {
-
-            0%,
-            60%,
-            100% {
-                opacity: .4;
-                transform: translateY(0);
-            }
-
-            30% {
-                opacity: 1;
-                transform: translateY(-4px);
-            }
-
-        }
-
-
-        /* =====================================================
-           EMPTY / CLEAR
-        ===================================================== */
-
-        .clear-confirm {
-            position: fixed;
-
-            inset: 0;
-
-            display: none;
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-
-            background: rgba(0,0,0,.65);
-
-            z-index: 100000;
-        }
-
-        .clear-confirm.show {
-            display: flex;
-        }
-
-        .confirm-box {
-            width: min(360px, 100%);
-
-            padding: 25px;
-
-            border-radius: 18px;
-
-            background: #10141b;
-
-            border: 1px solid #28303a;
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.45);
-
-            text-align: center;
-        }
-
-        .confirm-box-icon {
-            width: 50px;
-            height: 50px;
-
-            margin: 0 auto 12px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 50%;
-
-            background: rgba(244,196,0,.1);
-            color: #f4c400;
-        }
-
-        .confirm-box h3 {
-            font-size: 19px;
-        }
-
-        .confirm-box p {
-            margin-top: 5px;
-
-            color: #9299a4;
-
-            font-size: 13px;
-        }
-
-        .confirm-buttons {
-            display: flex;
-            gap: 8px;
-
-            margin-top: 20px;
-        }
-
-        .confirm-buttons button {
-            flex: 1;
-
-            min-height: 40px;
-
-            border-radius: 9px;
-
-            cursor: pointer;
-
-            font-weight: 700;
-        }
-
-        .cancel-clear {
-            border: 1px solid #343b45;
-            background: transparent;
-            color: #fff;
-        }
-
-        .confirm-clear {
-            border: none;
-            background: #f4c400;
-            color: #050505;
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 900px) {
-
-            .quick-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .social-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .hero {
-                grid-template-columns: 1fr;
-                padding: 55px 0;
-                text-align: center;
-            }
-
-            .hero-actions {
-                justify-content: center;
-            }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-cover {
-                order: -1;
-            }
-
-            .hero-cover img {
-                max-width: 330px;
-            }
-
-            .site-header {
-                flex-direction: column;
-                padding: 18px 0;
-            }
-
-            .nav {
-                justify-content: center;
-            }
-
-        }
-
-
-        @media (max-width: 600px) {
-
-            .promo-inner {
-                gap: 6px;
-                min-height: 42px;
-                font-size: 10px;
-            }
-
-            .promo-text {
-                display: none;
-            }
-
-            .promo-button {
-                padding: 5px 8px;
-            }
-
-            .site-header,
-            .hero,
-            .usha-banner,
-            .container {
-                width: min(100% - 20px, 1180px);
-            }
-
-            .logo {
-                width: 135px;
-            }
-
-            .nav {
-                gap: 3px;
-            }
-
-            .nav a {
-                font-size: 11px;
-                padding: 7px 7px;
-            }
-
-            .nav a:nth-child(1),
-            .nav a:nth-child(4) {
-                display: none;
-            }
-
-            .usha-banner-inner {
-                padding: 14px;
-            }
-
-            .usha-banner-left {
-                align-items: flex-start;
-            }
-
-            .usha-mini-icon {
-                width: 45px;
-                height: 45px;
-            }
-
-            .usha-banner-text h3 {
-                font-size: 15px;
-            }
-
-            .usha-banner-text p {
-                font-size: 11px;
-            }
-
-            .chat-banner-btn {
-                padding: 9px 11px;
-                font-size: 11px;
-            }
-
-            .hero {
-                min-height: auto;
-                padding: 50px 0 65px;
-            }
-
-            .hero h1 {
-                font-size: 50px;
-                letter-spacing: -3px;
-            }
-
-            .hero-description {
-                font-size: 14px;
-            }
-
-            .section {
-                padding: 55px 0;
-            }
-
-            .section-heading h2 {
-                font-size: 25px;
-            }
-
-            .quick-grid,
-            .recorded-grid,
-            .social-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quick-card {
-                min-height: 190px;
-            }
-
-            .support-box {
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 22px;
-            }
-
-            .whatsapp-button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .class-inner {
-                padding: 20px;
-            }
-
-            .class-inner h4 {
-                font-size: 19px;
-            }
-
-            .usha-button {
-                right: 14px;
-                bottom: 14px;
-
-                width: 58px;
-                height: 58px;
-            }
-
-            .chatbot {
-                right: 10px;
-                bottom: 80px;
-
-                width: calc(100vw - 20px);
-                max-width: none;
-
-                height: calc(100vh - 100px);
-                max-height: none;
-
-                border-radius: 17px;
-            }
-
-            .chat-header {
-                min-height: 66px;
-                padding: 10px 12px;
-            }
-
-            .chat-avatar {
-                width: 40px;
-                height: 40px;
-                flex-basis: 40px;
-            }
-
-            .message {
-                max-width: 91%;
-                font-size: 13.5px;
-            }
-
-            .quick-actions {
-                gap: 5px;
-                padding: 8px;
-            }
-
-            .quick-actions button {
-                font-size: 10.5px;
-                padding: 6px 9px;
-            }
-
-        }
-
-
-        @media (max-width: 360px) {
-
-            .nav a {
-                font-size: 10px;
-                padding: 6px;
-            }
-
-            .hero h1 {
-                font-size: 43px;
-            }
-
-            .chatbot {
-                right: 7px;
-                width: calc(100vw - 14px);
-                bottom: 75px;
-            }
-
-            .quick-actions button {
-                font-size: 10px;
-                padding: 5px 8px;
-            }
-
-            .chat-input {
-                font-size: 13px;
-            }
-
-            .header-tool-btn {
-                width: 31px;
-                height: 31px;
-            }
-
-        }
-
-
-        /* =====================================================
-           ACCESSIBILITY
-        ===================================================== */
-
-        :focus-visible {
-            outline: 3px solid rgba(244,196,0,.45);
-            outline-offset: 2px;
-        }
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>SNK IT Institute | Learn. Build. Grow.</title>
+
+  <meta
+    name="description"
+    content="SNK IT Institute — Free Live Classes, Recorded Classes, Support and USHA AI Learning Assistant."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+  <style>
+    :root {
+      --bg: #05070c;
+      --bg-soft: #0a0e15;
+      --card: #0d121b;
+      --card-2: #111824;
+      --yellow: #f4c400;
+      --green: #0aad4b;
+      --white: #ffffff;
+      --text: #eef2f7;
+      --muted: #9ba6b5;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Hind Siliguri", "Inter", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(5,7,12,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 19px;
+      white-space: nowrap;
+    }
+
+    .logo img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .nav-links a {
+      color: #c9d1dc;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: .25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+    }
+
+    .nav-links .ask {
+      background: var(--green);
+      color: white;
+      font-weight: 700;
+    }
+
+    .nav-links .ask:hover {
+      background: #0cc956;
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      padding: 75px 0 55px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(244,196,0,.07);
+      filter: blur(100px);
+      border-radius: 50%;
+      top: -250px;
+      left: -150px;
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border: 1px solid rgba(244,196,0,.25);
+      background: rgba(244,196,0,.08);
+      color: var(--yellow);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 17px;
+    }
+
+    .badge span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    h1 {
+      font-family: "Inter", sans-serif;
+      font-size: clamp(42px, 6vw, 70px);
+      line-height: 1.02;
+      letter-spacing: -2.5px;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      color: var(--yellow);
+    }
+
+    .hero-text {
+      color: var(--muted);
+      max-width: 600px;
+      font-size: 17px;
+      margin-bottom: 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: .25s;
+      border: 1px solid transparent;
+    }
+
+    .btn-yellow {
+      background: var(--yellow);
+      color: #111;
+    }
+
+    .btn-yellow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(244,196,0,.18);
+    }
+
+    .btn-dark {
+      background: rgba(255,255,255,.04);
+      border-color: var(--border);
+      color: var(--white);
+    }
+
+    .btn-dark:hover {
+      background: rgba(255,255,255,.08);
+    }
+
+    .hero-image {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: 15%;
+      background: rgba(10,173,75,.12);
+      filter: blur(70px);
+      border-radius: 50%;
+    }
+
+    .hero-image img {
+      position: relative;
+      width: min(500px, 100%);
+      max-height: 430px;
+      object-fit: contain;
+    }
+
+    /* =========================
+       USHA BANNER
+    ========================= */
+
+    .usha-banner {
+      margin: 20px 0 60px;
+    }
+
+    .usha-banner-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(10,173,75,.25);
+      background:
+        linear-gradient(
+          120deg,
+          rgba(10,173,75,.10),
+          rgba(255,255,255,.025)
+        );
+      border-radius: 24px;
+      padding: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .usha-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .usha-mini-icon {
+      width: 58px;
+      height: 58px;
+      padding: 7px;
+      border-radius: 17px;
+      background: rgba(10,173,75,.12);
+      border: 1px solid rgba(10,173,75,.25);
+    }
+
+    .usha-banner h2 {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    .usha-banner p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .usha-open-btn {
+      border: 0;
+      background: var(--green);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: .25s;
+      white-space: nowrap;
+    }
+
+    .usha-open-btn:hover {
+      transform: translateY(-2px);
+      background: #0cc956;
+    }
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    section {
+      scroll-margin-top: 90px;
+    }
+
+    .section {
+      padding: 65px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .section-title h2 {
+      font-family: "Inter", sans-serif;
+      font-size: clamp(27px, 4vw, 38px);
+      margin-bottom: 8px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+    }
+
+    /* =========================
+       QUICK ACCESS
+    ========================= */
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .quick-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: 18px;
+      transition: .25s;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(244,196,0,.22);
+    }
+
+    .quick-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: rgba(244,196,0,.1);
+      color: var(--yellow);
+      margin-bottom: 17px;
+      font-size: 19px;
+    }
+
+    .quick-card h3 {
+      margin-bottom: 4px;
+    }
+
+    .quick-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* =========================
+       CONTENT CARDS
+    ========================= */
+
+    .content-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .content-card h3 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .content-card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .content-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* =========================
+       SOCIAL
+    ========================= */
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    .social-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      transition: .25s;
+    }
+
+    .social-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .social-card i {
+      font-size: 22px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.06);
+    }
+
+    .social-card span {
+      color: var(--muted);
+      font-size: 13px;
+      display: block;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 0;
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* =========================================================
+       USHA LEARNING ASSISTANT
+       Learna-inspired interaction — SNK original implementation
+    ========================================================= */
+
+    .usha-widget {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 2000;
+    }
+
+    .usha-float {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      border: 2px solid rgba(10,173,75,.45);
+      background: #07120c;
+      box-shadow:
+        0 12px 35px rgba(0,0,0,.45),
+        0 0 0 7px rgba(10,173,75,.07);
+      cursor: pointer;
+      padding: 8px;
+      transition: .25s;
+      position: relative;
+    }
+
+    .usha-float:hover {
+      transform: scale(1.06);
+    }
+
+    .usha-float img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .usha-online {
+      position: absolute;
+      right: -1px;
+      bottom: 1px;
+      width: 14px;
+      height: 14px;
+      background: var(--green);
+      border: 3px solid var(--bg);
+      border-radius: 50%;
+    }
+
+    /* CHAT */
+
+    .usha-chat {
+      position: fixed;
+      right: 22px;
+      bottom: 95px;
+      width: min(420px, calc(100vw - 28px));
+      height: min(690px, calc(100vh - 115px));
+      background: #ffffff;
+      color: #111827;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 30px 90px rgba(0,0,0,.55);
+      border: 1px solid rgba(0,0,0,.08);
+      display: none;
+      flex-direction: column;
+    }
+
+    .usha-chat.active {
+      display: flex;
+      animation: chatIn .25s ease;
+    }
+
+    @keyframes chatIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .usha-chat-header {
+      background: #080b10;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .usha-profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .usha-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      padding: 5px;
+      background: rgba(10,173,75,.13);
+      border: 1px solid rgba(10,173,75,.3);
+    }
+
+    .usha-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .usha-profile strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .usha-status {
+      color: #9fe7b8;
+      font-size: 11px;
+    }
+
+    .usha-header-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .usha-head-btn {
+      width: 35px;
+      height: 35px;
+      border: 0;
+      border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      color: white;
+      cursor: pointer;
+    }
+
+    .usha-head-btn:hover {
+      background: rgba(255,255,255,.13);
+    }
+
+    /* Learning intro */
+
+    .usha-learning-intro {
+      padding: 17px 17px 10px;
+      background: #f7faf8;
+      border-bottom: 1px solid #edf1ee;
+    }
+
+    .usha-learning-intro strong {
+      font-size: 15px;
+    }
+
+    .usha-learning-intro p {
+      color: #687381;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+
+    .usha-suggestions {
+      padding: 10px 15px 7px;
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      background: #f7faf8;
+      scrollbar-width: none;
+    }
+
+    .usha-suggestions::-webkit-scrollbar {
+      display: none;
+    }
+
+    .suggestion {
+      flex: 0 0 auto;
+      border: 1px solid #dce8df;
+      background: white;
+      color: #26342c;
+      padding: 7px 11px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: .2s;
+    }
+
+    .suggestion:hover {
+      border-color: var(--green);
+      color: #087e38;
+      background: #f0fbf4;
+    }
+
+    /* Messages */
+
+    .usha-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 15px;
+      background: #ffffff;
+      scroll-behavior: smooth;
+    }
+
+    .message-row {
+      display: flex;
+      margin-bottom: 13px;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message {
+      max-width: 86%;
+      padding: 11px 13px;
+      border-radius: 15px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-wrap: break-word;
+    }
+
+    .message.bot {
+      background: #f1f5f3;
+      color: #17201b;
+      border-bottom-left-radius: 5px;
+    }
+
+    .message.user {
+      background: #0aad4b;
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .message a {
+      color: #087b39;
+      font-weight: 700;
+      text-decoration: underline;
+    }
+
+    .message.user a {
+      color: white;
+    }
+
+    .message-time {
+      display: block;
+      margin-top: 5px;
+      font-size: 9px;
+      opacity: .55;
+      text-align: right;
+    }
+
+    .typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 13px;
+      border-radius: 15px;
+      background: #f1f5f3;
+      border-bottom-left-radius: 5px;
+    }
+
+    .typing span {
+      width: 5px;
+      height: 5px;
+      background: #7d8982;
+      border-radius: 50%;
+      animation: typing .9s infinite;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .15s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .3s;
+    }
+
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+      }
+      30% {
+        transform: translateY(-4px);
+      }
+    }
+
+    /* Input */
+
+    .usha-input-area {
+      border-top: 1px solid #e9eeeb;
+      padding: 10px;
+      background: white;
+    }
+
+    .usha-input-box {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #f4f7f5;
+      border: 1px solid #e0e7e2;
+      border-radius: 14px;
+      padding: 5px;
+    }
+
+    #ushaInput {
+      flex: 1;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      padding: 9px 8px;
+      color: #111827;
+      font-size: 14px;
+    }
+
+    #ushaInput::placeholder {
+      color: #8b9590;
+    }
+
+    #sendUsha {
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--green);
+      color: white;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    #sendUsha:hover {
+      background: #088f3d;
+    }
+
+    .usha-footer-note {
+      text-align: center;
+      color: #98a09b;
+      font-size: 9px;
+      margin-top: 6px;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 50px;
+      }
+
+      .hero-image {
+        order: -1;
+      }
+
+      .quick-grid,
+      .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        width: min(100% - 22px, 1160px);
+      }
+
+      .hero {
+        padding: 42px 0 35px;
+      }
+
+      h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .hero-text {
+        font-size: 15px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .usha-banner-card {
+        padding: 18px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .usha-banner-left {
+        align-items: flex-start;
+      }
+
+      .usha-open-btn {
+        width: 100%;
+      }
+
+      .quick-grid,
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 48px 0;
+      }
+
+      .content-card {
+        padding: 20px;
+      }
+
+      .usha-widget {
+        right: 14px;
+        bottom: 14px;
+      }
+
+      .usha-float {
+        width: 58px;
+        height: 58px;
+      }
+
+      .usha-chat {
+        right: 7px;
+        bottom: 80px;
+        width: calc(100vw - 14px);
+        height: calc(100vh - 95px);
+        max-height: none;
+        border-radius: 20px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
+  <!-- =========================
+       HEADER
+  ========================== -->
 
-<!-- =====================================================
-     PROMO
-===================================================== -->
+  <header>
+    <div class="container nav">
 
-<div class="promo-bar">
-
-    <a
-        href="https://yourdocuments.github.io/shopingmela/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="promo-inner"
-    >
-
-        <span class="discount-badge">
-            <i class="fa-solid fa-tags"></i>
-            36% Discount
-        </span>
-
-        <span class="promo-text">
-            Shopping Mela-তে বিশেষ ছাড়
-        </span>
-
-        <span class="promo-code">
-            <i class="fa-solid fa-ticket"></i>
-            Promo Code:
-            <strong>SHOPING36</strong>
-        </span>
-
-        <span class="promo-button">
-            SHOP NOW
-            <i class="fa-solid fa-arrow-right"></i>
-        </span>
-
-    </a>
-
-</div>
-
-
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="site-header">
-
-    <a href="#home" class="logo" aria-label="SNK IT Institute Home">
-
+      <a href="#" class="logo">
         <img
-            src="https://github.com/yourdocuments/products/blob/main/snk%20itlogo%20tn.svg?raw=true"
-            alt="SNK IT Institute Logo"
+          src="https://github.com/yourdocuments/products/blob/main/snk%20itlogo%20tn.svg?raw=true"
+          alt="SNK IT Institute"
         >
+        <span>SNK IT Institute</span>
+      </a>
 
-    </a>
-
-
-    <nav class="nav">
-
+      <nav class="nav-links">
         <a href="#home">Home</a>
-
         <a href="#live">Live Class</a>
-
         <a href="#recorded">Recorded</a>
-
         <a href="#social">Social</a>
-
         <a href="#support">Support</a>
-
         <a
-            href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="nav-live"
+          href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+          target="_blank"
         >
-            <i class="fa-solid fa-video"></i>
-            Join Live
+          Join Live
         </a>
 
-        <a href="#usha" class="nav-usha" id="navUsha">
-            <i class="fa-solid fa-comment-dots"></i>
-            Ask USHA
+        <a href="javascript:void(0)" class="ask" onclick="openUsha()">
+          <i class="fa-solid fa-sparkles"></i>
+          Ask USHA
         </a>
-
-    </nav>
-
-</header>
-
-
-<!-- =====================================================
-     USHA BANNER
-===================================================== -->
-
-<section class="usha-banner" id="usha">
-
-    <div class="usha-banner-inner">
-
-        <div class="usha-banner-left">
-
-            <div class="usha-mini-icon">
-
-                <img
-                    src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-                    alt="USHA AI Assistant"
-                >
-
-            </div>
-
-            <div class="usha-banner-text">
-
-                <h3>
-                    Meet USHA — SNK AI Support Mentor
-                </h3>
-
-                <p>
-                    Course, class, Zoom, support এবং
-                    learning সম্পর্কে USHA-কে জিজ্ঞেস করুন।
-                </p>
-
-                <span class="usha-tag">
-                    <i class="fa-solid fa-circle"></i>
-                    Available for Students
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <button
-            type="button"
-            class="chat-banner-btn"
-            id="openUshaBanner"
-        >
-            <i class="fa-solid fa-comments"></i>
-            Ask USHA
-        </button>
+      </nav>
 
     </div>
-
-</section>
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<main id="home">
+  </header>
 
 
-<!-- =====================================================
-     HERO
-===================================================== -->
+  <!-- =========================
+       HOME
+  ========================== -->
 
-<section class="hero">
+  <main id="home">
 
-    <div class="hero-content">
+    <section class="hero">
+      <div class="container hero-grid">
 
-        <div class="hero-badge">
-            <i class="fa-solid fa-graduation-cap"></i>
+        <div>
+
+          <div class="badge">
+            <span></span>
             SNK IT INSTITUTE
-        </div>
+          </div>
 
-        <h1>
-            Learn.
-            <span>Build.</span>
+          <h1>
+            Learn.<br>
+            <span>Build.</span><br>
             Grow.
-        </h1>
+          </h1>
 
-        <p class="hero-description">
-            Live Zoom Class, Free Recorded Class এবং
-            Paid Recorded Class — সবকিছু এক জায়গা
-            থেকে সহজে access করুন।
-        </p>
+          <p class="hero-text">
+            Learn practical IT skills through live classes, recorded lessons
+            and friendly student support — all in one place.
+          </p>
 
-        <div class="hero-actions">
+          <div class="hero-buttons">
 
             <a
-                href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn btn-yellow"
+              class="btn btn-yellow"
+              href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+              target="_blank"
             >
-                <i class="fa-solid fa-video"></i>
-                Join Live Class
+              <i class="fa-solid fa-video"></i>
+              Join Live Class
             </a>
 
-            <a href="#recorded" class="btn btn-outline">
-                <i class="fa-brands fa-youtube"></i>
-                Recorded Classes
+            <a
+              class="btn btn-dark"
+              href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+              target="_blank"
+            >
+              <i class="fa-solid fa-play"></i>
+              Recorded Classes
             </a>
+
+          </div>
 
         </div>
 
-    </div>
+        <div class="hero-image">
 
-
-    <div class="hero-cover">
-
-        <img
+          <img
             src="https://github.com/yourdocuments/products/blob/main/Ushacover.svg?raw=true"
-            alt="USHA SNK IT Institute"
-        >
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     QUICK ACCESS
-===================================================== -->
-
-<section class="section">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <h2>Quick Access</h2>
-
-            <p>
-                প্রয়োজনীয় জায়গায় সরাসরি যান
-            </p>
+            alt="USHA AI Assistant"
+          >
 
         </div>
 
+      </div>
+    </section>
+
+
+    <!-- =========================
+         USHA BANNER
+    ========================== -->
+
+    <section class="usha-banner">
+
+      <div class="container">
+
+        <div class="usha-banner-card">
+
+          <div class="usha-banner-left">
+
+            <img
+              class="usha-mini-icon"
+              src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+              alt="USHA"
+            >
+
+            <div>
+              <h2>Meet USHA — SNK AI Learning Assistant</h2>
+
+              <p>
+                Course, class, recorded lesson, support — ask USHA anything.
+              </p>
+            </div>
+
+          </div>
+
+          <button
+            class="usha-open-btn"
+            onclick="openUsha()"
+          >
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            Ask USHA
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK ACCESS
+    ========================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Quick Access</h2>
+          <p>Everything you need to start learning.</p>
+        </div>
 
         <div class="quick-grid">
 
-
-            <article class="quick-card">
-
-                <div>
-
-                    <div class="quick-icon red">
-                        <i class="fa-solid fa-video"></i>
-                    </div>
-
-                    <h3>Live Class</h3>
-
-                    <p>
-                        Zoom-এর মাধ্যমে সরাসরি
-                        ক্লাসে যোগ দিন।
-                    </p>
-
-                </div>
-
-                <a
-                    href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="quick-link"
-                >
-                    Join Class
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-            </article>
-
-
-            <article class="quick-card">
-
-                <div>
-
-                    <div class="quick-icon green">
-                        <i class="fa-brands fa-youtube"></i>
-                    </div>
-
-                    <h3>Free Classes</h3>
-
-                    <p>
-                        Free recorded classes
-                        এক জায়গায়।
-                    </p>
-
-                </div>
-
-                <a
-                    href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="quick-link"
-                >
-                    Watch Free
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-            </article>
-
-
-            <article class="quick-card">
-
-                <div>
-
-                    <div class="quick-icon purple">
-                        <i class="fa-solid fa-play"></i>
-                    </div>
-
-                    <h3>Paid Classes</h3>
-
-                    <p>
-                        Paid recorded classes
-                        access করুন।
-                    </p>
-
-                </div>
-
-                <a
-                    href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="quick-link"
-                >
-                    Watch Paid
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-            </article>
-
-
-            <article class="quick-card">
-
-                <div>
-
-                    <div class="quick-icon yellow">
-                        <i class="fa-solid fa-headset"></i>
-                    </div>
-
-                    <h3>Support</h3>
-
-                    <p>
-                        যেকোনো প্রয়োজনে WhatsApp-এ
-                        যোগাযোগ করুন।
-                    </p>
-
-                </div>
-
-                <a
-                    href="https://wa.me/8801636363801"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="quick-link"
-                >
-                    WhatsApp
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     LIVE
-===================================================== -->
-
-<section class="section" id="live">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <h2>Live Class</h2>
-
-            <p>
-                Zoom দিয়ে সরাসরি ক্লাসে যোগ দিন
-            </p>
-
-        </div>
-
-
-        <div class="class-grid">
-
-            <article class="class-card live">
-
-                <div class="class-top">
-
-                    <h3>
-                        <i class="fa-solid fa-video"></i>
-                        Live Zoom Class
-                    </h3>
-
-                    <span class="status status-live">
-                        LIVE
-                    </span>
-
-                </div>
-
-
-                <div class="class-inner">
-
-                    <h4>
-                        SNK IT Institute Live Session
-                    </h4>
-
-                    <p>
-                        নির্ধারিত সময়ে নিচের button-এ
-                        click করে Zoom class-এ join করুন।
-                    </p>
-
-
-                    <div class="class-meta">
-
-                        <span>
-                            <i class="fa-solid fa-video"></i>
-                            Zoom
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-user-group"></i>
-                            Students
-                        </span>
-
-                        <span>
-                            <i class="fa-solid fa-circle-check"></i>
-                            Online
-                        </span>
-
-                    </div>
-
-
-                    <a
-                        href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="class-button"
-                    >
-                        <i class="fa-solid fa-video"></i>
-                        Join Zoom Class
-                    </a>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     RECORDED
-===================================================== -->
-
-<section class="section" id="recorded">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <h2>Recorded Classes</h2>
-
-            <p>
-                ক্লাস miss হলে পরে দেখে নিন
-            </p>
-
-        </div>
-
-
-        <div class="recorded-grid">
-
-
-            <article class="recorded-card">
-
-                <h3>
-                    <i class="fa-brands fa-youtube"></i>
-                    Free Recorded Classes
-                </h3>
-
-                <p>
-                    Free course-এর recorded
-                    video playlist এখানে পাবেন।
-                </p>
-
-                <a
-                    href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="recorded-button"
-                >
-                    <i class="fa-solid fa-play"></i>
-                    Watch Free Classes
-                </a>
-
-            </article>
-
-
-            <article class="recorded-card paid">
-
-                <h3>
-                    <i class="fa-solid fa-lock"></i>
-                    Paid Recorded Classes
-                </h3>
-
-                <p>
-                    Paid course-এর recorded
-                    video playlist access করুন।
-                </p>
-
-                <a
-                    href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="recorded-button"
-                >
-                    <i class="fa-solid fa-play"></i>
-                    Watch Paid Classes
-                </a>
-
-            </article>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SUPPORT
-===================================================== -->
-
-<section class="section" id="support">
-
-    <div class="container">
-
-        <div class="support-box">
-
-            <div>
-
-                <h2>Need Help?</h2>
-
-                <p>
-                    Class, Zoom অথবা অন্য কোনো বিষয়ে
-                    সাহায্যের জন্য WhatsApp-এ যোগাযোগ করুন।
-                </p>
-
+          <a
+            class="quick-card"
+            href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+            target="_blank"
+          >
+            <div class="quick-icon">
+              <i class="fa-solid fa-video"></i>
             </div>
 
+            <h3>Live Class</h3>
+            <p>Join the live Zoom class.</p>
+          </a>
+
+
+          <a
+            class="quick-card"
+            href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+            target="_blank"
+          >
+            <div class="quick-icon">
+              <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+
+            <h3>Free Classes</h3>
+            <p>Learn from free recorded lessons.</p>
+          </a>
+
+
+          <a
+            class="quick-card"
+            href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
+            target="_blank"
+          >
+            <div class="quick-icon">
+              <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <h3>Paid Classes</h3>
+            <p>Explore advanced learning content.</p>
+          </a>
+
+
+          <a
+            class="quick-card"
+            href="https://wa.me/8801636363801"
+            target="_blank"
+          >
+            <div class="quick-icon">
+              <i class="fa-brands fa-whatsapp"></i>
+            </div>
+
+            <h3>Support</h3>
+            <p>Contact SNK support directly.</p>
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         LIVE CLASS
+    ========================== -->
+
+    <section class="section" id="live">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Live Class</h2>
+          <p>Join SNK live learning sessions.</p>
+        </div>
+
+        <div class="content-card">
+
+          <h3>
+            <i class="fa-solid fa-video" style="color:#f4c400;"></i>
+            Join Our Live Class
+          </h3>
+
+          <p>
+            ক্লাস শুরু হলে Zoom link থেকে সরাসরি live class-এ join করুন।
+          </p>
+
+          <div class="content-actions">
+
             <a
-                href="https://wa.me/8801636363801"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="whatsapp-button"
+              class="btn btn-yellow"
+              href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+              target="_blank"
             >
-                <i class="fa-brands fa-whatsapp"></i>
-                Chat on WhatsApp
+              <i class="fa-solid fa-video"></i>
+              Join Zoom
             </a>
 
-        </div>
+            <button
+              class="btn btn-dark"
+              onclick="askUsha('আজকের live class সম্পর্কে বলো')"
+            >
+              <i class="fa-solid fa-robot"></i>
+              Ask USHA
+            </button>
 
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SOCIAL
-===================================================== -->
-
-<section class="section" id="social">
-
-    <div class="container">
-
-        <div class="section-heading">
-
-            <h2>Stay Connected</h2>
-
-            <p>
-                SNK IT Institute-এর সাথে connected থাকুন
-            </p>
+          </div>
 
         </div>
 
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECORDED
+    ========================== -->
+
+    <section class="section" id="recorded">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Recorded Classes</h2>
+          <p>Learn at your own pace.</p>
+        </div>
+
+        <div class="content-card">
+
+          <h3>
+            <i class="fa-solid fa-play" style="color:#f4c400;"></i>
+            Recorded Learning
+          </h3>
+
+          <p>
+            Missed a class? Recorded lessons থেকে নিজের সময় অনুযায়ী শিখুন।
+          </p>
+
+          <div class="content-actions">
+
+            <a
+              class="btn btn-yellow"
+              href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+              target="_blank"
+            >
+              <i class="fa-solid fa-play"></i>
+              Free Playlist
+            </a>
+
+            <a
+              class="btn btn-dark"
+              href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
+              target="_blank"
+            >
+              <i class="fa-solid fa-lock"></i>
+              Paid Playlist
+            </a>
+
+            <button
+              class="btn btn-dark"
+              onclick="askUsha('recorded class কোথায় পাবো?')"
+            >
+              <i class="fa-solid fa-robot"></i>
+              Ask USHA
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SUPPORT
+    ========================== -->
+
+    <section class="section" id="support">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Student Support</h2>
+          <p>Need help? We are here for you.</p>
+        </div>
+
+        <div class="content-card">
+
+          <h3>
+            <i
+              class="fa-brands fa-whatsapp"
+              style="color:#0aad4b;"
+            ></i>
+            SNK Support
+          </h3>
+
+          <p>
+            ভর্তি, class, course অথবা অন্য কোনো বিষয়ে সাহায্যের জন্য
+            WhatsApp support-এ যোগাযোগ করুন।
+          </p>
+
+          <div class="content-actions">
+
+            <a
+              class="btn btn-yellow"
+              href="https://wa.me/8801636363801"
+              target="_blank"
+            >
+              <i class="fa-brands fa-whatsapp"></i>
+              WhatsApp Support
+            </a>
+
+            <button
+              class="btn btn-dark"
+              onclick="askUsha('আমি support চাই')"
+            >
+              <i class="fa-solid fa-robot"></i>
+              Ask USHA
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SOCIAL
+    ========================== -->
+
+    <section class="section" id="social">
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Stay Connected</h2>
+          <p>Follow SNK across our social platforms.</p>
+        </div>
 
         <div class="social-grid">
 
+          <a
+            class="social-card"
+            href="https://www.facebook.com/snkitinstitute"
+            target="_blank"
+          >
+            <i class="fa-brands fa-facebook"></i>
 
-            <a
-                href="https://www.facebook.com/snkitinstitute"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-card facebook"
-            >
-
-                <div class="social-icon">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </div>
-
-                <div>
-                    <strong>Facebook</strong>
-                    <span>@snkitinstitute</span>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
-
-            </a>
+            <div>
+              <strong>Facebook</strong>
+              <span>SNK IT Institute</span>
+            </div>
+          </a>
 
 
-            <a
-                href="https://www.youtube.com/@snkguideup"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-card youtube"
-            >
+          <a
+            class="social-card"
+            href="https://www.youtube.com/@snkguideup"
+            target="_blank"
+          >
+            <i class="fa-brands fa-youtube"></i>
 
-                <div class="social-icon">
-                    <i class="fa-brands fa-youtube"></i>
-                </div>
-
-                <div>
-                    <strong>YouTube</strong>
-                    <span>@snkguideup</span>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
-
-            </a>
+            <div>
+              <strong>YouTube</strong>
+              <span>@snkguideup</span>
+            </div>
+          </a>
 
 
-            <a
-                href="https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-card whatsapp"
-            >
+          <a
+            class="social-card"
+            href="https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x"
+            target="_blank"
+          >
+            <i class="fa-brands fa-whatsapp"></i>
 
-                <div class="social-icon">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </div>
-
-                <div>
-                    <strong>WhatsApp Channel</strong>
-                    <span>Follow our updates</span>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
-
-            </a>
+            <div>
+              <strong>WhatsApp Channel</strong>
+              <span>Join SNK Channel</span>
+            </div>
+          </a>
 
 
-            <a
-                href="https://www.facebook.com/groups/shopingnmela"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="social-card shopping"
-            >
+          <a
+            class="social-card"
+            href="https://www.facebook.com/groups/shopingnmela"
+            target="_blank"
+          >
+            <i class="fa-solid fa-bag-shopping"></i>
 
-                <div class="social-icon">
-                    <i class="fa-brands fa-facebook"></i>
-                </div>
-
-                <div>
-                    <strong>Shopping Mela Group</strong>
-                    <span>user shopingnmela</span>
-                </div>
-
-                <i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
-
-            </a>
+            <div>
+              <strong>Shopping Mela</strong>
+              <span>Join Group</span>
+            </div>
+          </a>
 
         </div>
 
+      </div>
 
-        <div class="join-now-wrap">
+    </section>
 
-            <a
-                href="https://www.facebook.com/snkitinstitute"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="join-now-btn"
-            >
-                <i class="fa-solid fa-user-plus"></i>
-                JOIN NOW
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
+  </main>
 
 
-</main>
+  <!-- =========================
+       FOOTER
+  ========================== -->
 
+  <footer>
 
-<!-- =====================================================
-     FOOTER
-===================================================== -->
+    <div class="container">
 
-<footer>
-
-    <div class="footer-logo">
-
-        <img
-            src="https://github.com/yourdocuments/products/blob/main/snk%20itlogo%20tn.svg?raw=true"
-            alt="SNK IT Institute"
-        >
+      <p>
+        © <span id="year"></span> SNK IT Institute. All rights reserved.
+      </p>
 
     </div>
 
-    <div>
-        © <span id="year"></span>
-        SNK IT Institute.
-        All rights reserved.
-    </div>
-
-    <div>
-        Learn • Build • Grow
-    </div>
-
-</footer>
+  </footer>
 
 
-<!-- =====================================================
-     USHA FLOATING BUTTON
-===================================================== -->
+  <!-- =====================================================
+       USHA FLOATING ASSISTANT
+  ====================================================== -->
 
-<button
-    class="usha-button"
-    id="ushaButton"
-    type="button"
-    aria-label="Open USHA AI"
-    title="USHA AI"
->
+  <div class="usha-widget">
 
-    <img
-        src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-        alt="USHA AI"
+    <button
+      class="usha-float"
+      onclick="toggleUsha()"
+      aria-label="Open USHA"
     >
 
-</button>
+      <img
+        src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+        alt="USHA"
+      >
+
+      <span class="usha-online"></span>
+
+    </button>
+
+  </div>
 
 
-<!-- =====================================================
-     USHA CHATBOT
-===================================================== -->
+  <!-- =====================================================
+       USHA CHAT
+  ====================================================== -->
 
-<div
-    class="chatbot"
-    id="chatbot"
-    role="dialog"
-    aria-modal="false"
+  <div
+    class="usha-chat"
+    id="ushaChat"
     aria-hidden="true"
-    aria-label="USHA AI Support Mentor"
->
+  >
 
+    <!-- Header -->
 
-    <!-- CHAT HEADER -->
+    <div class="usha-chat-header">
 
-    <div class="chat-header">
+      <div class="usha-profile">
 
-        <div class="chat-avatar">
+        <div class="usha-avatar">
 
-            <img
-                src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-                alt="USHA AI"
-            >
-
-        </div>
-
-
-        <div class="chat-info">
-
-            <h3>USHA AI</h3>
-
-            <p>
-                ● Online
-            </p>
-
-            <div class="chat-status">
-                SNK Support Mentor
-            </div>
+          <img
+            src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+            alt="USHA"
+          >
 
         </div>
 
+        <div>
+          <strong>USHA</strong>
+          <div class="usha-status">
+            ● SNK Learning Assistant
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="usha-header-actions">
 
         <button
-            class="header-tool-btn"
-            id="clearChat"
-            type="button"
-            title="Clear chat"
-            aria-label="Clear chat"
+          class="usha-head-btn"
+          onclick="clearUshaChat()"
+          title="Clear chat"
         >
-            <i class="fa-solid fa-trash"></i>
+          <i class="fa-solid fa-trash"></i>
         </button>
-
 
         <button
-            class="close-chat"
-            id="closeChat"
-            type="button"
-            aria-label="Close USHA AI"
-            title="Close"
+          class="usha-head-btn"
+          onclick="closeUsha()"
+          title="Close"
         >
-            ×
+          <i class="fa-solid fa-xmark"></i>
         </button>
+
+      </div>
 
     </div>
 
 
-    <!-- MEMORY -->
+    <!-- Learning intro -->
 
-    <div class="chat-memory">
+    <div class="usha-learning-intro">
 
-        <span class="memory-status">
+      <strong>What would you like to learn?</strong>
 
-            <span class="memory-dot"></span>
-
-            Chat history saved on this device
-
-        </span>
-
-        <span id="messageCounter">
-            0 messages
-        </span>
+      <p>
+        Course, class, recorded lesson বা support সম্পর্কে আমাকে জিজ্ঞেস করুন।
+      </p>
 
     </div>
 
 
-    <!-- MESSAGES -->
+    <!-- Suggested questions -->
+
+    <div class="usha-suggestions" id="ushaSuggestions">
+
+      <button
+        class="suggestion"
+        onclick="askUsha('আমি একদম beginner, কোথা থেকে শুরু করবো?')"
+      >
+        Beginner Guide
+      </button>
+
+      <button
+        class="suggestion"
+        onclick="askUsha('Free course সম্পর্কে বলো')"
+      >
+        Free Course
+      </button>
+
+      <button
+        class="suggestion"
+        onclick="askUsha('Live class কখন?')"
+      >
+        Live Class
+      </button>
+
+      <button
+        class="suggestion"
+        onclick="askUsha('Recorded class কোথায়?')"
+      >
+        Recorded
+      </button>
+
+      <button
+        class="suggestion"
+        onclick="askUsha('Support চাই')"
+      >
+        Support
+      </button>
+
+    </div>
+
+
+    <!-- Messages -->
 
     <div
-        class="chat-messages"
-        id="chatMessages"
-        aria-live="polite"
+      class="usha-messages"
+      id="ushaMessages"
     ></div>
 
 
-    <!-- QUICK ACTIONS -->
+    <!-- Input -->
 
-    <div
-        class="quick-actions"
-        id="quickActions"
-    >
+    <div class="usha-input-area">
 
-        <button
-            type="button"
-            data-question="Free course কোথায়?"
-        >
-            🎓 Free Course
-        </button>
-
-        <button
-            type="button"
-            data-question="Paid course কোথায়?"
-        >
-            💎 Paid Course
-        </button>
-
-        <button
-            type="button"
-            data-question="Live class কীভাবে join করবো?"
-        >
-            📹 Live Class
-        </button>
-
-        <button
-            type="button"
-            data-question="Zoom class কীভাবে join করবো?"
-        >
-            🔵 Zoom
-        </button>
-
-        <button
-            type="button"
-            data-question="WhatsApp support চাই"
-        >
-            💬 WhatsApp
-        </button>
-
-        <button
-            type="button"
-            data-question="Shopping discount আছে?"
-        >
-            🛍️ Shopping
-        </button>
-
-    </div>
-
-
-    <!-- INPUT -->
-
-    <form
-        class="chat-input-area"
-        id="chatForm"
-        autocomplete="off"
-    >
+      <div class="usha-input-box">
 
         <input
-            type="text"
-            id="chatInput"
-            class="chat-input"
-            placeholder="USHA-কে কিছু জিজ্ঞেস করুন..."
-            aria-label="Message USHA"
-            autocomplete="off"
-            spellcheck="false"
-        >
+          id="ushaInput"
+          type="text"
+          autocomplete="off"
+          placeholder="USHA-কে প্রশ্ন করুন..."
+        />
 
         <button
-            class="send-btn"
-            type="submit"
-            aria-label="Send message"
-            title="Send"
+          id="sendUsha"
+          onclick="sendMessage()"
+          aria-label="Send"
         >
-            ➤
+          <i class="fa-solid fa-arrow-up"></i>
         </button>
 
-    </form>
+      </div>
 
-</div>
-
-
-<!-- =====================================================
-     CLEAR CHAT CONFIRMATION
-===================================================== -->
-
-<div
-    class="clear-confirm"
-    id="clearConfirm"
-    aria-hidden="true"
->
-
-    <div class="confirm-box">
-
-        <div class="confirm-box-icon">
-            <i class="fa-solid fa-trash"></i>
-        </div>
-
-        <h3>
-            Clear Chat?
-        </h3>
-
-        <p>
-            এই device-এ saved USHA conversation
-            মুছে যাবে।
-        </p>
-
-        <div class="confirm-buttons">
-
-            <button
-                type="button"
-                class="cancel-clear"
-                id="cancelClear"
-            >
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                class="confirm-clear"
-                id="confirmClear"
-            >
-                Clear Chat
-            </button>
-
-        </div>
+      <div class="usha-footer-note">
+        USHA • SNK Learning Assistant
+      </div>
 
     </div>
 
-</div>
+  </div>
 
 
-<!-- =====================================================
-     USHA JAVASCRIPT — STEP 2
-===================================================== -->
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
 
-<script>
+  <script>
 
-(function () {
+    /* =========================
+       YEAR
+    ========================== */
 
-    "use strict";
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
 
-    /* =====================================================
+    /* =========================
        LINKS
-    ===================================================== */
+    ========================== */
 
     const USHA_LINKS = {
 
-        freeCourse:
-            "https://yourdocuments.github.io/freecourse.github.io/",
+      free:
+        "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
 
-        shopping:
-            "https://yourdocuments.github.io/shopingmela/",
+      paid:
+        "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
 
-        zoom:
-            "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
+      zoom:
+        "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
 
-        whatsapp:
-            "https://wa.me/8801636363801",
+      whatsapp:
+        "https://wa.me/8801636363801",
 
-        whatsappChannel:
-            "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x",
+      facebook:
+        "https://www.facebook.com/snkitinstitute",
 
-        freePlaylist:
-            "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
+      youtube:
+        "https://www.youtube.com/@snkguideup",
 
-        paidPlaylist:
-            "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
+      channel:
+        "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x",
 
-        facebook:
-            "https://www.facebook.com/snkitinstitute",
+      shopping:
+        "https://yourdocuments.github.io/shopingmela/",
 
-        youtube:
-            "https://www.youtube.com/@snkguideup",
-
-        shoppingGroup:
-            "https://www.facebook.com/groups/shopingnmela"
+      shoppingGroup:
+        "https://www.facebook.com/groups/shopingnmela"
 
     };
 
 
-    /* =====================================================
-       STORAGE
-    ===================================================== */
-
-    const STORAGE_KEY =
-        "snkUshaSupportMentorChatV2";
-
-    const MAX_HISTORY =
-        60;
-
-
-    /* =====================================================
+    /* =========================
        ELEMENTS
-    ===================================================== */
+    ========================== */
 
-    const ushaButton =
-        document.getElementById("ushaButton");
+    const ushaChat =
+      document.getElementById("ushaChat");
 
-    const chatbot =
-        document.getElementById("chatbot");
+    const ushaMessages =
+      document.getElementById("ushaMessages");
 
-    const closeChat =
-        document.getElementById("closeChat");
+    const ushaInput =
+      document.getElementById("ushaInput");
 
-    const chatMessages =
-        document.getElementById("chatMessages");
 
-    const chatForm =
-        document.getElementById("chatForm");
+    /* =========================
+       STORAGE
+    ========================== */
 
-    const chatInput =
-        document.getElementById("chatInput");
+    const CHAT_STORAGE_KEY =
+      "snkUshaChatHistory_v2";
 
-    const navUsha =
-        document.getElementById("navUsha");
 
-    const openUshaBanner =
-        document.getElementById("openUshaBanner");
-
-    const year =
-        document.getElementById("year");
-
-    const clearChat =
-        document.getElementById("clearChat");
-
-    const clearConfirm =
-        document.getElementById("clearConfirm");
-
-    const cancelClear =
-        document.getElementById("cancelClear");
-
-    const confirmClear =
-        document.getElementById("confirmClear");
-
-    const messageCounter =
-        document.getElementById("messageCounter");
-
-    const quickActions =
-        document.getElementById("quickActions");
-
-
-    /* =====================================================
-       FOOTER YEAR
-    ===================================================== */
-
-    if (year) {
-        year.textContent =
-            new Date().getFullYear();
-    }
-
-
-    /* =====================================================
-       SAFE STORAGE
-    ===================================================== */
-
-    function saveHistory(history) {
-
-        try {
-
-            localStorage.setItem(
-                STORAGE_KEY,
-                JSON.stringify(
-                    history.slice(-MAX_HISTORY)
-                )
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "USHA history could not be saved.",
-                error
-            );
-
-        }
-
-    }
-
-
-    function getHistory() {
-
-        try {
-
-            const raw =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
-
-            if (!raw) {
-                return [];
-            }
-
-            const parsed =
-                JSON.parse(raw);
-
-            if (!Array.isArray(parsed)) {
-                return [];
-            }
-
-            return parsed.slice(
-                -MAX_HISTORY
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "USHA history could not be loaded.",
-                error
-            );
-
-            return [];
-
-        }
-
-    }
-
-
-    let chatHistory =
-        getHistory();
-
-
-    /* =====================================================
-       OPEN
-    ===================================================== */
-
-    function openUsha() {
-
-        chatbot.classList.add("show");
-
-        chatbot.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        setTimeout(function () {
-
-            chatInput.focus();
-
-        }, 120);
-
-        scrollToBottom();
-
-    }
-
-
-    /* =====================================================
-       CLOSE
-    ===================================================== */
-
-    function closeUsha() {
-
-        chatbot.classList.remove("show");
-
-        chatbot.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-    }
-
-
-    /* =====================================================
-       BUTTON
-    ===================================================== */
-
-    ushaButton.addEventListener(
-        "click",
-        function () {
-
-            if (
-                chatbot.classList.contains("show")
-            ) {
-
-                closeUsha();
-
-            } else {
-
-                openUsha();
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       CLOSE BUTTON
-    ===================================================== */
-
-    closeChat.addEventListener(
-        "click",
-        closeUsha
-    );
-
-
-    /* =====================================================
-       NAV USHA
-    ===================================================== */
-
-    if (navUsha) {
-
-        navUsha.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-                openUsha();
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       BANNER USHA
-    ===================================================== */
-
-    if (openUshaBanner) {
-
-        openUshaBanner.addEventListener(
-            "click",
-            openUsha
-        );
-
-    }
-
-
-    /* =====================================================
-       TIME
-    ===================================================== */
-
-    function getTime() {
-
-        return new Date().toLocaleTimeString(
-            "bn-BD",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-    }
-
-
-    /* =====================================================
-       UPDATE COUNTER
-    ===================================================== */
-
-    function updateCounter() {
-
-        if (!messageCounter) {
-            return;
-        }
-
-        const count =
-            chatHistory.length;
-
-        messageCounter.textContent =
-            count +
-            (count === 1
-                ? " message"
-                : " messages");
-
-    }
-
-
-    /* =====================================================
-       SAVE MESSAGE
-    ===================================================== */
-
-    function saveMessage(
-        role,
-        text,
-        html
-    ) {
-
-        chatHistory.push({
-
-            role: role,
-
-            text: text,
-
-            html: html,
-
-            time: getTime()
-
-        });
-
-        chatHistory =
-            chatHistory.slice(-MAX_HISTORY);
-
-        saveHistory(chatHistory);
-
-        updateCounter();
-
-    }
-
-
-    /* =====================================================
-       ADD MESSAGE TO UI
-    ===================================================== */
-
-    function addMessage(
-        text,
-        type,
-        save = true,
-        customHTML = null,
-        time = null
-    ) {
-
-        const message =
-            document.createElement("div");
-
-        message.classList.add(
-            "message",
-            type === "user"
-                ? "user-message"
-                : "bot-message"
-        );
-
-
-        const content =
-            customHTML !== null
-                ? customHTML
-                : escapeHTML(text);
-
-
-        message.innerHTML =
-            content +
-            `<span class="message-time">
-                ${time || getTime()}
-            </span>`;
-
-
-        chatMessages.appendChild(
-            message
-        );
-
-
-        if (save) {
-
-            saveMessage(
-                type === "user"
-                    ? "user"
-                    : "bot",
-                text,
-                customHTML
-            );
-
-        }
-
-
-        scrollToBottom();
-
-    }
-
-
-    /* =====================================================
+    /* =========================
        ESCAPE HTML
-    ===================================================== */
+    ========================== */
 
     function escapeHTML(text) {
 
-        const div =
-            document.createElement("div");
-
-        div.textContent =
-            String(text || "");
-
-        return div.innerHTML;
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
     }
 
 
-    /* =====================================================
-       SCROLL
-    ===================================================== */
+    /* =========================
+       LINK SAFE FORMAT
+    ========================== */
 
-    function scrollToBottom() {
+    function link(url, label) {
 
-        requestAnimationFrame(function () {
+      return `
+        <a
+          href="${url}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ${label}
+        </a>
+      `;
 
-            chatMessages.scrollTop =
-                chatMessages.scrollHeight;
+    }
+
+
+    /* =========================
+       TIME
+    ========================== */
+
+    function getTime() {
+
+      return new Date().toLocaleTimeString(
+        "bn-BD",
+        {
+          hour: "numeric",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+
+    /* =========================
+       SAVE CHAT
+    ========================== */
+
+    function saveChat() {
+
+      const messages =
+        [...ushaMessages.querySelectorAll(".message")]
+        .map(message => {
+
+          const isUser =
+            message.classList.contains("user");
+
+          const clone =
+            message.cloneNode(true);
+
+          const time =
+            clone.querySelector(".message-time");
+
+          if (time) {
+            time.remove();
+          }
+
+          return {
+            role: isUser ? "user" : "bot",
+            text: clone.innerHTML
+          };
 
         });
 
+      localStorage.setItem(
+        CHAT_STORAGE_KEY,
+        JSON.stringify(messages)
+      );
+
     }
 
 
-    /* =====================================================
-       TYPING
-    ===================================================== */
+    /* =========================
+       ADD MESSAGE
+    ========================== */
 
-    function showTyping() {
+    function addMessage(
+      text,
+      type = "bot",
+      save = true
+    ) {
 
-        hideTyping();
+      const row =
+        document.createElement("div");
 
-        const typing =
-            document.createElement("div");
+      row.className =
+        "message-row " + type;
 
-        typing.id =
-            "ushaTyping";
 
-        typing.className =
-            "message bot-message";
+      const bubble =
+        document.createElement("div");
 
-        typing.innerHTML = `
+      bubble.className =
+        "message " + type;
 
-            <div class="typing-message">
 
-                <span></span>
-                <span></span>
-                <span></span>
+      bubble.innerHTML = `
+        ${text}
+        <span class="message-time">
+          ${getTime()}
+        </span>
+      `;
 
-            </div>
 
-        `;
+      row.appendChild(bubble);
 
-        chatMessages.appendChild(
-            typing
+      ushaMessages.appendChild(row);
+
+      ushaMessages.scrollTop =
+        ushaMessages.scrollHeight;
+
+
+      if (save) {
+        saveChat();
+      }
+
+    }
+
+
+    /* =========================
+       LOAD CHAT
+    ========================== */
+
+    function loadChat() {
+
+      const saved =
+        localStorage.getItem(CHAT_STORAGE_KEY);
+
+      if (!saved) {
+
+        addMessage(
+          `
+          আসসালামু আলাইকুম! 👋<br><br>
+          আমি <strong>USHA</strong> — SNK IT Institute-এর
+          Learning Assistant।<br><br>
+          আপনি কী শিখতে চান বা কোন বিষয়ে সাহায্য চান,
+          আমাকে বলুন। আমি step-by-step guide করার চেষ্টা করব।
+          `,
+          "bot",
+          false
         );
 
-        scrollToBottom();
+        return;
+
+      }
+
+
+      try {
+
+        const messages =
+          JSON.parse(saved);
+
+        messages.forEach(item => {
+
+          addMessage(
+            item.text,
+            item.role,
+            false
+          );
+
+        });
+
+      } catch {
+
+        localStorage.removeItem(
+          CHAT_STORAGE_KEY
+        );
+
+        addMessage(
+          "আসসালামু আলাইকুম! 👋 আমি USHA। কী শিখতে চান?",
+          "bot",
+          false
+        );
+
+      }
 
     }
 
 
-    /* =====================================================
-       HIDE TYPING
-    ===================================================== */
+    /* =========================
+       CLEAR CHAT
+    ========================== */
 
-    function hideTyping() {
+    function clearUshaChat() {
 
-        const typing =
-            document.getElementById(
-                "ushaTyping"
-            );
+      const confirmed =
+        confirm("USHA chat history clear করবেন?");
 
-        if (typing) {
-            typing.remove();
-        }
+      if (!confirmed) {
+        return;
+      }
+
+      localStorage.removeItem(
+        CHAT_STORAGE_KEY
+      );
+
+      ushaMessages.innerHTML = "";
+
+      addMessage(
+        `
+        Chat cleared. 👋<br><br>
+        আমি আবার প্রস্তুত। আপনি কী শিখতে চান?
+        `,
+        "bot"
+      );
 
     }
 
 
-    /* =====================================================
+    /* =========================
+       OPEN / CLOSE
+    ========================== */
+
+    function openUsha() {
+
+      ushaChat.classList.add("active");
+
+      ushaChat.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      setTimeout(() => {
+
+        ushaInput.focus();
+
+      }, 100);
+
+    }
+
+
+    function closeUsha() {
+
+      ushaChat.classList.remove("active");
+
+      ushaChat.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+    }
+
+
+    function toggleUsha() {
+
+      if (
+        ushaChat.classList.contains("active")
+      ) {
+
+        closeUsha();
+
+      } else {
+
+        openUsha();
+
+      }
+
+    }
+
+
+    /* =========================
        NORMALIZE
-    ===================================================== */
+    ========================== */
 
     function normalizeText(text) {
 
-        return String(text || "")
-            .toLowerCase()
-            .trim()
-            .replace(/\s+/g, " ");
+      return String(text)
+        .toLowerCase()
+        .replace(/[।!?！？,،]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
 
     }
 
 
-    /* =====================================================
-       LANGUAGE DETECTION
-    ===================================================== */
+    /* =========================
+       KEYWORD CHECK
+    ========================== */
 
-    function detectLanguage(text) {
+    function hasAny(text, words) {
 
-        const value =
-            String(text || "");
-
-        const bangla =
-            /[\u0980-\u09FF]/.test(value);
-
-        const english =
-            /[a-zA-Z]/.test(value);
-
-        if (bangla && english) {
-            return "mixed";
-        }
-
-        if (bangla) {
-            return "bn";
-        }
-
-        if (english) {
-            return "en";
-        }
-
-        return "unknown";
+      return words.some(word =>
+        text.includes(word)
+      );
 
     }
 
 
-    /* =====================================================
-       KEYWORD MATCH
-    ===================================================== */
-
-    function hasAny(
-        text,
-        keywords
-    ) {
-
-        return keywords.some(
-            keyword =>
-                text.includes(keyword)
-        );
-
-    }
-
-
-    /* =====================================================
-       INTENT DETECTION
-    ===================================================== */
-
-    function detectIntent(question) {
-
-        const q =
-            normalizeText(question);
-
-
-        if (
-            hasAny(q, [
-                "hi",
-                "hello",
-                "hey",
-                "হাই",
-                "হ্যালো",
-                "হ্যাল",
-                "আসসালামু",
-                "সালাম",
-                "salam"
-            ])
-        ) {
-            return "greeting";
-        }
-
-
-        if (
-            hasAny(q, [
-                "free course",
-                "free class",
-                "free",
-                "ফ্রি",
-                "ফ্রী",
-                "বিনামূল্যে"
-            ])
-        ) {
-            return "free";
-        }
-
-
-        if (
-            hasAny(q, [
-                "paid course",
-                "paid class",
-                "premium",
-                "paid",
-                "পেইড",
-                "প্রিমিয়াম",
-                "প্রিমিয়াম"
-            ])
-        ) {
-            return "paid";
-        }
-
-
-        if (
-            hasAny(q, [
-                "live class",
-                "live",
-                "লাইভ ক্লাস",
-                "লাইভ"
-            ])
-        ) {
-            return "live";
-        }
-
-
-        if (
-            hasAny(q, [
-                "zoom",
-                "জুম"
-            ])
-        ) {
-            return "zoom";
-        }
-
-
-        if (
-            hasAny(q, [
-                "recorded",
-                "record",
-                "রেকর্ড",
-                "ভিডিও ক্লাস",
-                "video class"
-            ])
-        ) {
-            return "recorded";
-        }
-
-
-        if (
-            hasAny(q, [
-                "whatsapp",
-                "হোয়াটসঅ্যাপ",
-                "হোয়াটসঅ্যাপ",
-                "সাপোর্ট",
-                "support",
-                "help",
-                "সাহায্য",
-                "যোগাযোগ"
-            ])
-        ) {
-            return "support";
-        }
-
-
-        if (
-            hasAny(q, [
-                "shopping",
-                "shop",
-                "শপিং",
-                "discount",
-                "ডিসকাউন্ট",
-                "ছাড়",
-                "ছাড়",
-                "অফার",
-                "offer",
-                "promo",
-                "coupon",
-                "কুপন",
-                "shoping36",
-                "36%"
-            ])
-        ) {
-            return "shopping";
-        }
-
-
-        if (
-            hasAny(q, [
-                "facebook",
-                "ফেসবুক"
-            ])
-        ) {
-            return "facebook";
-        }
-
-
-        if (
-            hasAny(q, [
-                "youtube",
-                "ইউটিউব",
-                "channel"
-            ])
-        ) {
-            return "youtube";
-        }
-
-
-        if (
-            hasAny(q, [
-                "price",
-                "দাম",
-                "মূল্য",
-                "কত টাকা",
-                "কতো টাকা",
-                "fee",
-                "ফি"
-            ])
-        ) {
-            return "price";
-        }
-
-
-        if (
-            hasAny(q, [
-                "admission",
-                "ভর্তি",
-                "admit",
-                "registration",
-                "রেজিস্ট্রেশন"
-            ])
-        ) {
-            return "admission";
-        }
-
-
-        if (
-            hasAny(q, [
-                "certificate",
-                "সার্টিফিকেট",
-                "সনদ"
-            ])
-        ) {
-            return "certificate";
-        }
-
-
-        if (
-            hasAny(q, [
-                "website",
-                "web site",
-                "github",
-                "গিটহাব",
-                "ওয়েবসাইট",
-                "ওয়েবসাইট",
-                "html",
-                "css",
-                "javascript",
-                "js"
-            ])
-        ) {
-            return "technical";
-        }
-
-
-        if (
-            hasAny(q, [
-                "thank",
-                "thanks",
-                "ধন্যবাদ",
-                "অনেক ধন্যবাদ"
-            ])
-        ) {
-            return "thanks";
-        }
-
-
-        if (
-            hasAny(q, [
-                "who are you",
-                "what are you",
-                "তুমি কে",
-                "আপনি কে",
-                "usha কে",
-                "usha কি",
-                "usha"
-            ])
-        ) {
-            return "about";
-        }
-
-
-        if (
-            hasAny(q, [
-                "beginner",
-                "begin",
-                "start",
-                "শুরু",
-                "নতুন",
-                "কোথা থেকে শিখব",
-                "কোথা থেকে শুরু"
-            ])
-        ) {
-            return "start";
-        }
-
-
-        return "unknown";
-
-    }
-
-
-    /* =====================================================
-       QUICK SUGGESTIONS
-    ===================================================== */
-
-    const SUGGESTIONS = {
-
-        default: [
-
-            "🎓 Free Course কোথায়?",
-            "📹 Live Class কীভাবে join করবো?",
-            "💬 WhatsApp Support চাই",
-            "🛍️ Shopping Discount আছে?"
-
-        ],
-
-        free: [
-
-            "🎓 Free Course খুলুন",
-            "▶️ Free Playlist কোথায়?",
-            "💎 Paid Course কী আছে?"
-
-        ],
-
-        paid: [
-
-            "💎 Paid Classes দেখুন",
-            "💰 Course price জানতে চাই",
-            "💬 Support চাই"
-
-        ],
-
-        live: [
-
-            "📹 Join Live Class",
-            "🔵 Zoom link দিন",
-            "▶️ Recorded Class চাই"
-
-        ],
-
-        technical: [
-
-            "🌐 Website Support",
-            "💻 HTML সম্পর্কে জানতে চাই",
-            "📱 Mobile problem"
-
-        ],
-
-        support: [
-
-            "💬 WhatsApp Support",
-            "📢 WhatsApp Channel",
-            "📘 Facebook Page"
-
-        ]
-
-    };
-
-
-    /* =====================================================
-       UPDATE SUGGESTIONS
-    ===================================================== */
-
-    function updateSuggestions(
-        intent = "default"
-    ) {
-
-        if (!quickActions) {
-            return;
-        }
-
-        const list =
-            SUGGESTIONS[intent] ||
-            SUGGESTIONS.default;
-
-
-        quickActions.innerHTML = "";
-
-
-        list.forEach(function (label) {
-
-            const button =
-                document.createElement("button");
-
-            button.type = "button";
-
-            button.textContent =
-                label;
-
-            const cleanQuestion =
-                label
-                    .replace(
-                        /^[^\p{L}\p{N}]+/u,
-                        ""
-                    );
-
-
-            button.dataset.question =
-                cleanQuestion;
-
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    openUsha();
-
-                    sendMessage(
-                        cleanQuestion
-                    );
-
-                }
-            );
-
-
-            quickActions.appendChild(
-                button
-            );
-
-        });
-
-    }
-
-
-    /* =====================================================
-       REPLY BUILDER
-    ===================================================== */
-
-    function getUshaReply(
-        question
-    ) {
-
-        const q =
-            normalizeText(question);
-
-        const lang =
-            detectLanguage(question);
-
-        const intent =
-            detectIntent(question);
-
-
-        /* GREETING */
-
-        if (intent === "greeting") {
-
-            if (lang === "en") {
-
-                return `
-
-                    👋 <strong>Wa Alaikum Assalam!</strong>
-
-                    <br><br>
-
-                    I am <strong>USHA AI</strong>,
-                    the SNK Support Mentor.
-
-                    <br><br>
-
-                    I can help you with
-                    Free Course, Paid Course,
-                    Live Class, Zoom, Support
-                    and more.
-
-                    <br><br>
-
-                    What would you like to know? 😊
-
-                `;
-
-            }
-
-
-            return `
-
-                👋 <strong>ওয়ালাইকুম আসসালাম!</strong>
-
-                <br><br>
-
-                আমি <strong>USHA AI</strong> —
-                SNK Support Mentor।
-
-                <br><br>
-
-                Free Course, Paid Course,
-                Live Class, Zoom, Support
-                এবং আরও অনেক বিষয়ে সাহায্য
-                করতে পারি।
-
-                <br><br>
-
-                কী জানতে চান? 😊
-
-            `;
-
-        }
-
-
-        /* ABOUT USHA */
-
-        if (intent === "about") {
-
-            return `
-
-                🤖 <strong>আমি USHA AI</strong>
-
-                <br><br>
-
-                আমি <strong>SNK IT Institute</strong>-এর
-                Support Mentor।
-
-                <br><br>
-
-                🎓 Course Help
-                <br>
-                📹 Live Class
-                <br>
-                🔵 Zoom
-                <br>
-                ▶️ Recorded Classes
-                <br>
-                💬 Student Support
-                <br>
-                🛍️ Shopping Mela
-
-                <br><br>
-
-                আপনার প্রশ্ন লিখুন —
-                আমি available information অনুযায়ী
-                সাহায্য করার চেষ্টা করব। 😊
-
-            `;
-
-        }
-
-
-        /* START / BEGINNER */
-
-        if (intent === "start") {
-
-            return `
-
-                🚀 <strong>শুরু করতে চান?</strong>
-
-                <br><br>
-
-                আপনি যদি নতুন হন, তাহলে
-                প্রথমে <strong>Free Course</strong>
-                দিয়ে শুরু করতে পারেন।
-
-                <br><br>
-
-                এরপর Live Class এবং
-                Recorded Classes ব্যবহার করতে পারেন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.freeCourse}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🎓 Start Free Course
-                </a>
-
-                <br><br>
-
-                অথবা আমাকে লিখুন:
-                <strong>“আমি beginner”</strong>
-
-            `;
-
-        }
-
-
-        /* FREE */
-
-        if (intent === "free") {
-
-            return `
-
-                🎓 <strong>Free Course</strong>
-
-                <br><br>
-
-                আমাদের Free Course-এর
-                recorded classes দেখতে পারেন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.freeCourse}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🎓 Open Free Course
-                </a>
-
-                <br><br>
-
-                অথবা YouTube Free Playlist:
-
-                <br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.freePlaylist}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    ▶️ Watch Free Classes
-                </a>
-
-            `;
-
-        }
-
-
-        /* PAID */
-
-        if (intent === "paid") {
-
-            return `
-
-                💎 <strong>Paid Course</strong>
-
-                <br><br>
-
-                Paid Recorded Classes দেখতে
-                নিচের button ব্যবহার করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link dark"
-                    href="${USHA_LINKS.paidPlaylist}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💎 Watch Paid Classes
-                </a>
-
-                <br><br>
-
-                Price বা admission সম্পর্কে
-                জানতে Support-এ যোগাযোগ করতে পারেন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 Contact Support
-                </a>
-
-            `;
-
-        }
-
-
-        /* LIVE */
-
-        if (intent === "live") {
-
-            return `
-
-                📹 <strong>Live Class</strong>
-
-                <br><br>
-
-                Live Zoom Class-এ join করতে
-                নিচের button-এ click করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link blue"
-                    href="${USHA_LINKS.zoom}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    📹 JOIN LIVE CLASS
-                </a>
-
-            `;
-
-        }
-
-
-        /* ZOOM */
-
-        if (intent === "zoom") {
-
-            return `
-
-                🔵 <strong>Zoom Class</strong>
-
-                <br><br>
-
-                Zoom meeting-এ join করতে
-                নিচের button-এ click করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link blue"
-                    href="${USHA_LINKS.zoom}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🔵 JOIN ZOOM
-                </a>
-
-            `;
-
-        }
-
-
-        /* RECORDED */
-
-        if (intent === "recorded") {
-
-            return `
-
-                ▶️ <strong>Recorded Classes</strong>
-
-                <br><br>
-
-                Free এবং Paid recorded classes
-                দুইটাই available।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.freePlaylist}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    ▶️ Free Classes
-                </a>
-
-                <br>
-
-                <a
-                    class="usha-link dark"
-                    href="${USHA_LINKS.paidPlaylist}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💎 Paid Classes
-                </a>
-
-            `;
-
-        }
-
-
-        /* SUPPORT */
-
-        if (intent === "support") {
-
-            return `
-
-                💬 <strong>SNK Support</strong>
-
-                <br><br>
-
-                সরাসরি WhatsApp-এ
-                support team-এর সাথে যোগাযোগ করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 WhatsApp Support
-                </a>
-
-                <br><br>
-
-                📢 WhatsApp Channel:
-
-                <br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsappChannel}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    📢 Join Channel
-                </a>
-
-            `;
-
-        }
-
-
-        /* SHOPPING */
-
-        if (intent === "shopping") {
-
-            return `
-
-                🛍️ <strong>Shopping Mela</strong>
-
-                <br><br>
-
-                🎉 <strong>36% Discount</strong>
-
-                <br><br>
-
-                Promo Code:
-                <strong>SHOPING36</strong>
-
-                <br><br>
-
-                Shopping Mela-তে যেতে
-                নিচের button ব্যবহার করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.shopping}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    🛍️ SHOP NOW
-                </a>
-
-            `;
-
-        }
-
-
-        /* FACEBOOK */
-
-        if (intent === "facebook") {
-
-            return `
-
-                📘 <strong>Facebook</strong>
-
-                <br><br>
-
-                SNK IT Institute Facebook Page:
-
-                <br><br>
-
-                <a
-                    class="usha-link blue"
-                    href="${USHA_LINKS.facebook}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    📘 Open Facebook
-                </a>
-
-            `;
-
-        }
-
-
-        /* YOUTUBE */
-
-        if (intent === "youtube") {
-
-            return `
-
-                ▶️ <strong>YouTube</strong>
-
-                <br><br>
-
-                SNK IT Institute YouTube channel:
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.youtube}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    ▶️ Open YouTube
-                </a>
-
-            `;
-
-        }
-
-
-        /* PRICE */
-
-        if (intent === "price") {
-
-            return `
-
-                💰 <strong>Course Price</strong>
-
-                <br><br>
-
-                কোন Course-এর price জানতে
-                চাচ্ছেন?
-
-                <br><br>
-
-                Course-এর নাম লিখুন অথবা
-                Support Team-কে জিজ্ঞেস করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link dark"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 Ask Support
-                </a>
-
-            `;
-
-        }
-
-
-        /* ADMISSION */
-
-        if (intent === "admission") {
-
-            return `
-
-                📝 <strong>Admission / Registration</strong>
-
-                <br><br>
-
-                Admission বা registration
-                সম্পর্কিত তথ্যের জন্য
-                Support Team-এর সাথে যোগাযোগ করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 Contact Support
-                </a>
-
-            `;
-
-        }
-
-
-        /* CERTIFICATE */
-
-        if (intent === "certificate") {
-
-            return `
-
-                🏆 <strong>Certificate</strong>
-
-                <br><br>
-
-                Certificate সম্পর্কে নির্দিষ্ট তথ্য
-                জানতে Support Team-এর সাথে
-                যোগাযোগ করুন।
-
-                <br><br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 Ask Support
-                </a>
-
-            `;
-
-        }
-
-
-        /* TECHNICAL */
-
-        if (intent === "technical") {
-
-            return `
-
-                💻 <strong>Technical Support</strong>
-
-                <br><br>
-
-                Website, HTML, CSS, JavaScript,
-                GitHub বা technical সমস্যা হলে
-                সমস্যাটি একটু বিস্তারিত লিখুন।
-
-                <br><br>
-
-                উদাহরণ:
-
-                <br>
-
-                <strong>
-                    “আমার website open হচ্ছে না”
-                </strong>
-
-                <br>
-                <strong>
-                    “HTML code কাজ করছে না”
-                </strong>
-
-                <br>
-                <strong>
-                    “GitHub Pages problem”
-                </strong>
-
-                <br><br>
-
-                প্রয়োজন হলে Support Team:
-
-                <br>
-
-                <a
-                    class="usha-link"
-                    href="${USHA_LINKS.whatsapp}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    💬 Technical Support
-                </a>
-
-            `;
-
-        }
-
-
-        /* THANKS */
-
-        if (intent === "thanks") {
-
-            if (lang === "en") {
-
-                return `
-
-                    😊 You're welcome!
-
-                    <br><br>
-
-                    If you need anything else,
-                    just ask <strong>USHA AI</strong>.
-
-                `;
-
-            }
-
-
-            return `
-
-                😊 আপনাকেও ধন্যবাদ!
-
-                <br><br>
-
-                প্রয়োজন হলে আবার
-                <strong>USHA AI</strong>-কে
-                জিজ্ঞেস করুন।
-
-            `;
-
-        }
-
-
-        /* UNKNOWN */
+    /* =========================
+       SMART USHA REPLY
+    ========================== */
+
+    function getUshaReply(input) {
+
+      const text =
+        normalizeText(input);
+
+
+      /* Greeting */
+
+      if (
+        hasAny(text, [
+          "hello",
+          "hi",
+          "hey",
+          "হাই",
+          "হ্যালো",
+          "আসসালামু",
+          "salam"
+        ])
+      ) {
 
         return `
-
-            😊 <strong>আমি সাহায্য করতে প্রস্তুত।</strong>
-
-            <br><br>
-
-            আপনার প্রশ্নটি আরও একটু
-            বিস্তারিত লিখুন।
-
-            <br><br>
-
-            আপনি চাইলে এসব বিষয়ে
-            জানতে পারেন:
-
-            <br><br>
-
-            🎓 Free Course
-            <br>
-            💎 Paid Course
-            <br>
-            📹 Live Class
-            <br>
-            🔵 Zoom
-            <br>
-            ▶️ Recorded Classes
-            <br>
-            💬 WhatsApp Support
-            <br>
-            💻 Technical Support
-            <br>
-            🛍️ Shopping Discount
-
-            <br><br>
-
-            উদাহরণ:
-
-            <br>
-
-            <strong>
-                “আমি beginner, কোথা থেকে শুরু করব?”
-            </strong>
-
+          হ্যালো! 👋<br><br>
+          আমি <strong>USHA</strong>।
+          আপনি চাইলে আমাকে course, class, recorded lesson,
+          Zoom বা support সম্পর্কে প্রশ্ন করতে পারেন।
         `;
 
+      }
+
+
+      /* Beginner */
+
+      if (
+        hasAny(text, [
+          "beginner",
+          "new",
+          "শুরু",
+          "কোথা থেকে",
+          "কি দিয়ে শুরু",
+          "শিখতে চাই",
+          "শুরু করব"
+        ])
+      ) {
+
+        return `
+          আপনি যদি একদম beginner হন, তাহলে এভাবে শুরু করতে পারেন:
+          <br><br>
+
+          <strong>1.</strong> Free class দিয়ে basic concept শুরু করুন।<br>
+          <strong>2.</strong> Live class-এ প্রশ্ন করুন।<br>
+          <strong>3.</strong> Recorded lesson আবার practice করুন।<br>
+          <strong>4.</strong> সমস্যা হলে Support-এ যোগাযোগ করুন।
+          <br><br>
+
+          Free learning শুরু করতে:
+          ${link(USHA_LINKS.free, "Free Classes")}
+        `;
+
+      }
+
+
+      /* Free Course */
+
+      if (
+        hasAny(text, [
+          "free course",
+          "free class",
+          "ফ্রি কোর্স",
+          "ফ্রি ক্লাস",
+          "বিনামূল্যে",
+          "free"
+        ])
+      ) {
+
+        return `
+          অবশ্যই! 🎓<br><br>
+
+          SNK-এর free recorded classes এখানে পাবেন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.free,
+            "▶ Open Free Classes"
+          )}
+
+          <br><br>
+
+          আপনি চাইলে আমাকে আপনার learning level বলতেও পারেন।
+          আমি কোনভাবে শুরু করবেন সেটা বুঝিয়ে দিতে পারি।
+        `;
+
+      }
+
+
+      /* Paid Course */
+
+      if (
+        hasAny(text, [
+          "paid",
+          "premium",
+          "পেইড",
+          "পেইড কোর্স",
+          "টাকা",
+          "মূল্য",
+          "দাম"
+        ])
+      ) {
+
+        return `
+          Paid learning content-এর জন্য এই playlist দেখুন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.paid,
+            "▶ Paid Classes"
+          )}
+
+          <br><br>
+
+          নির্দিষ্ট course fee জানতে চাইলে
+          SNK Support-এ যোগাযোগ করুন।
+          <br><br>
+
+          ${link(
+            USHA_LINKS.whatsapp,
+            "💬 WhatsApp Support"
+          )}
+        `;
+
+      }
+
+
+      /* Live Class */
+
+      if (
+        hasAny(text, [
+          "live",
+          "লাইভ",
+          "আজকের ক্লাস",
+          "live class",
+          "ক্লাস কখন",
+          "ক্লাস হবে"
+        ])
+      ) {
+
+        return `
+          Live class-এ join করতে এই Zoom link ব্যবহার করুন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.zoom,
+            "🎥 Join Live Class"
+          )}
+
+          <br><br>
+
+          Class schedule বা specific timing জানতে
+          SNK Support-এ যোগাযোগ করুন।
+        `;
+
+      }
+
+
+      /* Zoom */
+
+      if (
+        hasAny(text, [
+          "zoom",
+          "জুম",
+          "zoom link",
+          "জুম লিংক"
+        ])
+      ) {
+
+        return `
+          অবশ্যই! 🎥<br><br>
+
+          SNK Live Class Zoom:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.zoom,
+            "Open Zoom Class"
+          )}
+        `;
+
+      }
+
+
+      /* Recorded */
+
+      if (
+        hasAny(text, [
+          "recorded",
+          "record",
+          "রেকর্ড",
+          "রেকর্ডেড",
+          "ভিডিও ক্লাস",
+          "ভিডিও"
+        ])
+      ) {
+
+        return `
+          Recorded classes নিজের সময় অনুযায়ী দেখতে পারবেন। 📚
+          <br><br>
+
+          Free:
+          ${link(
+            USHA_LINKS.free,
+            "Free Playlist"
+          )}
+
+          <br><br>
+
+          Paid:
+          ${link(
+            USHA_LINKS.paid,
+            "Paid Playlist"
+          )}
+        `;
+
+      }
+
+
+      /* Certificate */
+
+      if (
+        hasAny(text, [
+          "certificate",
+          "সার্টিফিকেট",
+          "সনদ"
+        ])
+      ) {
+
+        return `
+          Certificate সম্পর্কে নির্দিষ্ট তথ্য
+          course-এর উপর নির্ভর করতে পারে।
+          <br><br>
+
+          আপনি সরাসরি SNK Support-এ জিজ্ঞেস করতে পারেন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.whatsapp,
+            "💬 Ask Support"
+          )}
+        `;
+
+      }
+
+
+      /* Admission / Enrollment */
+
+      if (
+        hasAny(text, [
+          "admission",
+          "ভর্তি",
+          "enroll",
+          "enrollment",
+          "যোগ দিতে",
+          "join করতে চাই"
+        ])
+      ) {
+
+        return `
+          SNK course-এ join করার বিষয়ে সাহায্য করতে পারি। 🎓
+          <br><br>
+
+          আপনি যদি নতুন হন, আগে Free Classes দেখে
+          learning শুরু করতে পারেন।
+          <br><br>
+
+          ${link(
+            USHA_LINKS.free,
+            "Start Free Learning"
+          )}
+
+          <br><br>
+
+          Admission সংক্রান্ত নির্দিষ্ট তথ্যের জন্য:
+          <br>
+
+          ${link(
+            USHA_LINKS.whatsapp,
+            "💬 Contact Support"
+          )}
+        `;
+
+      }
+
+
+      /* WhatsApp */
+
+      if (
+        hasAny(text, [
+          "whatsapp",
+          "হোয়াটসঅ্যাপ",
+          "হোয়াটসঅ্যাপ",
+          "support",
+          "সাপোর্ট",
+          "যোগাযোগ"
+        ])
+      ) {
+
+        return `
+          অবশ্যই। SNK Support-এর সাথে WhatsApp-এ যোগাযোগ করুন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.whatsapp,
+            "💬 WhatsApp Support"
+          )}
+        `;
+
+      }
+
+
+      /* Facebook */
+
+      if (
+        hasAny(text, [
+          "facebook",
+          "ফেসবুক"
+        ])
+      ) {
+
+        return `
+          SNK IT Institute-এর Facebook page:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.facebook,
+            "Open Facebook Page"
+          )}
+        `;
+
+      }
+
+
+      /* YouTube */
+
+      if (
+        hasAny(text, [
+          "youtube",
+          "ইউটিউব"
+        ])
+      ) {
+
+        return `
+          SNK YouTube channel:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.youtube,
+            "Open YouTube"
+          )}
+        `;
+
+      }
+
+
+      /* Shopping */
+
+      if (
+        hasAny(text, [
+          "shopping",
+          "shopping mela",
+          "শপিং",
+          "শপিং মেলা",
+          "offer",
+          "অফার",
+          "discount",
+          "ডিসকাউন্ট",
+          "coupon",
+          "কুপন"
+        ])
+      ) {
+
+        return `
+          Shopping Mela সম্পর্কে জানতে এখানে যেতে পারেন:
+          <br><br>
+
+          ${link(
+            USHA_LINKS.shopping,
+            "🛍️ Shopping Mela"
+          )}
+
+          <br><br>
+
+          Shopping Mela community:
+          <br>
+
+          ${link(
+            USHA_LINKS.shoppingGroup,
+            "Join Facebook Group"
+          )}
+        `;
+
+      }
+
+
+      /* Help */
+
+      if (
+        hasAny(text, [
+          "help",
+          "সাহায্য",
+          "কি করতে পারো",
+          "তুমি কি করতে পারো",
+          "what can you do"
+        ])
+      ) {
+
+        return `
+          আমি আপনাকে এসব বিষয়ে guide করতে পারি:
+          <br><br>
+
+          🎓 Free Course<br>
+          🎥 Live Class<br>
+          📚 Recorded Classes<br>
+          🔗 Zoom<br>
+          💬 Support<br>
+          ▶ YouTube<br>
+          🛍️ Shopping Mela
+          <br><br>
+
+          শুধু আপনার প্রশ্নটি লিখুন।
+        `;
+
+      }
+
+
+      /* Thanks */
+
+      if (
+        hasAny(text, [
+          "thanks",
+          "thank",
+          "ধন্যবাদ",
+          "থ্যাংক"
+        ])
+      ) {
+
+        return `
+          আপনাকেও ধন্যবাদ! 😊<br><br>
+          শেখার পথে যেকোনো সময় আমাকে প্রশ্ন করতে পারেন।
+        `;
+
+      }
+
+
+      /* Default */
+
+      return `
+        আপনার প্রশ্নটি আমি বুঝতে চেষ্টা করছি। 😊
+        <br><br>
+
+        আপনি একটু সহজভাবে এভাবে লিখতে পারেন:
+        <br><br>
+
+        • আমি beginner, কীভাবে শুরু করবো?<br>
+        • Free course কোথায়?<br>
+        • Live class-এর Zoom link চাই<br>
+        • Recorded class কোথায়?<br>
+        • Support-এর সাথে কথা বলতে চাই
+        <br><br>
+
+        অথবা আপনার নিজের প্রশ্নটি লিখুন।
+      `;
+
     }
 
 
-    /* =====================================================
-       RESTORE CHAT
-    ===================================================== */
+    /* =========================
+       TYPING INDICATOR
+    ========================== */
 
-    function restoreChat() {
+    function showTyping() {
 
-        chatMessages.innerHTML = "";
+      const row =
+        document.createElement("div");
 
+      row.className =
+        "message-row";
+
+      row.id =
+        "ushaTyping";
+
+
+      row.innerHTML = `
+        <div class="typing">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      `;
+
+      ushaMessages.appendChild(row);
+
+      ushaMessages.scrollTop =
+        ushaMessages.scrollHeight;
+
+    }
+
+
+    function removeTyping() {
+
+      const typing =
+        document.getElementById("ushaTyping");
+
+      if (typing) {
+        typing.remove();
+      }
+
+    }
+
+
+    /* =========================
+       SEND MESSAGE
+    ========================== */
+
+    async function sendMessage() {
+
+      const raw =
+        ushaInput.value.trim();
+
+      if (!raw) {
+        return;
+      }
+
+      const safeText =
+        escapeHTML(raw);
+
+      addMessage(
+        safeText,
+        "user"
+      );
+
+      ushaInput.value = "";
+
+      showTyping();
+
+
+      const delay =
+        500 + Math.floor(
+          Math.random() * 700
+        );
+
+
+      await new Promise(resolve =>
+        setTimeout(resolve, delay)
+      );
+
+
+      removeTyping();
+
+
+      const reply =
+        getUshaReply(raw);
+
+      addMessage(
+        reply,
+        "bot"
+      );
+
+    }
+
+
+    /* =========================
+       ASK USHA
+    ========================== */
+
+    function askUsha(question) {
+
+      openUsha();
+
+      setTimeout(() => {
+
+        ushaInput.value =
+          question;
+
+        sendMessage();
+
+      }, 150);
+
+    }
+
+
+    /* =========================
+       ENTER KEY
+    ========================== */
+
+    ushaInput.addEventListener(
+      "keydown",
+      function(event) {
 
         if (
-            !chatHistory.length
+          event.key === "Enter" &&
+          !event.shiftKey
         ) {
 
-            const welcome = `
+          event.preventDefault();
 
-                👋 <strong>আসসালামু আলাইকুম!</strong>
-
-                <br><br>
-
-                আমি <strong>USHA AI</strong> —
-                SNK IT Institute-এর
-                <strong>Support Mentor</strong>।
-
-                <br><br>
-
-                আমি আপনাকে Free Course,
-                Paid Course, Live Class,
-                Zoom, Recorded Classes,
-                Technical Support এবং
-                আরও অনেক বিষয়ে guide করতে পারি।
-
-                <br><br>
-
-                আপনি কী জানতে চান? 😊
-
-            `;
-
-
-            addMessage(
-                "",
-                "bot",
-                false,
-                welcome
-            );
-
-
-            updateSuggestions(
-                "default"
-            );
-
-            return;
+          sendMessage();
 
         }
 
-
-        chatHistory.forEach(
-            function (item) {
-
-                addMessage(
-                    item.text || "",
-                    item.role === "user"
-                        ? "user"
-                        : "bot",
-                    false,
-                    item.html || null,
-                    item.time || null
-                );
-
-            }
-        );
-
-
-        updateCounter();
-
-
-        updateSuggestions(
-            "default"
-        );
-
-
-        scrollToBottom();
-
-    }
-
-
-    /* =====================================================
-       SEND MESSAGE
-    ===================================================== */
-
-    let isSending = false;
-
-
-    function sendMessage(
-        question
-    ) {
-
-        question =
-            String(question || "")
-                .trim();
-
-
-        if (!question) {
-            return;
-        }
-
-
-        if (isSending) {
-            return;
-        }
-
-
-        isSending = true;
-
-
-        const intent =
-            detectIntent(question);
-
-
-        addMessage(
-            question,
-            "user"
-        );
-
-
-        chatInput.value = "";
-
-
-        updateSuggestions(
-            intent
-        );
-
-
-        showTyping();
-
-
-        const delay =
-            550 +
-            Math.floor(
-                Math.random() * 650
-            );
-
-
-        setTimeout(
-            function () {
-
-                hideTyping();
-
-
-                const reply =
-                    getUshaReply(
-                        question
-                    );
-
-
-                addMessage(
-                    "",
-                    "bot",
-                    true,
-                    reply
-                );
-
-
-                updateSuggestions(
-                    intent
-                );
-
-
-                isSending = false;
-
-
-                chatInput.focus();
-
-
-            },
-            delay
-        );
-
-    }
-
-
-    /* =====================================================
-       FORM SUBMIT
-    ===================================================== */
-
-    chatForm.addEventListener(
-        "submit",
-        function (event) {
-
-            event.preventDefault();
-
-            sendMessage(
-                chatInput.value
-            );
-
-        }
+      }
     );
 
 
-    /* =====================================================
-       QUICK QUESTIONS
-    ===================================================== */
-
-    document
-        .querySelectorAll(
-            ".quick-actions button"
-        )
-        .forEach(
-            function (button) {
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        openUsha();
-
-                        sendMessage(
-                            button.dataset.question
-                        );
-
-                    }
-                );
-
-            }
-        );
-
-
-    /* =====================================================
-       CLEAR CHAT OPEN
-    ===================================================== */
-
-    clearChat.addEventListener(
-        "click",
-        function () {
-
-            clearConfirm.classList.add(
-                "show"
-            );
-
-            clearConfirm.setAttribute(
-                "aria-hidden",
-                "false"
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       CANCEL CLEAR
-    ===================================================== */
-
-    cancelClear.addEventListener(
-        "click",
-        function () {
-
-            clearConfirm.classList.remove(
-                "show"
-            );
-
-            clearConfirm.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-        }
-    );
-
-
-    /* =====================================================
-       CONFIRM CLEAR
-    ===================================================== */
-
-    confirmClear.addEventListener(
-        "click",
-        function () {
-
-            localStorage.removeItem(
-                STORAGE_KEY
-            );
-
-
-            chatHistory = [];
-
-
-            clearConfirm.classList.remove(
-                "show"
-            );
-
-            clearConfirm.setAttribute(
-                "aria-hidden",
-                "true"
-            );
-
-
-            restoreChat();
-
-        }
-    );
-
-
-    /* =====================================================
-       CLOSE CONFIRM BY BACKDROP
-    ===================================================== */
-
-    clearConfirm.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === clearConfirm
-            ) {
-
-                clearConfirm.classList.remove(
-                    "show"
-                );
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       ENTER
-    ===================================================== */
-
-    chatInput.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (
-                event.key === "Enter" &&
-                !event.shiftKey
-            ) {
-
-                event.preventDefault();
-
-                sendMessage(
-                    chatInput.value
-                );
-
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       ESC
-    ===================================================== */
+    /* =========================
+       ESCAPE CLOSE
+    ========================== */
 
     document.addEventListener(
-        "keydown",
-        function (event) {
+      "keydown",
+      function(event) {
 
-            if (
-                event.key === "Escape"
-            ) {
-
-                if (
-                    chatbot.classList.contains(
-                        "show"
-                    )
-                ) {
-
-                    closeUsha();
-
-                }
-
-
-                if (
-                    clearConfirm.classList.contains(
-                        "show"
-                    )
-                ) {
-
-                    clearConfirm.classList.remove(
-                        "show"
-                    );
-
-                }
-
-            }
-
+        if (event.key === "Escape") {
+          closeUsha();
         }
+
+      }
     );
 
 
-    /* =====================================================
-       INITIALIZE
-    ===================================================== */
+    /* =========================
+       START
+    ========================== */
 
-    restoreChat();
+    loadChat();
 
-
-    updateCounter();
-
-
-    console.log(
-        "USHA AI Step 2 — SNK Support Mentor ready."
-    );
-
-
-})();
-
-</script>
+  </script>
 
 </body>
 </html>
