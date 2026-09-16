@@ -1,901 +1,646 @@
 /* =========================================================
-   1.4 — USHA AI CHATBOT JAVASCRIPT
-   File: usha.js
-   ========================================================= */
+   SNK IT INSTITUTE
+   Main Website Script
+   File: script.js
+========================================================= */
 
-(function () {
-
-  "use strict";
-
+document.addEventListener("DOMContentLoaded", () => {
   /* =======================================================
-     USHA LINKS
+     CONFIG
   ======================================================= */
 
-  const USHA_LINKS = {
-
-    freeCourse:
-      "https://yourdocuments.github.io/freecourse.github.io/",
-
-    shopping:
-      "https://yourdocuments.github.io/shopingmela/",
-
-    zoom:
+  const LINKS = {
+    live:
       "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
 
-    whatsapp:
+    freeCourse:
+      "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
+
+    paidCourse:
+      "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
+
+    support:
       "https://wa.me/8801636363801",
+
+    facebook:
+      "https://www.facebook.com/snkitinstitute",
+
+    youtube:
+      "https://www.youtube.com/@snkguideup",
 
     whatsappChannel:
       "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x",
 
-    freePlaylist:
-      "https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+    shoppingMela:
+      "https://yourdocuments.github.io/shopingmela/",
 
+    usha:
+      "usha.html"
   };
 
 
   /* =======================================================
-     GET ELEMENTS
+     MOBILE MENU
   ======================================================= */
 
-  const ushaButton =
-    document.getElementById("ushaButton");
+  const menuBtn = document.querySelector(".menu-btn");
+  const nav = document.querySelector(".main-nav");
 
-  const chatbot =
-    document.getElementById("chatbot");
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", () => {
+      nav.classList.toggle("active");
+      menuBtn.classList.toggle("active");
+    });
 
-  const closeChat =
-    document.getElementById("closeChat");
-
-  const chatMessages =
-    document.getElementById("chatMessages");
-
-  const chatForm =
-    document.getElementById("chatForm");
-
-  const chatInput =
-    document.getElementById("chatInput");
-
-
-  /* =======================================================
-     CHECK ELEMENTS
-  ======================================================= */
-
-  if (
-    !ushaButton ||
-    !chatbot ||
-    !closeChat ||
-    !chatMessages ||
-    !chatForm ||
-    !chatInput
-  ) {
-
-    console.warn(
-      "USHA AI: Required HTML elements were not found."
-    );
-
-    return;
-
+    nav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        nav.classList.remove("active");
+        menuBtn.classList.remove("active");
+      });
+    });
   }
 
 
   /* =======================================================
-     OPEN USHA
+     SMOOTH SCROLL
   ======================================================= */
 
-  function openUsha() {
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.getAttribute("href");
 
-    chatbot.classList.add("show");
-
-    setTimeout(function () {
-
-      chatInput.focus();
-
-    }, 150);
-
-  }
-
-
-  /* =======================================================
-     CLOSE USHA
-  ======================================================= */
-
-  function closeUshaChat() {
-
-    chatbot.classList.remove("show");
-
-  }
-
-
-  /* =======================================================
-     FLOATING BUTTON
-  ======================================================= */
-
-  ushaButton.addEventListener(
-    "click",
-    function () {
-
-      if (
-        chatbot.classList.contains("show")
-      ) {
-
-        closeUshaChat();
-
-      } else {
-
-        openUsha();
-
+      if (!targetId || targetId === "#") {
+        return;
       }
 
-    }
-  );
-
-
-  /* =======================================================
-     CLOSE BUTTON
-  ======================================================= */
-
-  closeChat.addEventListener(
-    "click",
-    function () {
-
-      closeUshaChat();
-
-    }
-  );
-
-
-  /* =======================================================
-     ADD MESSAGE
-  ======================================================= */
-
-  function addMessage(
-    text,
-    type
-  ) {
-
-    const message =
-      document.createElement("div");
-
-    message.classList.add(
-      "message"
-    );
-
-
-    if (type === "user") {
-
-      message.classList.add(
-        "user-message"
-      );
-
-    } else {
-
-      message.classList.add(
-        "bot-message"
-      );
-
-    }
-
-
-    message.innerHTML =
-      text;
-
-
-    chatMessages.appendChild(
-      message
-    );
-
-
-    scrollToBottom();
-
-  }
-
-
-  /* =======================================================
-     SCROLL
-  ======================================================= */
-
-  function scrollToBottom() {
-
-    chatMessages.scrollTop =
-      chatMessages.scrollHeight;
-
-  }
-
-
-  /* =======================================================
-     TYPING MESSAGE
-  ======================================================= */
-
-  function showTyping() {
-
-    const typing =
-      document.createElement("div");
-
-    typing.id =
-      "ushaTyping";
-
-    typing.className =
-      "message bot-message";
-
-
-    typing.innerHTML = `
-      <div class="typing-message">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    `;
-
-
-    chatMessages.appendChild(
-      typing
-    );
-
-
-    scrollToBottom();
-
-  }
-
-
-  /* =======================================================
-     REMOVE TYPING
-  ======================================================= */
-
-  function hideTyping() {
-
-    const typing =
-      document.getElementById(
-        "ushaTyping"
-      );
-
-
-    if (typing) {
-
-      typing.remove();
-
-    }
-
-  }
-
-
-  /* =======================================================
-     TEXT NORMALIZE
-  ======================================================= */
-
-  function normalizeText(text) {
-
-    return String(text || "")
-      .toLowerCase()
-      .trim();
-
-  }
-
-
-  /* =======================================================
-     SAFE USER TEXT
-  ======================================================= */
-
-  function escapeHTML(text) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent =
-      text;
-
-    return div.innerHTML;
-
-  }
-
-
-  /* =======================================================
-     USHA RESPONSE
-  ======================================================= */
-
-  function getUshaReply(question) {
-
-    const q =
-      normalizeText(question);
-
-
-    /* ---------------------------------------------------
-       GREETING
-    --------------------------------------------------- */
-
-    if (
-      q.includes("hi") ||
-      q.includes("hello") ||
-      q.includes("হাই") ||
-      q.includes("হ্যালো") ||
-      q.includes("আসসালামু") ||
-      q.includes("salam")
-    ) {
-
-      return `
-        👋 ওয়ালাইকুম আসসালাম!
-
-        <br><br>
-
-        আমি <strong>USHA AI</strong>।
-
-        <br><br>
-
-        আপনাকে Free Course, Live Class,
-        Recorded Course, WhatsApp এবং
-        Shopping সম্পর্কে সাহায্য করতে পারি।
-
-        <br><br>
-
-        কী জানতে চান? 😊
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       FREE COURSE
-    --------------------------------------------------- */
-
-    if (
-      q.includes("free course") ||
-      q.includes("free") ||
-      q.includes("ফ্রি") ||
-      q.includes("ফ্রী") ||
-      q.includes("কোর্স")
-    ) {
-
-      return `
-        🎓 <strong>Free Course</strong>
-
-        <br><br>
-
-        আমাদের Free Course দেখতে
-        নিচের button-এ click করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.freeCourse}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🎓 Open Free Course
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       PAID COURSE
-    --------------------------------------------------- */
-
-    if (
-      q.includes("paid") ||
-      q.includes("premium") ||
-      q.includes("পেইড") ||
-      q.includes("প্রিমিয়াম") ||
-      q.includes("প্রিমিয়াম")
-    ) {
-
-      return `
-        💎 <strong>Paid Course</strong>
-
-        <br><br>
-
-        Paid Course সম্পর্কে জানতে
-        Support-এর সাথে যোগাযোগ করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link dark"
-          href="${USHA_LINKS.whatsapp}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 Contact Support
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       LIVE CLASS
-    --------------------------------------------------- */
-
-    if (
-      q.includes("live") ||
-      q.includes("লাইভ") ||
-      q.includes("live class")
-    ) {
-
-      return `
-        📹 <strong>Live Class</strong>
-
-        <br><br>
-
-        Live Class-এ join করতে
-        নিচের button ব্যবহার করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link blue"
-          href="${USHA_LINKS.zoom}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📹 JOIN LIVE CLASS
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       ZOOM
-    --------------------------------------------------- */
-
-    if (
-      q.includes("zoom") ||
-      q.includes("জুম")
-    ) {
-
-      return `
-        🔵 <strong>Zoom Class</strong>
-
-        <br><br>
-
-        Zoom meeting-এ join করতে
-        নিচের button-এ click করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link blue"
-          href="${USHA_LINKS.zoom}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🔵 JOIN ZOOM
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       RECORDED COURSE
-    --------------------------------------------------- */
-
-    if (
-      q.includes("recorded") ||
-      q.includes("record") ||
-      q.includes("রেকর্ড")
-    ) {
-
-      return `
-        ▶️ <strong>Recorded Course</strong>
-
-        <br><br>
-
-        Recorded classes দেখতে
-        YouTube playlist খুলুন।
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.freePlaylist}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ▶️ WATCH RECORDED CLASS
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       WHATSAPP
-    --------------------------------------------------- */
-
-    if (
-      q.includes("whatsapp") ||
-      q.includes("হোয়াটসঅ্যাপ") ||
-      q.includes("হোয়াটসঅ্যাপ") ||
-      q.includes("সাপোর্ট") ||
-      q.includes("support")
-    ) {
-
-      return `
-        💬 <strong>WhatsApp Support</strong>
-
-        <br><br>
-
-        সরাসরি WhatsApp-এ যোগাযোগ করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.whatsapp}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 WhatsApp Support
-        </a>
-
-        <br><br>
-
-        📢 WhatsApp Channel-এ join করতে পারেন।
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.whatsappChannel}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          📢 Join Channel
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       SHOPPING
-    --------------------------------------------------- */
-
-    if (
-      q.includes("shopping") ||
-      q.includes("shop") ||
-      q.includes("শপিং") ||
-      q.includes("discount") ||
-      q.includes("ডিসকাউন্ট") ||
-      q.includes("ছাড়") ||
-      q.includes("ছাড়") ||
-      q.includes("promo") ||
-      q.includes("promocode") ||
-      q.includes("coupon") ||
-      q.includes("কুপন") ||
-      q.includes("36")
-    ) {
-
-      return `
-        🛍️ <strong>Shopping Mela</strong>
-
-        <br><br>
-
-        🎉 <strong>36% Discount</strong>
-
-        <br><br>
-
-        Promo Code:
-
-        <strong>SHOPING36</strong>
-
-        <br><br>
-
-        Shopping করতে নিচের button-এ
-        click করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.shopping}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🛍️ SHOP NOW
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       OFFER
-    --------------------------------------------------- */
-
-    if (
-      q.includes("offer") ||
-      q.includes("অফার")
-    ) {
-
-      return `
-        🎉 <strong>Special Offer</strong>
-
-        <br><br>
-
-        Shopping Mela-তে
-        <strong>36% Discount</strong> আছে।
-
-        <br><br>
-
-        Promo Code:
-
-        <strong>SHOPING36</strong>
-
-        <br><br>
-
-        <a
-          class="usha-link"
-          href="${USHA_LINKS.shopping}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🛍️ SHOP NOW
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       PRICE
-    --------------------------------------------------- */
-
-    if (
-      q.includes("price") ||
-      q.includes("দাম") ||
-      q.includes("মূল্য")
-    ) {
-
-      return `
-        💰 কোন Course-এর দাম জানতে
-        চাচ্ছেন?
-
-        <br><br>
-
-        Course-এর নাম লিখুন অথবা
-        WhatsApp Support-এ যোগাযোগ করুন।
-
-        <br><br>
-
-        <a
-          class="usha-link dark"
-          href="${USHA_LINKS.whatsapp}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          💬 Ask Support
-        </a>
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       THANK YOU
-    --------------------------------------------------- */
-
-    if (
-      q.includes("thank") ||
-      q.includes("thanks") ||
-      q.includes("ধন্যবাদ")
-    ) {
-
-      return `
-        😊 আপনাকেও ধন্যবাদ!
-
-        <br><br>
-
-        প্রয়োজন হলে আবার
-        <strong>USHA AI</strong>-কে জিজ্ঞেস করুন।
-      `;
-
-    }
-
-
-    /* ---------------------------------------------------
-       DEFAULT
-    --------------------------------------------------- */
-
-    return `
-      😊 আপনার প্রশ্নটি আমি পুরোপুরি
-      বুঝতে পারিনি।
-
-      <br><br>
-
-      আপনি নিচের বিষয়গুলো সম্পর্কে
-      জানতে পারেন:
-
-      <br><br>
-
-      🎓 Free Course
-
-      <br>
-
-      💎 Paid Course
-
-      <br>
-
-      📹 Live Class
-
-      <br>
-
-      🔵 Zoom
-
-      <br>
-
-      ▶️ Recorded Course
-
-      <br>
-
-      💬 WhatsApp Support
-
-      <br>
-
-      🛍️ Shopping Discount
-    `;
-
-  }
-
-
-  /* =======================================================
-     SEND MESSAGE
-  ======================================================= */
-
-  function sendMessage(question) {
-
-    question =
-      String(question || "").trim();
-
-
-    if (!question) {
-
-      return;
-
-    }
-
-
-    /* User message */
-
-    addMessage(
-      escapeHTML(question),
-      "user"
-    );
-
-
-    /* Clear input */
-
-    chatInput.value = "";
-
-
-    /* Show typing */
-
-    showTyping();
-
-
-    /* AI-like delay */
-
-    const delay =
-      600 +
-      Math.floor(
-        Math.random() * 800
-      );
-
-
-    setTimeout(
-      function () {
-
-        hideTyping();
-
-
-        const reply =
-          getUshaReply(
-            question
-          );
-
-
-        addMessage(
-          reply,
-          "bot"
-        );
-
-      },
-      delay
-    );
-
-  }
-
-
-  /* =======================================================
-     FORM SUBMIT
-  ======================================================= */
-
-  chatForm.addEventListener(
-    "submit",
-    function (event) {
+      const target = document.querySelector(targetId);
+
+      if (!target) {
+        return;
+      }
 
       event.preventDefault();
 
-      sendMessage(
-        chatInput.value
-      );
-
-    }
-  );
-
-
-  /* =======================================================
-     QUICK QUESTION
-     Used by onclick="" in usha.html
-  ======================================================= */
-
-  window.quickQuestion =
-    function (question) {
-
-      openUsha();
-
-      sendMessage(
-        question
-      );
-
-    };
+      target.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  });
 
 
   /* =======================================================
-     ENTER KEY
+     CURRENT YEAR
   ======================================================= */
 
-  chatInput.addEventListener(
-    "keydown",
-    function (event) {
+  document.querySelectorAll("[data-year]").forEach((element) => {
+    element.textContent = new Date().getFullYear();
+  });
 
-      if (
-        event.key === "Enter" &&
-        !event.shiftKey
-      ) {
 
-        event.preventDefault();
+  /* =======================================================
+     EXTERNAL LINK HANDLER
+  ======================================================= */
 
-        sendMessage(
-          chatInput.value
+  document.querySelectorAll("[data-link]").forEach((element) => {
+    element.addEventListener("click", () => {
+      const type = element.dataset.link;
+
+      if (!type || !LINKS[type]) {
+        return;
+      }
+
+      window.open(LINKS[type], "_blank", "noopener,noreferrer");
+    });
+  });
+
+
+  /* =======================================================
+     USHA OPEN
+  ======================================================= */
+
+  document.querySelectorAll("[data-usha]").forEach((button) => {
+    button.addEventListener("click", () => {
+      window.location.href = LINKS.usha;
+    });
+  });
+
+
+  /* =======================================================
+     PROMO CODE
+  ======================================================= */
+
+  const promoCopy = document.querySelector("[data-copy-promo]");
+
+  if (promoCopy) {
+    promoCopy.addEventListener("click", async () => {
+      const code =
+        promoCopy.dataset.copyPromo ||
+        "SHOPING36";
+
+      try {
+        await navigator.clipboard.writeText(code);
+
+        showToast(
+          "Promo code copied: " + code
         );
 
+      } catch (error) {
+        showToast(
+          "Promo code: " + code
+        );
       }
-
-    }
-  );
+    });
+  }
 
 
   /* =======================================================
-     ESC KEY CLOSE
+     GENERAL TOAST
   ======================================================= */
 
-  document.addEventListener(
-    "keydown",
-    function (event) {
+  function showToast(message) {
+    let toast = document.querySelector(".site-toast");
 
-      if (
-        event.key === "Escape"
-      ) {
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "site-toast";
 
-        closeUshaChat();
+      toast.style.position = "fixed";
+      toast.style.left = "50%";
+      toast.style.bottom = "25px";
+      toast.style.transform = "translateX(-50%)";
+      toast.style.zIndex = "99999";
+      toast.style.padding = "11px 17px";
+      toast.style.borderRadius = "10px";
+      toast.style.background = "#111";
+      toast.style.color = "#fff";
+      toast.style.fontSize = "13px";
+      toast.style.fontWeight = "600";
+      toast.style.boxShadow =
+        "0 10px 30px rgba(0,0,0,.18)";
+      toast.style.opacity = "0";
+      toast.style.transition = "opacity .2s ease";
 
-      }
-
+      document.body.appendChild(toast);
     }
+
+    toast.textContent = message;
+    toast.style.opacity = "1";
+
+    clearTimeout(window.__snkToastTimer);
+
+    window.__snkToastTimer = setTimeout(() => {
+      toast.style.opacity = "0";
+    }, 2200);
+  }
+
+
+  /* =======================================================
+     SCROLL REVEAL
+  ======================================================= */
+
+  const revealElements =
+    document.querySelectorAll(
+      ".reveal, .fade-up, .animate-on-scroll"
+    );
+
+  if (revealElements.length) {
+    const observer =
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.12
+        }
+      );
+
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
+  }
+
+
+  /* =======================================================
+     ACTIVE NAVIGATION
+  ======================================================= */
+
+  const sections =
+    document.querySelectorAll("section[id]");
+
+  const navLinks =
+    document.querySelectorAll(
+      '.main-nav a[href^="#"]'
+    );
+
+  if (sections.length && navLinks.length) {
+    const sectionObserver =
+      new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+              return;
+            }
+
+            const id = entry.target.id;
+
+            navLinks.forEach((link) => {
+              link.classList.remove("active");
+
+              if (
+                link.getAttribute("href") ===
+                "#" + id
+              ) {
+                link.classList.add("active");
+              }
+            });
+          });
+        },
+        {
+          rootMargin:
+            "-25% 0px -60% 0px"
+        }
+      );
+
+    sections.forEach((section) => {
+      sectionObserver.observe(section);
+    });
+  }
+
+
+  /* =======================================================
+     BACK TO TOP
+  ======================================================= */
+
+  const topButton =
+    document.querySelector(
+      "#backToTop, .back-to-top"
+    );
+
+  if (topButton) {
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (window.scrollY > 500) {
+          topButton.classList.add("show");
+        } else {
+          topButton.classList.remove("show");
+        }
+      },
+      {
+        passive: true
+      }
+    );
+
+    topButton.addEventListener("click", () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
+
+  /* =======================================================
+     HERO BUTTONS
+  ======================================================= */
+
+  document
+    .querySelectorAll(
+      '[data-action="free-course"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.freeCourse,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-action="paid-course"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.paidCourse,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-action="live"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.live,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-action="support"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.support,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  /* =======================================================
+     SOCIAL BUTTONS
+  ======================================================= */
+
+  document
+    .querySelectorAll(
+      '[data-social="facebook"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.facebook,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-social="youtube"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.youtube,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  document
+    .querySelectorAll(
+      '[data-social="whatsapp"]'
+    )
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        window.open(
+          LINKS.whatsappChannel,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      });
+    });
+
+
+  /* =======================================================
+     USHA SUGGESTION QUICK ACTIONS
+  ======================================================= */
+
+  const ushaQuestions = {
+    free:
+      "আমি কীভাবে Free Course শুরু করব?",
+
+    coding:
+      "আমি coding শিখতে চাই, কোথা থেকে শুরু করব?",
+
+    html:
+      "আমি HTML শিখতে চাই, কীভাবে শুরু করব?",
+
+    live:
+      "Live class কীভাবে join করব?",
+
+    recorded:
+      "Recorded class কোথায় পাব?",
+
+    snk:
+      "SNK সম্পর্কে বলো"
+  };
+
+
+  document
+    .querySelectorAll("[data-usha-question]")
+    .forEach((button) => {
+      button.addEventListener("click", () => {
+        const key =
+          button.dataset.ushaQuestion;
+
+        const question =
+          ushaQuestions[key];
+
+        if (!question) {
+          return;
+        }
+
+        sessionStorage.setItem(
+          "ushaPendingQuestion",
+          question
+        );
+
+        window.location.href =
+          LINKS.usha;
+      });
+    });
+
+
+  /* =======================================================
+     SEND QUESTION TO USHA
+  ======================================================= */
+
+  window.askUshaFromHome = function (question) {
+    if (!question) {
+      return;
+    }
+
+    sessionStorage.setItem(
+      "ushaPendingQuestion",
+      question
+    );
+
+    window.location.href =
+      LINKS.usha;
+  };
+
+
+  /* =======================================================
+     FLOATING USHA BUTTON
+  ======================================================= */
+
+  const floatingUsha =
+    document.querySelector(
+      ".floating-usha"
+    );
+
+  if (floatingUsha) {
+    floatingUsha.addEventListener(
+      "click",
+      () => {
+        window.location.href =
+          LINKS.usha;
+      }
+    );
+  }
+
+
+  /* =======================================================
+     PREVENT DOUBLE SUBMIT
+  ======================================================= */
+
+  document
+    .querySelectorAll("form")
+    .forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          const submitButton =
+            form.querySelector(
+              'button[type="submit"]'
+            );
+
+          if (submitButton) {
+            submitButton.disabled = true;
+
+            setTimeout(() => {
+              submitButton.disabled =
+                false;
+            }, 2500);
+          }
+        }
+      );
+    });
+
+
+  /* =======================================================
+     IMAGE LAZY LOAD
+  ======================================================= */
+
+  document
+    .querySelectorAll("img")
+    .forEach((image) => {
+      if (!image.hasAttribute("loading")) {
+        image.setAttribute(
+          "loading",
+          "lazy"
+        );
+      }
+    });
+
+
+  /* =======================================================
+     YEAR FALLBACK
+  ======================================================= */
+
+  const yearElements =
+    document.querySelectorAll(
+      ".current-year"
+    );
+
+  yearElements.forEach((element) => {
+    element.textContent =
+      new Date().getFullYear();
+  });
+
+
+  /* =======================================================
+     PAGE LOADED
+  ======================================================= */
+
+  document.body.classList.add(
+    "page-ready"
   );
 
 
   /* =======================================================
-     INITIAL MESSAGE
+     DEBUG
   ======================================================= */
 
   console.log(
-    "USHA AI JavaScript loaded successfully."
+    "SNK Website Script Loaded Successfully."
   );
 
+  console.log(
+    "USHA AI Mentor:",
+    LINKS.usha
+  );
+});
 
-})();
+
+/* =========================================================
+   GLOBAL FUNCTIONS
+========================================================= */
+
+function openFreeCourse() {
+  window.open(
+    "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+
+function openPaidCourse() {
+  window.open(
+    "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+
+function joinLiveClass() {
+  window.open(
+    "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+
+function contactSupport() {
+  window.open(
+    "https://wa.me/8801636363801",
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
+
+
+function openUsha() {
+  window.location.href =
+    "usha.html";
+}
+
+
+function openShoppingMela() {
+  window.open(
+    "https://yourdocuments.github.io/shopingmela/",
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
