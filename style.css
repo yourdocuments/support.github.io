@@ -1,794 +1,916 @@
 /* =========================================================
-   1.4 — USHA AI CHATBOT CSS
+   USHA AI — Step 4.1
+   Modern AI Learning Mentor UI
    File: usha.css
-   ========================================================= */
+========================================================= */
 
-
-/* =========================================================
-   BASIC RESET
-   ========================================================= */
-
-.usha-button,
-.chatbot,
-.chatbot *,
-.usha-button * {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-
-/* =========================================================
-   USHA FLOATING BUTTON
-   ========================================================= */
-
-.usha-button {
-  position: fixed;
-
-  right: 20px;
-  bottom: 20px;
-
-  width: 64px;
-  height: 64px;
-
-  padding: 4px;
-
-  border: none;
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  cursor: pointer;
-
-  z-index: 99990;
-
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.28);
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-
-.usha-button:hover {
-  transform: scale(1.08);
-
-  box-shadow:
-    0 12px 38px rgba(0, 0, 0, 0.35);
-}
-
-
-.usha-button:active {
-  transform: scale(0.96);
-}
-
-
-.usha-button img {
-  display: block;
-
+html,
+body {
   width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  border-radius: 50%;
-}
-
-
-/* =========================================================
-   CHATBOT MAIN WINDOW
-   ========================================================= */
-
-.chatbot {
-  position: fixed;
-
-  right: 20px;
-  bottom: 96px;
-
-  width: 380px;
-  max-width: calc(100vw - 24px);
-
-  height: 570px;
-  max-height: calc(100vh - 115px);
-
-  display: none;
-
-  flex-direction: column;
-
-  overflow: hidden;
-
-  background: #ffffff;
-
-  border: 1px solid rgba(0, 0, 0, 0.08);
-
-  border-radius: 20px;
-
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.30);
-
-  z-index: 99989;
-
+  min-height: 100%;
   font-family:
+    Inter,
+    "Segoe UI",
     Arial,
-    "Noto Sans Bengali",
     sans-serif;
+  background: #f7f8fa;
+  color: #171717;
 }
-
-
-/* JS will add this class */
-
-.chatbot.show {
-  display: flex;
-
-  animation:
-    ushaChatOpen 0.25s ease;
-}
-
-
-@keyframes ushaChatOpen {
-
-  from {
-    opacity: 0;
-
-    transform:
-      translateY(18px)
-      scale(0.96);
-  }
-
-  to {
-    opacity: 1;
-
-    transform:
-      translateY(0)
-      scale(1);
-  }
-
-}
-
 
 /* =========================================================
-   CHAT HEADER
-   ========================================================= */
+   MAIN APP
+========================================================= */
 
-.chat-header {
+.usha-app {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
+  flex-direction: column;
+  background: #f7f8fa;
+  overflow: hidden;
+}
 
+/* =========================================================
+   HEADER
+========================================================= */
+
+.usha-header {
+  width: 100%;
+  height: 72px;
+  flex: 0 0 72px;
+  display: flex;
   align-items: center;
-
-  gap: 10px;
-
-  min-height: 72px;
-
-  padding: 12px 14px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #111111,
-      #202020
-    );
-
-  color: #ffffff;
+  justify-content: space-between;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #e8e8e8;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
 }
 
+/* Brand */
 
-/* =========================================================
-   CHAT AVATAR
-   ========================================================= */
-
-.chat-avatar {
-  flex: 0 0 44px;
-
-  width: 44px;
-  height: 44px;
-
-  object-fit: cover;
-
-  border-radius: 50%;
-
-  background: #ffffff;
-
-  border: 2px solid rgba(255,255,255,0.85);
-}
-
-
-/* =========================================================
-   HEADER INFO
-   ========================================================= */
-
-.chat-head-info {
-  flex: 1;
-
+.usha-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   min-width: 0;
 }
 
+.usha-brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: #111;
+  flex-shrink: 0;
+}
 
-.chat-head-info h3 {
-  margin: 0 0 3px;
+.usha-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
 
-  font-size: 17px;
+.usha-brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
 
-  line-height: 1.2;
+.usha-brand-subtitle {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #777;
+}
 
+/* Header Right */
+
+.usha-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Online */
+
+.usha-online {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.usha-online-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #20b26b;
+  box-shadow: 0 0 0 4px rgba(32, 178, 107, 0.1);
+}
+
+/* Support */
+
+.usha-support-btn {
+  border: 0;
+  background: #111;
+  color: #fff;
+  height: 40px;
+  padding: 0 17px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 13px;
   font-weight: 700;
+  transition: 0.2s ease;
 }
 
-
-.online {
-  font-size: 11px;
-
-  color: #45e982;
-
-  font-weight: 500;
+.usha-support-btn:hover {
+  transform: translateY(-1px);
+  background: #222;
 }
-
 
 /* =========================================================
-   CLOSE BUTTON
-   ========================================================= */
+   MAIN AREA
+========================================================= */
 
-.close-chat {
+.usha-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
+/* =========================================================
+   WELCOME SCREEN
+========================================================= */
+
+.usha-welcome {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 48px 24px 24px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.usha-welcome-icon {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 18px;
+  border-radius: 24px;
+  object-fit: cover;
+  background: #111;
+  padding: 5px;
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.usha-welcome-badge {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  width: 38px;
-  height: 38px;
-
-  padding: 0;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: transparent;
-
-  color: #ffffff;
-
-  font-size: 28px;
-
-  line-height: 1;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  color: #666;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 15px;
 }
 
-
-.close-chat:hover {
-  background:
-    rgba(255, 255, 255, 0.12);
-
-  transform: rotate(90deg);
+.usha-welcome h1 {
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.12;
+  letter-spacing: -1.5px;
+  font-weight: 850;
+  color: #111;
 }
 
+.usha-welcome p {
+  max-width: 620px;
+  margin: 13px auto 0;
+  color: #707070;
+  font-size: 16px;
+  line-height: 1.7;
+}
 
 /* =========================================================
-   CHAT MESSAGES AREA
-   ========================================================= */
+   SUGGESTION GRID
+========================================================= */
 
-.chat-messages {
-  flex: 1;
+.usha-suggestions {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 10px 24px 24px;
 
-  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
 
-  overflow-y: auto;
-
-  padding: 15px;
-
-  background:
-    #f4f6f8;
-
-  scroll-behavior: smooth;
+  flex-shrink: 0;
 }
 
-
-/* Scrollbar */
-
-.chat-messages::-webkit-scrollbar {
-  width: 6px;
-}
-
-
-.chat-messages::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-
-.chat-messages::-webkit-scrollbar-thumb {
-  background: #c8cdd2;
-
-  border-radius: 20px;
-}
-
-
-/* =========================================================
-   MESSAGE
-   ========================================================= */
-
-.message {
-  width: fit-content;
-
-  max-width: 88%;
-
-  margin-bottom: 10px;
-
-  padding: 10px 13px;
-
+.usha-suggestion {
+  width: 100%;
+  min-height: 78px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
   border-radius: 15px;
-
-  font-size: 14px;
-
-  line-height: 1.6;
-
-  word-break: break-word;
-}
-
-
-/* =========================================================
-   BOT MESSAGE
-   ========================================================= */
-
-.bot-message {
-  margin-right: auto;
-
-  color: #17202a;
-
-  background: #ffffff;
-
-  border-top-left-radius: 4px;
-
-  box-shadow:
-    0 2px 8px rgba(0,0,0,0.06);
-}
-
-
-/* =========================================================
-   USER MESSAGE
-   ========================================================= */
-
-.user-message {
-  margin-left: auto;
-
-  color: #ffffff;
-
-  background:
-    #0aad4b;
-
-  border-top-right-radius: 4px;
-
-  box-shadow:
-    0 2px 7px rgba(10,173,75,0.15);
-}
-
-
-/* =========================================================
-   QUICK ACTIONS
-   ========================================================= */
-
-.quick-actions {
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 6px;
-
-  padding: 9px 10px;
-
-  background: #ffffff;
-
-  border-top:
-    1px solid #eeeeee;
-}
-
-
-.quick-actions button {
-  min-height: 31px;
-
-  padding: 6px 10px;
-
-  border:
-    1px solid #0aad4b;
-
-  border-radius: 20px;
-
-  background: #ffffff;
-
-  color: #087b37;
-
-  font-size: 11px;
-
-  font-weight: 600;
-
+  padding: 15px;
+  text-align: left;
   cursor: pointer;
-
   transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.2s ease;
-}
-
-
-.quick-actions button:hover {
-  background: #0aad4b;
-
-  color: #ffffff;
-
-  transform: translateY(-1px);
-}
-
-
-.quick-actions button:active {
-  transform: scale(0.96);
-}
-
-
-/* =========================================================
-   CHAT INPUT AREA
-   ========================================================= */
-
-.chat-input-area {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  padding: 10px;
-
-  background: #ffffff;
-
-  border-top:
-    1px solid #eeeeee;
-}
-
-
-/* =========================================================
-   INPUT
-   ========================================================= */
-
-.chat-input {
-  flex: 1;
-
-  min-width: 0;
-
-  height: 44px;
-
-  padding:
-    9px 14px;
-
-  border:
-    1px solid #dddddd;
-
-  border-radius: 24px;
-
-  outline: none;
-
-  background: #ffffff;
-
-  color: #222222;
-
-  font-family: inherit;
-
-  font-size: 14px;
-
-  transition:
+    transform 0.2s ease,
     border-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
-
-.chat-input::placeholder {
-  color: #999999;
+.usha-suggestion:hover {
+  transform: translateY(-2px);
+  border-color: #cfcfcf;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
-
-.chat-input:focus {
-  border-color: #0aad4b;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(10,173,75,0.10);
+.usha-suggestion-icon {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 7px;
 }
 
-
-/* =========================================================
-   SEND BUTTON
-   ========================================================= */
-
-.send-btn {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  flex: 0 0 44px;
-
-  width: 44px;
-  height: 44px;
-
-  padding: 0;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background:
-    #0aad4b;
-
-  color: #ffffff;
-
-  font-size: 18px;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
-}
-
-
-.send-btn:hover {
-  background:
-    #078c3e;
-
-  transform: scale(1.05);
-}
-
-
-.send-btn:active {
-  transform: scale(0.94);
-}
-
-
-/* =========================================================
-   USHA REPLY LINKS
-   ========================================================= */
-
-.usha-link {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-top: 8px;
-
-  padding: 8px 13px;
-
-  border-radius: 22px;
-
-  background: #0aad4b;
-
-  color: #ffffff !important;
-
-  font-size: 12px;
-
+.usha-suggestion-title {
+  display: block;
+  color: #222;
+  font-size: 13px;
+  line-height: 1.4;
   font-weight: 700;
-
-  text-decoration: none;
-
-  transition:
-    background 0.2s ease,
-    transform 0.2s ease;
 }
 
+/* =========================================================
+   CHAT MESSAGES
+========================================================= */
 
-.usha-link:hover {
-  background: #078c3e;
+.usha-messages {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
 
-  transform: translateY(-1px);
+  flex: 1 1 0;
+  min-height: 0;
+  height: 0;
+
+  padding: 15px 24px 28px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cfcfcf transparent;
 }
 
+/* Chrome scrollbar */
 
-.usha-link.blue {
-  background: #2563eb;
+.usha-messages::-webkit-scrollbar {
+  width: 7px;
 }
 
-
-.usha-link.blue:hover {
-  background: #1d4ed8;
+.usha-messages::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-
-.usha-link.dark {
-  background: #111111;
+.usha-messages::-webkit-scrollbar-thumb {
+  background: #d1d1d1;
+  border-radius: 20px;
 }
 
+/* Message Row */
 
-.usha-link.dark:hover {
-  background: #2a2a2a;
+.usha-message {
+  width: 100%;
+  display: flex;
+  margin-bottom: 18px;
+  animation: ushaMessageIn 0.22s ease;
 }
 
+@keyframes ushaMessageIn {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.usha-message.user {
+  justify-content: flex-end;
+}
+
+.usha-message.assistant {
+  justify-content: flex-start;
+}
+
+/* =========================================================
+   MESSAGE BUBBLE
+========================================================= */
+
+.usha-bubble {
+  max-width: min(76%, 680px);
+  padding: 13px 16px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.usha-message.user .usha-bubble {
+  background: #111;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+}
+
+.usha-message.assistant .usha-bubble {
+  background: #fff;
+  color: #202020;
+  border: 1px solid #e6e6e6;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.035);
+}
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.usha-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.usha-action-btn {
+  border: 1px solid #dedede;
+  background: #fafafa;
+  color: #222;
+  padding: 8px 11px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: 0.18s ease;
+}
+
+.usha-action-btn:hover {
+  background: #111;
+  color: #fff;
+  border-color: #111;
+}
 
 /* =========================================================
    TYPING INDICATOR
-   ========================================================= */
+========================================================= */
 
-.typing-message {
+.usha-typing {
   display: flex;
-
   align-items: center;
-
-  gap: 4px;
-
-  min-height: 34px;
+  gap: 5px;
+  padding: 14px 16px;
+  width: fit-content;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 18px;
+  border-bottom-left-radius: 5px;
 }
 
-
-.typing-message span {
-  display: block;
-
+.usha-typing span {
   width: 7px;
   height: 7px;
-
   border-radius: 50%;
-
-  background: #777777;
-
-  animation:
-    ushaTyping 1s infinite;
+  background: #999;
+  animation: ushaTyping 1.2s infinite ease-in-out;
 }
 
-
-.typing-message span:nth-child(2) {
+.usha-typing span:nth-child(2) {
   animation-delay: 0.15s;
 }
 
-
-.typing-message span:nth-child(3) {
-  animation-delay: 0.30s;
+.usha-typing span:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
-
 @keyframes ushaTyping {
-
   0%,
   60%,
   100% {
-    opacity: 0.4;
-
-    transform:
-      translateY(0);
+    transform: translateY(0);
+    opacity: 0.45;
   }
 
   30% {
+    transform: translateY(-4px);
     opacity: 1;
-
-    transform:
-      translateY(-4px);
   }
-
 }
 
+/* =========================================================
+   FOOTER / INPUT AREA
+========================================================= */
+
+.usha-footer {
+  width: 100%;
+  flex: 0 0 auto;
+  background: rgba(247, 248, 250, 0.96);
+  border-top: 1px solid #e8e8e8;
+  padding: 12px 20px 18px;
+  z-index: 50;
+}
+
+.usha-input-container {
+  width: 100%;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.usha-input-wrap {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 17px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s ease;
+}
+
+.usha-input-wrap:focus-within {
+  border-color: #999;
+}
+
+/* Textarea */
+
+#ushaInput {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  max-height: 150px;
+
+  resize: none;
+  border: 0;
+  outline: none;
+
+  padding: 9px 10px;
+
+  background: transparent;
+  color: #171717;
+
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#ushaInput::placeholder {
+  color: #999;
+}
+
+/* Send */
+
+#ushaSend {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+
+  border: 0;
+  border-radius: 12px;
+
+  background: #111;
+  color: #fff;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  transition: 0.2s ease;
+}
+
+#ushaSend:hover {
+  transform: translateY(-1px);
+  background: #292929;
+}
+
+#ushaSend:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Footer note */
+
+.usha-footer-note {
+  text-align: center;
+  margin-top: 8px;
+  color: #999;
+  font-size: 10px;
+  line-height: 1.4;
+}
 
 /* =========================================================
-   MOBILE RESPONSIVE
-   ========================================================= */
+   CLEAR BUTTON
+========================================================= */
 
-@media (max-width: 600px) {
+.usha-clear {
+  display: flex;
+  justify-content: center;
+  margin-top: 7px;
+}
 
-  .usha-button {
-    right: 14px;
+#ushaClear {
+  border: 0;
+  background: transparent;
+  color: #999;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 4px 8px;
+}
 
-    bottom: 14px;
+#ushaClear:hover {
+  color: #333;
+}
 
-    width: 58px;
+/* =========================================================
+   SUPPORT TOAST
+========================================================= */
 
-    height: 58px;
+.usha-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translateX(-50%) translateY(20px);
+
+  max-width: calc(100% - 30px);
+
+  padding: 12px 17px;
+
+  border-radius: 12px;
+
+  background: #111;
+  color: #fff;
+
+  font-size: 13px;
+  line-height: 1.5;
+
+  opacity: 0;
+  visibility: hidden;
+
+  z-index: 9999;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.usha-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =========================================================
+   EMPTY / HIDDEN STATES
+========================================================= */
+
+.hidden {
+  display: none !important;
+}
+
+.usha-hidden {
+  display: none !important;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
   }
 
-
-  .chatbot {
-    right: 10px;
-
-    bottom: 80px;
-
-    width:
-      calc(100vw - 20px);
-
-    max-width: none;
-
-    height:
-      calc(100vh - 100px);
-
-    max-height: none;
-
-    border-radius: 17px;
+  body {
+    position: fixed;
+    inset: 0;
   }
 
-
-  .chat-header {
-    min-height: 66px;
-
-    padding: 10px 12px;
+  .usha-app {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
   }
 
+  /* Header */
 
-  .chat-avatar {
-    width: 40px;
-
-    height: 40px;
-
-    flex-basis: 40px;
+  .usha-header {
+    height: 62px;
+    flex-basis: 62px;
+    padding: 0 13px;
   }
 
+  .usha-brand {
+    gap: 9px;
+  }
 
-  .chat-head-info h3 {
+  .usha-brand-icon {
+    width: 37px;
+    height: 37px;
+    border-radius: 10px;
+  }
+
+  .usha-brand-name {
+    font-size: 17px;
+  }
+
+  .usha-brand-subtitle {
+    display: none;
+  }
+
+  .usha-online {
+    font-size: 11px;
+  }
+
+  .usha-online-dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .usha-support-btn {
+    height: 35px;
+    padding: 0 11px;
+    border-radius: 9px;
+    font-size: 11px;
+  }
+
+  /* Main */
+
+  .usha-main {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* Welcome */
+
+  .usha-welcome {
+    padding: 25px 16px 12px;
+  }
+
+  .usha-welcome-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 19px;
+    margin-bottom: 13px;
+  }
+
+  .usha-welcome-badge {
+    font-size: 10px;
+    padding: 6px 10px;
+    margin-bottom: 10px;
+  }
+
+  .usha-welcome h1 {
+    font-size: 28px;
+    letter-spacing: -1px;
+  }
+
+  .usha-welcome p {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+
+  /* Suggestions */
+
+  .usha-suggestions {
+    padding: 8px 13px 13px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .usha-suggestion {
+    min-height: 67px;
+    padding: 11px;
+    border-radius: 12px;
+  }
+
+  .usha-suggestion-icon {
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+
+  .usha-suggestion-title {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  /* Messages */
+
+  .usha-messages {
+    flex: 1 1 0;
+    min-height: 0;
+    height: 0;
+
+    padding:
+      12px
+      13px
+      18px;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  .usha-message {
+    margin-bottom: 13px;
+  }
+
+  .usha-bubble {
+    max-width: 88%;
+    padding: 11px 13px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  /* Actions */
+
+  .usha-actions {
+    gap: 6px;
+    margin-top: 9px;
+  }
+
+  .usha-action-btn {
+    padding: 7px 9px;
+    border-radius: 8px;
+    font-size: 10px;
+  }
+
+  /* Footer */
+
+  .usha-footer {
+    padding:
+      8px
+      10px
+      calc(9px + env(safe-area-inset-bottom));
+
+    flex-shrink: 0;
+  }
+
+  .usha-input-wrap {
+    min-height: 50px;
+    padding: 6px;
+    border-radius: 14px;
+    gap: 7px;
+  }
+
+  #ushaInput {
+    min-height: 36px;
+    max-height: 120px;
+    padding: 8px 8px;
+    font-size: 14px;
+  }
+
+  #ushaSend {
+    width: 37px;
+    height: 37px;
+    flex-basis: 37px;
+    border-radius: 10px;
     font-size: 16px;
   }
 
-
-  .message {
-    max-width: 91%;
-
-    font-size: 13.5px;
+  .usha-footer-note {
+    margin-top: 5px;
+    font-size: 9px;
   }
 
-
-  .quick-actions {
-    gap: 5px;
-
-    padding: 8px;
+  .usha-clear {
+    margin-top: 3px;
   }
 
-
-  .quick-actions button {
-    font-size: 10.5px;
-
-    padding:
-      6px 9px;
+  #ushaClear {
+    font-size: 10px;
   }
 
+  .usha-toast {
+    bottom: 80px;
+    font-size: 12px;
+  }
 }
-
 
 /* =========================================================
-   VERY SMALL MOBILE
-   ========================================================= */
+   SMALL MOBILE
+========================================================= */
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
 
-  .chatbot {
-    right: 7px;
-
-    width:
-      calc(100vw - 14px);
-
-    bottom: 75px;
+  .usha-header {
+    padding: 0 10px;
   }
 
-
-  .quick-actions button {
-    font-size: 10px;
-
-    padding:
-      5px 8px;
+  .usha-brand-name {
+    font-size: 16px;
   }
 
+  .usha-online {
+    display: none;
+  }
 
-  .chat-input {
+  .usha-support-btn {
+    padding: 0 9px;
+  }
+
+  .usha-welcome {
+    padding-top: 20px;
+  }
+
+  .usha-welcome h1 {
+    font-size: 25px;
+  }
+
+  .usha-welcome p {
+    font-size: 12px;
+  }
+
+  .usha-suggestions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .usha-suggestion {
+    min-height: 62px;
+  }
+
+  .usha-bubble {
+    max-width: 91%;
     font-size: 13px;
   }
-
 }
-
 
 /* =========================================================
    ACCESSIBILITY
-   ========================================================= */
+========================================================= */
 
-.usha-button:focus-visible,
-.close-chat:focus-visible,
-.quick-actions button:focus-visible,
-.send-btn:focus-visible,
-.chat-input:focus-visible {
-
-  outline:
-    3px solid
-    rgba(10,173,75,0.35);
-
+button:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #777;
   outline-offset: 2px;
+}
 
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
