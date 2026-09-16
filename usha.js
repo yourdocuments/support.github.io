@@ -1,873 +1,1816 @@
 /* =========================================================
-   USHA AI MENTOR - FULL JAVASCRIPT
-   SNK IT Institute
+   USHA.AI
+   SNK IT INSTITUTE
+   Full Smart Chat JS
+   Proper Desktop + Mobile Auto Scrolling
    ========================================================= */
 
-(function () {
-  "use strict";
 
-  /* =========================================================
-     CONFIG
-     ========================================================= */
+/* =========================================================
+   CONFIG
+   ========================================================= */
 
-  const STORAGE_KEY = "ushaChatHistory";
+const STORAGE_KEY = "snkUshaChatHistory";
 
-  const DEFAULT_MESSAGE =
-    "Hi! আমি USHA 👋 তোমার AI learning mentor। " +
-    "তুমি আমাকে course, class, coding, website বা learning নিয়ে যেকোনো প্রশ্ন করতে পারো।";
 
-  /* =========================================================
-     DOM ELEMENTS
-     ========================================================= */
+/* =========================================================
+   REAL SNK LINKS
+   ========================================================= */
 
-  const ushaPanel =
-    document.getElementById("ushaPanel") ||
-    document.querySelector(".usha-panel") ||
-    document.querySelector("#ushaChat");
+const ACTIONS = {
 
-  const ushaButton =
-    document.getElementById("ushaButton") ||
-    document.querySelector(".usha-floating-btn") ||
-    document.querySelector(".usha-float");
+  freeCourse: {
+    label: "🎓 Open Free Course",
+    url: "https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+  },
 
-  const closeButton =
-    document.getElementById("ushaClose") ||
-    document.querySelector(".usha-close");
+  paidCourse: {
+    label: "💳 Open Paid Course",
+    url: "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
+  },
 
-  const clearButton =
-    document.getElementById("ushaClear") ||
-    document.querySelector(".usha-clear");
+  live: {
+    label: "🔴 Join Live Class",
+    url: "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+  },
 
-  const messageArea =
-    document.getElementById("ushaMessages") ||
-    document.querySelector(".usha-messages") ||
-    document.querySelector(".chat-messages");
+  recorded: {
+    label: "🎥 Open Recorded Playlist",
+    url: "https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+  },
 
-  const input =
-    document.getElementById("ushaInput") ||
-    document.querySelector(".usha-input") ||
-    document.querySelector("textarea");
+  support: {
+    label: "💬 WhatsApp Support",
+    url: "https://wa.me/8801636363801"
+  },
 
-  const sendButton =
-    document.getElementById("ushaSend") ||
-    document.querySelector(".usha-send") ||
-    document.querySelector(".send-btn");
+  facebook: {
+    label: "📘 Facebook",
+    url: "https://www.facebook.com/snkitinstitute"
+  },
 
-  const suggestionContainer =
-    document.getElementById("ushaSuggestions") ||
-    document.querySelector(".usha-suggestions");
+  youtube: {
+    label: "▶️ YouTube",
+    url: "https://www.youtube.com/@snkguideup"
+  },
 
-  /* =========================================================
-     HELPER
-     ========================================================= */
+  whatsappChannel: {
+    label: "📣 WhatsApp Channel",
+    url: "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x"
+  },
 
-  function safeText(text) {
-    return String(text)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
+  shoppingMela: {
+    label: "🛍️ Shopping Mela",
+    url: "https://yourdocuments.github.io/shopingmela/"
   }
 
-  function normalizeText(text) {
-    return String(text)
-      .toLowerCase()
-      .trim()
-      .replace(/[!?.,،。]/g, " ")
-      .replace(/\s+/g, " ");
+};
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const messagesBox =
+  document.getElementById("ushaMessages");
+
+const input =
+  document.getElementById("ushaInput");
+
+const sendButton =
+  document.getElementById("ushaSend");
+
+const suggestionsBox =
+  document.getElementById("ushaSuggestions");
+
+const welcomeBox =
+  document.getElementById("ushaWelcome");
+
+
+/* =========================================================
+   NORMALIZE TEXT
+   ========================================================= */
+
+function normalizeText(text) {
+
+  return String(text || "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ");
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(text) {
+
+  const div = document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   IMPORTANT SCROLL FUNCTION
+   =========================================================
+   This function keeps the chat at the latest message.
+   Multiple animation frames are used because:
+   - message DOM is rendered
+   - typing indicator may change height
+   - mobile browser may calculate height slightly later
+   ========================================================= */
+
+function scrollChatToBottom(force = true) {
+
+  if (!messagesBox) {
+    return;
   }
 
-  /* =========================================================
-     OPEN USHA
-     ========================================================= */
+  const doScroll = () => {
 
-  window.openUsha = function () {
-    if (!ushaPanel) return;
+    messagesBox.scrollTop =
+      messagesBox.scrollHeight;
 
-    ushaPanel.classList.add("active");
-    ushaPanel.classList.add("open");
+    if (force) {
 
-    document.body.classList.add("usha-open");
-
-    setTimeout(function () {
-      if (input) {
-        input.focus();
-      }
-    }, 250);
-  };
-
-  /* =========================================================
-     CLOSE USHA
-     ========================================================= */
-
-  window.closeUsha = function () {
-    if (!ushaPanel) return;
-
-    ushaPanel.classList.remove("active");
-    ushaPanel.classList.remove("open");
-
-    document.body.classList.remove("usha-open");
-  };
-
-  /* =========================================================
-     TOGGLE USHA
-     ========================================================= */
-
-  window.toggleUsha = function () {
-    if (!ushaPanel) return;
-
-    if (
-      ushaPanel.classList.contains("active") ||
-      ushaPanel.classList.contains("open")
-    ) {
-      closeUsha();
-    } else {
-      openUsha();
-    }
-  };
-
-  /* =========================================================
-     ADD MESSAGE
-     ========================================================= */
-
-  function addMessage(text, sender, save = true) {
-    if (!messageArea) return;
-
-    const message = document.createElement("div");
-
-    message.className =
-      sender === "user"
-        ? "usha-message user-message"
-        : "usha-message usha-message";
-
-    const bubble = document.createElement("div");
-    bubble.className = "usha-bubble";
-
-    bubble.innerHTML = safeText(text).replace(/\n/g, "<br>");
-
-    message.appendChild(bubble);
-    messageArea.appendChild(message);
-
-    scrollMessages();
-
-    if (save) {
-      saveMessage(text, sender);
-    }
-  }
-
-  /* =========================================================
-     SCROLL MESSAGE AREA
-     ========================================================= */
-
-  function scrollMessages() {
-    if (!messageArea) return;
-
-    setTimeout(function () {
-      messageArea.scrollTop = messageArea.scrollHeight;
-    }, 50);
-  }
-
-  /* =========================================================
-     SAVE MESSAGE
-     ========================================================= */
-
-  function saveMessage(text, sender) {
-    try {
-      const history = JSON.parse(
-        localStorage.getItem(STORAGE_KEY) || "[]"
-      );
-
-      history.push({
-        text: text,
-        sender: sender,
-        time: new Date().toISOString()
+      messagesBox.scrollTo({
+        top: messagesBox.scrollHeight,
+        behavior: "smooth"
       });
 
-      /*
-       * Keep last 100 messages
-       */
-      const limitedHistory = history.slice(-100);
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(limitedHistory)
-      );
-    } catch (error) {
-      console.warn("USHA localStorage error:", error);
-    }
-  }
-
-  /* =========================================================
-     LOAD CHAT HISTORY
-     ========================================================= */
-
-  function loadChat() {
-    if (!messageArea) return;
-
-    messageArea.innerHTML = "";
-
-    try {
-      const history = JSON.parse(
-        localStorage.getItem(STORAGE_KEY) || "[]"
-      );
-
-      if (!history.length) {
-        addMessage(DEFAULT_MESSAGE, "usha", false);
-        return;
-      }
-
-      history.forEach(function (item) {
-        if (!item || !item.text) return;
-
-        addMessage(
-          item.text,
-          item.sender === "user" ? "user" : "usha",
-          false
-        );
-      });
-
-      scrollMessages();
-    } catch (error) {
-      console.warn("USHA history load error:", error);
-
-      addMessage(DEFAULT_MESSAGE, "usha", false);
-    }
-  }
-
-  /* =========================================================
-     CLEAR CHAT
-     ========================================================= */
-
-  window.clearUshaChat = function () {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (error) {
-      console.warn("Unable to clear USHA chat:", error);
     }
 
-    if (messageArea) {
-      messageArea.innerHTML = "";
-      addMessage(DEFAULT_MESSAGE, "usha", false);
-    }
   };
 
-  /* =========================================================
-     TYPING INDICATOR
-     ========================================================= */
 
-  function showTyping() {
-    if (!messageArea) return;
+  requestAnimationFrame(() => {
 
-    removeTyping();
+    doScroll();
 
-    const typing = document.createElement("div");
+    requestAnimationFrame(() => {
 
-    typing.id = "ushaTyping";
-    typing.className = "usha-message usha-message";
+      doScroll();
 
-    typing.innerHTML = `
-      <div class="usha-bubble usha-typing">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+      setTimeout(() => {
+        doScroll();
+      }, 80);
+
+      setTimeout(() => {
+        doScroll();
+      }, 250);
+
+    });
+
+  });
+
+}
+
+
+/* =========================================================
+   SCROLL ALIAS
+   ========================================================= */
+
+function scrollMessages() {
+
+  scrollChatToBottom(true);
+
+}
+
+
+/* =========================================================
+   HIDE WELCOME
+   ========================================================= */
+
+function hideWelcome() {
+
+  if (welcomeBox) {
+
+    welcomeBox.style.display = "none";
+
+  }
+
+  if (suggestionsBox) {
+
+    suggestionsBox.style.display = "none";
+
+  }
+
+}
+
+
+/* =========================================================
+   SHOW WELCOME
+   ========================================================= */
+
+function showWelcome() {
+
+  if (welcomeBox) {
+
+    welcomeBox.style.display = "";
+
+  }
+
+  if (suggestionsBox) {
+
+    suggestionsBox.style.display = "";
+
+  }
+
+}
+
+
+/* =========================================================
+   CREATE ACTION BUTTONS
+   ========================================================= */
+
+function createActions(actions = []) {
+
+  if (!actions || !actions.length) {
+
+    return "";
+
+  }
+
+
+  let html = `
+    <div class="usha-actions">
+  `;
+
+
+  actions.forEach(actionKey => {
+
+    const action = ACTIONS[actionKey];
+
+    if (!action) {
+      return;
+    }
+
+
+    html += `
+      <a
+        class="usha-action-btn"
+        href="${action.url}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        ${action.label}
+      </a>
     `;
 
-    messageArea.appendChild(typing);
+  });
 
-    scrollMessages();
+
+  html += `
+    </div>
+  `;
+
+
+  return html;
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+   ========================================================= */
+
+function addMessage(
+  text,
+  sender = "assistant",
+  save = true,
+  actions = []
+) {
+
+  if (!messagesBox) {
+    return;
   }
 
-  function removeTyping() {
-    const typing = document.getElementById("ushaTyping");
 
-    if (typing) {
-      typing.remove();
-    }
-  }
+  hideWelcome();
 
-  /* =========================================================
-     SHAH NEIL KHAN / SNK INTENT
-     ========================================================= */
 
-  function isShahNeilKhanQuestion(lower) {
-    const patterns = [
-      "shah neil khan কে",
-      "shah neil khan কি",
-      "shah neil khan সম্পর্কে",
-      "shah neil khan কে সে",
-      "shah neil khan",
-      "শাহ নীল খান কে",
-      "শাহ নীল খান কি",
-      "শাহ নীল খান সম্পর্কে",
-      "শাহ নীল খান",
-      "shah neil কে",
-      "শাহ নীল কে",
-      "who is shah neil khan",
-      "who is shah neil",
-      "who is snk",
-      "snk কে",
-      "snk কি",
-      "snk সম্পর্কে",
-      "snk কে সে",
-      "snk person",
-      "snk founder",
-      "snk sir কে",
-      "snk স্যার কে"
-    ];
+  const row =
+    document.createElement("div");
 
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
 
-  /* =========================================================
-     "TOMAR KI?" / RELATION WITH SHAH NEIL KHAN
-     ========================================================= */
+  row.className =
+    `usha-message ${sender}`;
 
-  function isTomarQuestion(lower) {
-    const patterns = [
-      "তোমার কি শাহ নীল খান",
-      "তোমার কি shah neil khan",
-      "তোমার কি snk",
-      "snk তোমার কি",
-      "শাহ নীল খান তোমার কি",
-      "shah neil khan তোমার কি",
-      "snk কে তোমার",
-      "শাহ নীল খান কে তোমার",
-      "shah neil khan কে তোমার",
-      "তোমার কাছে snk",
-      "তোমার কাছে শাহ নীল খান"
-    ];
 
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
+  const bubble =
+    document.createElement("div");
 
-  /* =========================================================
-     USHA ABOUT HERSELF
-     ========================================================= */
 
-  function isUshaQuestion(lower) {
-    const patterns = [
-      "usha কে",
-      "usha কি",
-      "usha সম্পর্কে",
-      "তুমি কে",
-      "তুমি কি",
-      "who are you",
-      "what is usha",
-      "who is usha",
-      "usha ai",
-      "usha assistant",
-      "usha mentor"
-    ];
+  bubble.className =
+    "usha-bubble";
 
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
 
-  /* =========================================================
-     GREETING
-     ========================================================= */
+  bubble.innerHTML =
+    escapeHTML(text);
 
-  function isGreeting(lower) {
-    const patterns = [
-      "hi",
-      "hello",
-      "hey",
-      "হাই",
-      "হ্যালো",
-      "আসসালামু আলাইকুম",
-      "assalamualaikum",
-      "good morning",
-      "good evening",
-      "good afternoon"
-    ];
 
-    return patterns.some(function (pattern) {
-      return lower === pattern || lower.startsWith(pattern + " ");
-    });
-  }
+  row.appendChild(bubble);
 
-  /* =========================================================
-     COURSE QUESTIONS
-     ========================================================= */
 
-  function isCourseQuestion(lower) {
-    const patterns = [
-      "course",
-      "কোর্স",
-      "কোন কোর্স",
-      "free course",
-      "ফ্রি কোর্স",
-      "paid course",
-      "পেইড কোর্স",
-      "শিখতে চাই",
-      "কি শিখবো",
-      "what can i learn",
-      "learning"
-    ];
+  messagesBox.appendChild(row);
 
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
 
-  /* =========================================================
-     LIVE CLASS QUESTIONS
-     ========================================================= */
+  /* Add action buttons only for assistant */
+  if (
+    sender === "assistant" &&
+    actions &&
+    actions.length
+  ) {
 
-  function isLiveClassQuestion(lower) {
-    const patterns = [
-      "live class",
-      "লাইভ ক্লাস",
-      "জুম ক্লাস",
-      "zoom class",
-      "zoom",
-      "ক্লাস কখন",
-      "class time",
-      "join live",
-      "লাইভে কিভাবে",
-      "কিভাবে join",
-      "ক্লাসে join"
-    ];
+    const actionHTML =
+      createActions(actions);
 
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     RECORDED CLASS QUESTIONS
-     ========================================================= */
-
-  function isRecordedQuestion(lower) {
-    const patterns = [
-      "recorded",
-      "recorded class",
-      "রেকর্ডেড",
-      "রেকর্ড ক্লাস",
-      "ভিডিও ক্লাস",
-      "video class",
-      "playlist"
-    ];
-
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     WEBSITE / CODING QUESTIONS
-     ========================================================= */
-
-  function isCodingQuestion(lower) {
-    const patterns = [
-      "html",
-      "css",
-      "javascript",
-      "js",
-      "coding",
-      "code",
-      "কোড",
-      "ওয়েবসাইট",
-      "website",
-      "web design",
-      "web development",
-      "programming",
-      "প্রোগ্রামিং"
-    ];
-
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     SUPPORT QUESTIONS
-     ========================================================= */
-
-  function isSupportQuestion(lower) {
-    const patterns = [
-      "support",
-      "সাপোর্ট",
-      "যোগাযোগ",
-      "contact",
-      "help",
-      "সাহায্য",
-      "whatsapp",
-      "হোয়াটসঅ্যাপ"
-    ];
-
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     THANK YOU
-     ========================================================= */
-
-  function isThanks(lower) {
-    const patterns = [
-      "thanks",
-      "thank you",
-      "ধন্যবাদ",
-      "থ্যাংকস",
-      "অনেক ধন্যবাদ"
-    ];
-
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     GOODBYE
-     ========================================================= */
-
-  function isGoodbye(lower) {
-    const patterns = [
-      "bye",
-      "goodbye",
-      "বিদায়",
-      "আবার কথা হবে",
-      "পরে কথা হবে"
-    ];
-
-    return patterns.some(function (pattern) {
-      return lower.includes(pattern);
-    });
-  }
-
-  /* =========================================================
-     MAIN USHA REPLY ENGINE
-     ========================================================= */
-
-  function getUshaReply(userText) {
-    const lower = normalizeText(userText);
-
-    /*
-     * IMPORTANT:
-     * Shah Neil Khan / SNK intent comes first.
-     */
-
-    if (isTomarQuestion(lower)) {
-      return "Shah Neil Khan? 😊 সে আমার খুব পছন্দের একজন। ❤️ আর SNK আমার কাছে খুবই special!";
-    }
-
-    if (isShahNeilKhanQuestion(lower)) {
-      return "Shah Neil Khan? 😊 সে আমার খুব পছন্দের একজন। ❤️ আর SNK আমার কাছে খুবই special!";
-    }
-
-    /* -------------------------------------------------------
-       USHA
-       ------------------------------------------------------- */
-
-    if (isUshaQuestion(lower)) {
-      return "আমি USHA — SNK-এর AI learning mentor। 🤖💛 তোমার learning, course, coding আর website journey-তে আমি তোমার সাথে আছি।";
-    }
-
-    /* -------------------------------------------------------
-       GREETING
-       ------------------------------------------------------- */
-
-    if (isGreeting(lower)) {
-      return "Hello! 👋 আমি USHA। আজ কী শিখতে চাও? 😊";
-    }
-
-    /* -------------------------------------------------------
-       COURSE
-       ------------------------------------------------------- */
-
-    if (isCourseQuestion(lower)) {
-      return "SNK IT Institute-এ বিভিন্ন learning opportunity আছে। 🎓 তুমি চাইলে Free Classes, Paid Classes বা Recorded Classes থেকে শুরু করতে পারো।";
-    }
-
-    /* -------------------------------------------------------
-       LIVE CLASS
-       ------------------------------------------------------- */
-
-    if (isLiveClassQuestion(lower)) {
-      return "Live Class-এ অংশ নিতে Join Live অপশন ব্যবহার করো। 💻📚 ক্লাস Zoom-এর মাধ্যমে হতে পারে।";
-    }
-
-    /* -------------------------------------------------------
-       RECORDED
-       ------------------------------------------------------- */
-
-    if (isRecordedQuestion(lower)) {
-      return "Recorded Classes-এর জন্য Recorded section অথবা available YouTube playlist দেখতে পারো। 🎥 চাইলে আমি তোমাকে কীভাবে শুরু করবে সেটাও বুঝিয়ে দিতে পারি।";
-    }
-
-    /* -------------------------------------------------------
-       CODING
-       ------------------------------------------------------- */
-
-    if (isCodingQuestion(lower)) {
-      return "Coding শিখতে হলে HTML → CSS → JavaScript এইভাবে শুরু করতে পারো। 💻✨ চাইলে আমি beginner level থেকে step-by-step শেখাতে পারি।";
-    }
-
-    /* -------------------------------------------------------
-       SUPPORT
-       ------------------------------------------------------- */
-
-    if (isSupportQuestion(lower)) {
-      return "সাহায্যের জন্য SNK IT Institute-এর Support option ব্যবহার করতে পারো। 💬 প্রয়োজন হলে WhatsApp support-এ যোগাযোগ করাও যেতে পারে।";
-    }
-
-    /* -------------------------------------------------------
-       THANK YOU
-       ------------------------------------------------------- */
-
-    if (isThanks(lower)) {
-      return "You're welcome! 😊❤️ যখনই প্রয়োজন হবে, USHA তোমার পাশে আছে।";
-    }
-
-    /* -------------------------------------------------------
-       GOODBYE
-       ------------------------------------------------------- */
-
-    if (isGoodbye(lower)) {
-      return "ঠিক আছে 😊 আবার এসো। তোমার learning journey-এর জন্য অনেক শুভকামনা! 💛";
-    }
-
-    /* -------------------------------------------------------
-       DEFAULT SMART RESPONSE
-       ------------------------------------------------------- */
-
-    const defaultReplies = [
-      "Interesting! 😊 একটু বিস্তারিত বলো, তাহলে আমি ভালোভাবে সাহায্য করতে পারব।",
-      "বুঝতে পারছি। 💛 তুমি চাইলে বিষয়টা সহজ করে step-by-step আলোচনা করতে পারি।",
-      "অবশ্যই! 😊 তোমার প্রশ্নটা আরেকটু বিস্তারিত লিখলে আমি আরও নির্দিষ্টভাবে উত্তর দিতে পারব।",
-      "আমি তোমাকে learning, coding, website এবং course-related বিষয়ে সাহায্য করতে পারি। 🚀"
-    ];
-
-    const randomIndex = Math.floor(
-      Math.random() * defaultReplies.length
+    bubble.insertAdjacentHTML(
+      "beforeend",
+      actionHTML
     );
 
-    return defaultReplies[randomIndex];
   }
 
-  /* =========================================================
-     SEND MESSAGE
-     ========================================================= */
 
-  window.sendMessage = function () {
-    if (!input) return;
+  if (save) {
 
-    const text = input.value.trim();
+    saveMessage({
+      sender: sender,
+      text: text
+    });
 
-    if (!text) return;
-
-    /*
-     * User message
-     */
-    addMessage(text, "user", true);
-
-    /*
-     * Clear input
-     */
-    input.value = "";
-
-    /*
-     * Show typing
-     */
-    showTyping();
-
-    /*
-     * Small AI-style delay
-     */
-    const delay =
-      Math.floor(Math.random() * 700) + 700;
-
-    setTimeout(function () {
-      removeTyping();
-
-      const reply = getUshaReply(text);
-
-      addMessage(reply, "usha", true);
-    }, delay);
-  };
-
-  /* =========================================================
-     ASK USHA
-     * Used by suggestion buttons
-     * ========================================================= */
-
-  window.askUsha = function (question) {
-    if (!input) return;
-
-    input.value = question;
-
-    openUsha();
-
-    setTimeout(function () {
-      sendMessage();
-    }, 150);
-  };
-
-  /* =========================================================
-     ENTER KEY
-     ========================================================= */
-
-  function handleInputKeydown(event) {
-    if (!event) return;
-
-    /*
-     * Enter = Send
-     * Shift + Enter = New line
-     */
-
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-
-      sendMessage();
-    }
   }
 
-  /* =========================================================
-     SUGGESTION BUTTONS
-     ========================================================= */
 
-  function setupSuggestions() {
-    if (!suggestionContainer) return;
+  /*
+    IMPORTANT:
+    Wait until the bubble has entered DOM,
+    then scroll.
+  */
 
-    const buttons =
-      suggestionContainer.querySelectorAll(
-        "button, [data-question]"
+  scrollChatToBottom(true);
+
+
+  return row;
+
+}
+
+
+/* =========================================================
+   SAVE MESSAGE
+   ========================================================= */
+
+function saveMessage(message) {
+
+  try {
+
+    const history =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
       );
 
-    buttons.forEach(function (button) {
-      button.addEventListener("click", function () {
-        const question =
-          button.getAttribute("data-question") ||
-          button.textContent.trim();
 
-        if (question) {
-          askUsha(question);
-        }
-      });
+    history.push({
+      sender: message.sender,
+      text: message.text,
+      time: Date.now()
     });
-  }
 
-  /* =========================================================
-     FLOATING BUTTON
-     ========================================================= */
 
-  function setupFloatingButton() {
-    if (!ushaButton) return;
+    /*
+      Keep latest 100 messages.
+    */
 
-    ushaButton.addEventListener("click", function () {
-      toggleUsha();
-    });
-  }
+    const limitedHistory =
+      history.slice(-100);
 
-  /* =========================================================
-     CLOSE BUTTON
-     ========================================================= */
 
-  function setupCloseButton() {
-    if (!closeButton) return;
-
-    closeButton.addEventListener("click", function () {
-      closeUsha();
-    });
-  }
-
-  /* =========================================================
-     CLEAR BUTTON
-     ========================================================= */
-
-  function setupClearButton() {
-    if (!clearButton) return;
-
-    clearButton.addEventListener("click", function () {
-      clearUshaChat();
-    });
-  }
-
-  /* =========================================================
-     SEND BUTTON
-     ========================================================= */
-
-  function setupSendButton() {
-    if (!sendButton) return;
-
-    sendButton.addEventListener("click", function () {
-      sendMessage();
-    });
-  }
-
-  /* =========================================================
-     INPUT
-     ========================================================= */
-
-  function setupInput() {
-    if (!input) return;
-
-    input.addEventListener(
-      "keydown",
-      handleInputKeydown
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(limitedHistory)
     );
+
+  } catch (error) {
+
+    console.warn(
+      "USHA history save error:",
+      error
+    );
+
   }
 
-  /* =========================================================
-     ESC KEY
-     ========================================================= */
+}
 
-  function setupEscapeKey() {
-    document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape") {
-        closeUsha();
+
+/* =========================================================
+   LOAD CHAT
+   ========================================================= */
+
+function loadChat() {
+
+  if (!messagesBox) {
+    return;
+  }
+
+
+  let history = [];
+
+
+  try {
+
+    history =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
+
+  } catch (error) {
+
+    history = [];
+
+  }
+
+
+  if (!Array.isArray(history) || history.length === 0) {
+
+    showWelcome();
+
+    return;
+
+  }
+
+
+  hideWelcome();
+
+
+  history.forEach(item => {
+
+    addMessage(
+      item.text,
+      item.sender,
+      false
+    );
+
+  });
+
+
+  /*
+    After all history is rendered,
+    go to bottom.
+  */
+
+  setTimeout(() => {
+
+    scrollChatToBottom(false);
+
+  }, 100);
+
+}
+
+
+/* =========================================================
+   CLEAR CHAT
+   ========================================================= */
+
+function clearChat() {
+
+  localStorage.removeItem(STORAGE_KEY);
+
+
+  if (messagesBox) {
+
+    messagesBox.innerHTML = "";
+
+  }
+
+
+  showWelcome();
+
+
+  /*
+    Small welcome message is optional.
+  */
+
+}
+
+
+/* =========================================================
+   CLEAR CHAT ALIAS
+   ========================================================= */
+
+function clearUshaChat() {
+
+  clearChat();
+
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+   ========================================================= */
+
+function showTyping() {
+
+  if (!messagesBox) {
+    return;
+  }
+
+
+  removeTyping();
+
+
+  const row =
+    document.createElement("div");
+
+
+  row.className =
+    "usha-message assistant";
+
+
+  row.id =
+    "ushaTypingMessage";
+
+
+  row.innerHTML = `
+    <div class="usha-typing">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  `;
+
+
+  messagesBox.appendChild(row);
+
+
+  scrollChatToBottom(true);
+
+}
+
+
+/* =========================================================
+   REMOVE TYPING
+   ========================================================= */
+
+function removeTyping() {
+
+  const typing =
+    document.getElementById(
+      "ushaTypingMessage"
+    );
+
+
+  if (typing) {
+
+    typing.remove();
+
+  }
+
+}
+
+
+/* =========================================================
+   INTENT HELPERS
+   ========================================================= */
+
+
+/* ---------- SNK ---------- */
+
+function isSNKQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("shah neil khan") ||
+    lower.includes("shah neil") ||
+    lower.includes("শাহ নীল খান") ||
+    lower.includes("শাহ নীল") ||
+
+    lower.includes("snk কে") ||
+    lower.includes("snk কি") ||
+    lower.includes("snk সম্পর্কে") ||
+    lower.includes("snk সম্বন্ধে") ||
+    lower.includes("who is snk") ||
+    lower.includes("about snk")
+  );
+
+}
+
+
+/* ---------- SNK PERSONAL ---------- */
+
+function isSNKPersonalQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  const snkMention =
+    lower.includes("shah neil khan") ||
+    lower.includes("shah neil") ||
+    lower.includes("শাহ নীল খান") ||
+    lower.includes("শাহ নীল") ||
+    lower.includes("snk");
+
+
+  const personalWords =
+    lower.includes("তোমার") ||
+    lower.includes("তোমার কি") ||
+    lower.includes("পছন্দ") ||
+    lower.includes("ভালো লাগে") ||
+    lower.includes("your") ||
+    lower.includes("like") ||
+    lower.includes("favorite") ||
+    lower.includes("favourite");
+
+
+  return (
+    snkMention &&
+    personalWords
+  );
+
+}
+
+
+/* ---------- USHA ---------- */
+
+function isUshaQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("তুমি কে") ||
+    lower.includes("তোমার নাম") ||
+    lower.includes("usha কে") ||
+    lower.includes("usha কি") ||
+    lower.includes("who are you") ||
+    lower.includes("what are you") ||
+    lower.includes("your name") ||
+    lower === "usha" ||
+    lower === "usha?"
+  );
+
+}
+
+
+/* ---------- GREETING ---------- */
+
+function isGreeting(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower === "hi" ||
+    lower === "hello" ||
+    lower === "hey" ||
+    lower.includes("হাই") ||
+    lower.includes("হ্যালো") ||
+    lower.includes("আসসালামু আলাইকুম") ||
+    lower.includes("assalamualaikum") ||
+    lower.includes("good morning") ||
+    lower.includes("good evening")
+  );
+
+}
+
+
+/* ---------- LEARNING ---------- */
+
+function isLearningQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("কি শিখ") ||
+    lower.includes("কী শিখ") ||
+    lower.includes("কি শিখতে") ||
+    lower.includes("কী শিখতে") ||
+    lower.includes("শেখা শুরু") ||
+    lower.includes("কোথা থেকে শুরু") ||
+    lower.includes("what should i learn") ||
+    lower.includes("what can i learn") ||
+    lower.includes("learn")
+  );
+
+}
+
+
+/* ---------- COURSE ---------- */
+
+function isCourseQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("course") ||
+    lower.includes("কোর্স") ||
+    lower.includes("কোর্স সম্পর্কে") ||
+    lower.includes("free course") ||
+    lower.includes("ফ্রি কোর্স") ||
+    lower.includes("paid course") ||
+    lower.includes("পেইড কোর্স") ||
+    lower.includes("পেইড ক্লাস") ||
+    lower.includes("ফ্রি ক্লাস")
+  );
+
+}
+
+
+/* ---------- FREE COURSE ---------- */
+
+function isFreeCourseQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("free") ||
+    lower.includes("ফ্রি") ||
+    lower.includes("বিনা খরচ") ||
+    lower.includes("ফ্রি কোর্স") ||
+    lower.includes("free course")
+  );
+
+}
+
+
+/* ---------- PAID COURSE ---------- */
+
+function isPaidCourseQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("paid") ||
+    lower.includes("পেইড") ||
+    lower.includes("paid course") ||
+    lower.includes("পেইড কোর্স") ||
+    lower.includes("টাকার কোর্স") ||
+    lower.includes("payment course")
+  );
+
+}
+
+
+/* ---------- LIVE ---------- */
+
+function isLiveQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("live") ||
+    lower.includes("লাইভ") ||
+    lower.includes("zoom") ||
+    lower.includes("জুম") ||
+    lower.includes("live class") ||
+    lower.includes("লাইভ ক্লাস") ||
+    lower.includes("join live")
+  );
+
+}
+
+
+/* ---------- RECORDED ---------- */
+
+function isRecordedQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("recorded") ||
+    lower.includes("রেকর্ডেড") ||
+    lower.includes("recording") ||
+    lower.includes("রেকর্ডিং") ||
+    lower.includes("ভিডিও ক্লাস")
+  );
+
+}
+
+
+/* ---------- CODING ---------- */
+
+function isCodingQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("html") ||
+    lower.includes("css") ||
+    lower.includes("javascript") ||
+    lower.includes("js") ||
+    lower.includes("coding") ||
+    lower.includes("code") ||
+    lower.includes("কোডিং") ||
+    lower.includes("কোড")
+  );
+
+}
+
+
+/* ---------- SUPPORT ---------- */
+
+function isSupportQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("support") ||
+    lower.includes("সাপোর্ট") ||
+    lower.includes("help") ||
+    lower.includes("হেল্প") ||
+    lower.includes("যোগাযোগ") ||
+    lower.includes("contact") ||
+    lower.includes("whatsapp")
+  );
+
+}
+
+
+/* ---------- SOCIAL ---------- */
+
+function isSocialQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("facebook") ||
+    lower.includes("ফেসবুক") ||
+    lower.includes("youtube") ||
+    lower.includes("ইউটিউব") ||
+    lower.includes("whatsapp channel") ||
+    lower.includes("সোশ্যাল") ||
+    lower.includes("social")
+  );
+
+}
+
+
+/* ---------- SHOPPING MELA ---------- */
+
+function isShoppingMelaQuestion(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("shopping mela") ||
+    lower.includes("shoppingmela") ||
+    lower.includes("শপিং মেলা") ||
+    lower.includes("shoping mela") ||
+    lower.includes("shopingmela")
+  );
+
+}
+
+
+/* ---------- THANKS ---------- */
+
+function isThanks(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower.includes("thank") ||
+    lower.includes("thanks") ||
+    lower.includes("ধন্যবাদ") ||
+    lower.includes("অনেক ধন্যবাদ")
+  );
+
+}
+
+
+/* ---------- GOODBYE ---------- */
+
+function isGoodbye(text) {
+
+  const lower =
+    normalizeText(text);
+
+
+  return (
+    lower === "bye" ||
+    lower.includes("goodbye") ||
+    lower.includes("বিদায়") ||
+    lower.includes("আবার কথা হবে")
+  );
+
+}
+
+
+/* =========================================================
+   RANDOM REPLY
+   ========================================================= */
+
+function randomReply(list) {
+
+  return list[
+    Math.floor(
+      Math.random() * list.length
+    )
+  ];
+
+}
+
+
+/* =========================================================
+   RESPONSE BUILDER
+   ========================================================= */
+
+function makeResponse(
+  text,
+  actions = []
+) {
+
+  return {
+    text: text,
+    actions: actions
+  };
+
+}
+
+
+/* =========================================================
+   SMART USHA RESPONSE
+   ========================================================= */
+
+function getUshaReply(userText) {
+
+  const text =
+    normalizeText(userText);
+
+
+  /* =======================================================
+     1. PERSONAL SNK QUESTION
+     ======================================================= */
+
+  if (isSNKPersonalQuestion(text)) {
+
+    return makeResponse(
+      "Shah Neil Khan? 😊\nসে আমার খুব পছন্দের একজন। ❤️\nআর SNK আমার কাছে খুবই special!",
+      ["facebook"]
+    );
+
+  }
+
+
+  /* =======================================================
+     2. SNK QUESTION
+     ======================================================= */
+
+  if (isSNKQuestion(text)) {
+
+    return makeResponse(
+      "Shah Neil Khan? 😊\nতিনি SNK-এর সঙ্গে যুক্ত একজন গুরুত্বপূর্ণ ব্যক্তি।\nআর SNK আমার কাছে খুবই special! ❤️",
+      ["facebook", "youtube"]
+    );
+
+  }
+
+
+  /* =======================================================
+     3. USHA
+     ======================================================= */
+
+  if (isUshaQuestion(text)) {
+
+    return makeResponse(
+      "আমি USHA — SNK IT Institute-এর AI Learning Mentor। 🤖✨\n\nতুমি আমাকে learning, coding, course, live class, recorded class অথবা SNK সম্পর্কে প্রশ্ন করতে পারো। ❤️"
+    );
+
+  }
+
+
+  /* =======================================================
+     4. GREETING
+     ======================================================= */
+
+  if (isGreeting(text)) {
+
+    return makeResponse(
+      randomReply([
+        "হ্যালো! 👋 আমি USHA। আজ কী শিখতে চাও?",
+        "হাই! 😊 আমি USHA। তোমার learning journey-তে আমি আছি।",
+        "আসসালামু আলাইকুম! 🌸 আমি USHA। কীভাবে সাহায্য করতে পারি?"
+      ]),
+      [
+        "freeCourse",
+        "live"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     5. FREE COURSE
+     ======================================================= */
+
+  if (isFreeCourseQuestion(text)) {
+
+    return makeResponse(
+      "অবশ্যই! 🎓 SNK-এর Free Learning playlist থেকে তুমি নিজের সময় অনুযায়ী শেখা শুরু করতে পারো।",
+      [
+        "freeCourse"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     6. PAID COURSE
+     ======================================================= */
+
+  if (isPaidCourseQuestion(text)) {
+
+    return makeResponse(
+      "Paid course-এর জন্য SNK-এর structured learning content দেখতে পারো। 💳",
+      [
+        "paidCourse"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     7. GENERAL COURSE
+     ======================================================= */
+
+  if (isCourseQuestion(text)) {
+
+    return makeResponse(
+      "SNK-তে তুমি Free এবং Paid — দুই ধরনের learning content দেখতে পারো। 🎓\n\nতুমি চাইলে Free Course দিয়ে শুরু করতে পারো, অথবা Paid Course দেখতে পারো।",
+      [
+        "freeCourse",
+        "paidCourse"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     8. LIVE CLASS
+     ======================================================= */
+
+  if (isLiveQuestion(text)) {
+
+    return makeResponse(
+      "Live class-এ যোগ দিতে Zoom ব্যবহার করো। 🔴\n\nনিচের button থেকে সরাসরি Join Live Class করতে পারবে।",
+      [
+        "live"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     9. RECORDED
+     ======================================================= */
+
+  if (isRecordedQuestion(text)) {
+
+    return makeResponse(
+      "Recorded learning content দেখতে নিচের playlist-এ যেতে পারো। 🎥",
+      [
+        "recorded"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     10. CODING
+     ======================================================= */
+
+  if (isCodingQuestion(text)) {
+
+    return makeResponse(
+      "Coding শিখতে চাইলে HTML → CSS → JavaScript এইভাবে শুরু করা ভালো। 💻\n\nপ্রথমে HTML দিয়ে webpage structure তৈরি শেখো। তারপর CSS দিয়ে design এবং JavaScript দিয়ে interaction শেখো।\n\nচাইলে Free Learning দিয়ে শুরু করতে পারো।",
+      [
+        "freeCourse"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     11. LEARNING
+     ======================================================= */
+
+  if (isLearningQuestion(text)) {
+
+    return makeResponse(
+      "তুমি কয়েকটি direction থেকে শুরু করতে পারো। 🎓\n\n💻 Web Development\n🎨 HTML & CSS\n⚡ JavaScript\n🤖 AI & Technology\n📚 Practical Projects\n\nতুমি একদম beginner হলে HTML দিয়ে শুরু করা সহজ।",
+      [
+        "freeCourse"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     12. SUPPORT
+     ======================================================= */
+
+  if (isSupportQuestion(text)) {
+
+    return makeResponse(
+      "অবশ্যই। 💬 SNK Support Team-এর সঙ্গে WhatsApp-এ যোগাযোগ করতে পারো।",
+      [
+        "support"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     13. SOCIAL
+     ======================================================= */
+
+  if (isSocialQuestion(text)) {
+
+    return makeResponse(
+      "SNK-এর social platforms থেকে update, learning content এবং announcements পেতে পারো। 📱",
+      [
+        "facebook",
+        "youtube",
+        "whatsappChannel"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     14. SHOPPING MELA
+     ======================================================= */
+
+  if (isShoppingMelaQuestion(text)) {
+
+    return makeResponse(
+      "Shopping Mela হলো local brands এবং businesses-এর জন্য একটি online marketplace ও promotion platform। 🛍️",
+      [
+        "shoppingMela"
+      ]
+    );
+
+  }
+
+
+  /* =======================================================
+     15. THANKS
+     ======================================================= */
+
+  if (isThanks(text)) {
+
+    return makeResponse(
+      randomReply([
+        "You're welcome! 😊❤️",
+        "অবশ্যই! আমি আছি। ✨",
+        "Welcome! 🌸 আবার কিছু জানতে চাইলে আমাকে জিজ্ঞেস করো।"
+      ])
+    );
+
+  }
+
+
+  /* =======================================================
+     16. GOODBYE
+     ======================================================= */
+
+  if (isGoodbye(text)) {
+
+    return makeResponse(
+      "ঠিক আছে। 😊 আবার দেখা হবে। তোমার learning journey-এর জন্য শুভকামনা! ❤️"
+    );
+
+  }
+
+
+  /* =======================================================
+     17. DEFAULT
+     ======================================================= */
+
+  return makeResponse(
+    "আমি বুঝতে চেষ্টা করছি। 😊\n\nতুমি আমাকে Free Course, Paid Course, Live Class, Recorded Class, Coding, HTML, Support অথবা SNK সম্পর্কে প্রশ্ন করতে পারো।",
+    [
+      "freeCourse",
+      "live"
+    ]
+  );
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+   ========================================================= */
+
+async function sendMessage() {
+
+  if (!input) {
+    return;
+  }
+
+
+  const text =
+    input.value.trim();
+
+
+  if (!text) {
+    return;
+  }
+
+
+  /*
+    Prevent double send.
+  */
+
+  if (
+    sendButton &&
+    sendButton.disabled
+  ) {
+    return;
+  }
+
+
+  /* Clear input immediately */
+
+  input.value = "";
+
+  autoResizeTextarea();
+
+
+  /* Add user message */
+
+  addMessage(
+    text,
+    "user",
+    true
+  );
+
+
+  /* Disable button */
+
+  if (sendButton) {
+
+    sendButton.disabled = true;
+
+  }
+
+
+  /* Show typing */
+
+  showTyping();
+
+
+  /*
+    Small realistic thinking delay.
+  */
+
+  await new Promise(resolve => {
+
+    setTimeout(
+      resolve,
+      550
+    );
+
+  });
+
+
+  /* Remove typing */
+
+  removeTyping();
+
+
+  /* Generate response */
+
+  const response =
+    getUshaReply(text);
+
+
+  /* Add USHA response */
+
+  addMessage(
+    response.text,
+    "assistant",
+    true,
+    response.actions
+  );
+
+
+  /* Re-enable */
+
+  if (sendButton) {
+
+    sendButton.disabled = false;
+
+  }
+
+
+  /* Focus input */
+
+  input.focus();
+
+
+  /* Final guaranteed scroll */
+
+  scrollChatToBottom(true);
+
+}
+
+
+/* =========================================================
+   ASK USHA
+   ========================================================= */
+
+function askUsha(text) {
+
+  if (!input) {
+    return;
+  }
+
+
+  input.value =
+    text || "";
+
+
+  autoResizeTextarea();
+
+
+  input.focus();
+
+
+  if (input.value.trim()) {
+
+    sendMessage();
+
+  }
+
+}
+
+
+/* =========================================================
+   OPEN USHA
+   ========================================================= */
+
+function openUsha() {
+
+  /*
+    If using usha.html as a standalone page,
+    browser is already on the page.
+  */
+
+  if (input) {
+
+    input.focus();
+
+  }
+
+
+  scrollChatToBottom(false);
+
+}
+
+
+/* =========================================================
+   CLOSE USHA
+   ========================================================= */
+
+function closeUsha() {
+
+  /*
+    Reserved for future popup version.
+  */
+
+}
+
+
+/* =========================================================
+   TOGGLE USHA
+   ========================================================= */
+
+function toggleUsha() {
+
+  /*
+    Reserved for future popup version.
+  */
+
+}
+
+
+/* =========================================================
+   AUTO RESIZE TEXTAREA
+   ========================================================= */
+
+function autoResizeTextarea() {
+
+  if (!input) {
+    return;
+  }
+
+
+  input.style.height =
+    "auto";
+
+
+  const maxHeight =
+    window.innerWidth <= 700
+      ? 110
+      : 150;
+
+
+  input.style.height =
+    Math.min(
+      input.scrollHeight,
+      maxHeight
+    ) + "px";
+
+}
+
+
+/* =========================================================
+   SUPPORT TOAST
+   ========================================================= */
+
+function showSupportMessage() {
+
+  /*
+    If support button already exists,
+    show a small confirmation.
+  */
+
+  let toast =
+    document.querySelector(
+      ".usha-toast"
+    );
+
+
+  if (!toast) {
+
+    toast =
+      document.createElement("div");
+
+    toast.className =
+      "usha-toast";
+
+    toast.textContent =
+      "💬 Support: WhatsApp থেকে SNK Team-এর সাথে যোগাযোগ করুন।";
+
+    document.body.appendChild(toast);
+
+  }
+
+
+  toast.classList.add("show");
+
+
+  setTimeout(() => {
+
+    toast.classList.remove("show");
+
+  }, 2800);
+
+}
+
+
+/* =========================================================
+   SUGGESTION BUTTONS
+   ========================================================= */
+
+function setupSuggestions() {
+
+  if (!suggestionsBox) {
+    return;
+  }
+
+
+  const cards =
+    suggestionsBox.querySelectorAll(
+      ".suggestion-card"
+    );
+
+
+  cards.forEach(card => {
+
+    card.addEventListener(
+      "click",
+      function() {
+
+        const text =
+          this.dataset.question ||
+          this.getAttribute("data-question") ||
+          this.textContent.trim();
+
+
+        askUsha(text);
+
       }
-    });
-  }
-
-  /* =========================================================
-     PREVENT CHAT CLICK FROM CLOSING
-     ========================================================= */
-
-  if (ushaPanel) {
-    ushaPanel.addEventListener("click", function (event) {
-      event.stopPropagation();
-    });
-  }
-
-  /* =========================================================
-     INITIALIZE
-     ========================================================= */
-
-  function initUsha() {
-    setupFloatingButton();
-    setupCloseButton();
-    setupClearButton();
-    setupSendButton();
-    setupInput();
-    setupSuggestions();
-    setupEscapeKey();
-
-    loadChat();
-
-    console.log("USHA AI Mentor initialized successfully.");
-  }
-
-  /* =========================================================
-     DOM READY
-     ========================================================= */
-
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initUsha
     );
-  } else {
-    initUsha();
+
+  });
+
+}
+
+
+/* =========================================================
+   ENTER KEY
+   ========================================================= */
+
+function setupInput() {
+
+  if (!input) {
+    return;
   }
 
-})();
+
+  input.addEventListener(
+    "input",
+    function() {
+
+      autoResizeTextarea();
+
+    }
+  );
+
+
+  input.addEventListener(
+    "keydown",
+    function(event) {
+
+      /*
+        Enter = send
+        Shift + Enter = new line
+      */
+
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SEND BUTTON
+   ========================================================= */
+
+function setupSendButton() {
+
+  if (!sendButton) {
+    return;
+  }
+
+
+  sendButton.addEventListener(
+    "click",
+    function() {
+
+      sendMessage();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+   ========================================================= */
+
+function setupClearButton() {
+
+  const clearButton =
+    document.getElementById(
+      "ushaClear"
+    );
+
+
+  if (!clearButton) {
+    return;
+  }
+
+
+  clearButton.addEventListener(
+    "click",
+    function() {
+
+      clearChat();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   SUPPORT BUTTON
+   ========================================================= */
+
+function setupSupportButton() {
+
+  const supportButton =
+    document.querySelector(
+      ".usha-support"
+    );
+
+
+  if (!supportButton) {
+    return;
+  }
+
+
+  supportButton.addEventListener(
+    "click",
+    function() {
+
+      showSupportMessage();
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   VISIBILITY / RESIZE
+   ========================================================= */
+
+window.addEventListener(
+  "resize",
+  function() {
+
+    autoResizeTextarea();
+
+    /*
+      On mobile browser resize,
+      keep latest message visible.
+    */
+
+    setTimeout(() => {
+
+      scrollChatToBottom(false);
+
+    }, 100);
+
+  }
+);
+
+
+/* =========================================================
+   MOBILE KEYBOARD FIX
+   ========================================================= */
+
+if (window.visualViewport) {
+
+  window.visualViewport.addEventListener(
+    "resize",
+    function() {
+
+      setTimeout(() => {
+
+        scrollChatToBottom(false);
+
+      }, 120);
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+function initUsha() {
+
+  loadChat();
+
+  setupSuggestions();
+
+  setupInput();
+
+  setupSendButton();
+
+  setupClearButton();
+
+  setupSupportButton();
+
+  autoResizeTextarea();
+
+
+  /*
+    Final scroll after browser has painted everything.
+  */
+
+  setTimeout(() => {
+
+    scrollChatToBottom(false);
+
+  }, 150);
+
+
+  setTimeout(() => {
+
+    scrollChatToBottom(false);
+
+  }, 500);
+
+}
+
+
+/* =========================================================
+   GLOBAL FUNCTIONS
+   ========================================================= */
+
+window.sendMessage =
+  sendMessage;
+
+window.askUsha =
+  askUsha;
+
+window.clearUshaChat =
+  clearUshaChat;
+
+window.openUsha =
+  openUsha;
+
+window.closeUsha =
+  closeUsha;
+
+window.toggleUsha =
+  toggleUsha;
+
+window.showSupportMessage =
+  showSupportMessage;
+
+
+/* =========================================================
+   START
+   ========================================================= */
+
+if (
+  document.readyState ===
+  "loading"
+) {
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    initUsha
+  );
+
+} else {
+
+  initUsha();
+
+}
