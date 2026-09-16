@@ -1,63 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   >
+
+  <title>USHA AI — Your AI Learning Mentor</title>
 
   <meta
     name="description"
-    content="USHA AI Learning Mentor - SNK IT Institute"
+    content="USHA — SNK IT Institute AI Learning Mentor"
   >
-
-  <title>USHA AI Mentor — SNK IT Institute</title>
 
   <link rel="stylesheet" href="usha.css">
 </head>
 
 <body>
 
-  <!-- =====================================================
-       USHA APP
-       ===================================================== -->
+  <div class="usha-app">
 
-  <main class="usha-app">
-
-    <!-- ===================================================
+    <!-- =====================================================
          HEADER
-         =================================================== -->
+    ====================================================== -->
 
     <header class="usha-header">
 
       <div class="usha-brand">
 
-        <div class="usha-logo">
-          <img
-            src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-            alt="USHA"
-          >
-        </div>
+        <img
+          class="usha-brand-icon"
+          src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+          alt="USHA"
+        >
 
         <div class="usha-brand-text">
-          <h1>usha.ai</h1>
-          <p>Your AI Learning Mentor</p>
+
+          <div class="usha-brand-name">
+            usha.ai
+          </div>
+
+          <div class="usha-brand-subtitle">
+            Your AI Learning Mentor
+          </div>
+
         </div>
 
       </div>
 
+
       <div class="usha-header-right">
 
-        <div class="usha-status">
-          <span class="status-dot"></span>
-          <span>Online</span>
+        <div class="usha-online">
+
+          <span class="usha-online-dot"></span>
+
+          <span>
+            Online
+          </span>
+
         </div>
 
+
         <button
-          class="header-support"
           type="button"
+          class="usha-support-btn"
           onclick="showSupportMessage()"
         >
           Support
@@ -68,228 +77,263 @@
     </header>
 
 
-    <!-- ===================================================
-         MAIN CHAT AREA
-         =================================================== -->
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
 
-    <section class="usha-main">
+    <main class="usha-main">
 
-      <!-- ================================================
-           WELCOME SCREEN
-           ================================================ -->
 
-      <div
+      <!-- ===================================================
+           WELCOME
+      ==================================================== -->
+
+      <section
         id="ushaWelcome"
         class="usha-welcome"
       >
 
-        <div class="welcome-avatar">
+        <img
+          class="usha-welcome-icon"
+          src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+          alt="USHA AI"
+        >
 
-          <img
-            src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-            alt="USHA AI"
-          >
 
-          <span class="welcome-online"></span>
-
-        </div>
-
-        <div class="welcome-badge">
+        <div class="usha-welcome-badge">
           ✨ AI Learning Mentor
         </div>
 
-        <h2>
-          Hi, I'm <span>USHA</span> 👋
-        </h2>
+
+        <h1>
+          Hi, I'm USHA 👋
+        </h1>
+
 
         <p>
-          তোমার learning journey শুরু করি।
-          <br>
-          Course, coding, website বা learning নিয়ে আমাকে যেকোনো প্রশ্ন করতে পারো।
+          তোমার শেখার journey-তে আমি তোমার AI learning mentor।
+          তুমি কী শিখতে চাও বলো, আমরা একসাথে শুরু করি।
         </p>
 
-      </div>
+      </section>
 
 
-      <!-- ================================================
-           SUGGESTION CARDS
-           ================================================ -->
+      <!-- ===================================================
+           SMART LEARNING MENU
+      ==================================================== -->
 
-      <div
+      <section
         id="ushaSuggestions"
         class="usha-suggestions"
       >
 
+        <!-- Free Course -->
+
         <button
-          class="suggestion-card"
           type="button"
-          data-question="আমি কী কী শিখতে পারি?"
+          class="usha-suggestion"
+          data-question="আমি কী কী Free Course শিখতে পারি?"
         >
 
-          <span class="suggestion-icon">🎓</span>
-
-          <span class="suggestion-content">
-            <strong>Learning</strong>
-            <small>আমি কী কী শিখতে পারি?</small>
+          <span class="usha-suggestion-icon">
+            🎓
           </span>
 
-          <span class="suggestion-arrow">→</span>
+          <span class="usha-suggestion-title">
+            Free Course
+          </span>
 
         </button>
 
 
+        <!-- Coding -->
+
         <button
-          class="suggestion-card"
           type="button"
+          class="usha-suggestion"
+          data-question="আমি coding শিখতে চাই, কোথা থেকে শুরু করব?"
+        >
+
+          <span class="usha-suggestion-icon">
+            💻
+          </span>
+
+          <span class="usha-suggestion-title">
+            Coding শিখতে চাই
+          </span>
+
+        </button>
+
+
+        <!-- HTML -->
+
+        <button
+          type="button"
+          class="usha-suggestion"
           data-question="আমি HTML শিখতে চাই, কোথা থেকে শুরু করব?"
         >
 
-          <span class="suggestion-icon">💻</span>
-
-          <span class="suggestion-content">
-            <strong>Learn Coding</strong>
-            <small>HTML কোথা থেকে শুরু করব?</small>
+          <span class="usha-suggestion-icon">
+            🌐
           </span>
 
-          <span class="suggestion-arrow">→</span>
+          <span class="usha-suggestion-title">
+            HTML শেখা শুরু
+          </span>
 
         </button>
 
 
-        <button
-          class="suggestion-card"
-          type="button"
-          data-question="Free course সম্পর্কে বলো"
-        >
-
-          <span class="suggestion-icon">📚</span>
-
-          <span class="suggestion-content">
-            <strong>Free Courses</strong>
-            <small>Free course সম্পর্কে জানি</small>
-          </span>
-
-          <span class="suggestion-arrow">→</span>
-
-        </button>
-
+        <!-- Live -->
 
         <button
-          class="suggestion-card"
           type="button"
+          class="usha-suggestion"
           data-question="Live class কীভাবে join করব?"
         >
 
-          <span class="suggestion-icon">🔴</span>
-
-          <span class="suggestion-content">
-            <strong>Live Class</strong>
-            <small>কীভাবে live class join করব?</small>
+          <span class="usha-suggestion-icon">
+            🔴
           </span>
 
-          <span class="suggestion-arrow">→</span>
+          <span class="usha-suggestion-title">
+            Live Class
+          </span>
 
         </button>
 
+
+        <!-- Recorded -->
 
         <button
-          class="suggestion-card"
           type="button"
-          data-question="তুমি কে?"
+          class="usha-suggestion"
+          data-question="Recorded class কোথায় পাব?"
         >
 
-          <span class="suggestion-icon">🤖</span>
-
-          <span class="suggestion-content">
-            <strong>About USHA</strong>
-            <small>USHA সম্পর্কে জানি</small>
+          <span class="usha-suggestion-icon">
+            📚
           </span>
 
-          <span class="suggestion-arrow">→</span>
+          <span class="usha-suggestion-title">
+            Recorded Classes
+          </span>
 
         </button>
 
+
+        <!-- SNK -->
 
         <button
-          class="suggestion-card"
           type="button"
-          data-question="SNK কে?"
+          class="usha-suggestion"
+          data-question="SNK IT Institute সম্পর্কে বলো"
         >
 
-          <span class="suggestion-icon">❤️</span>
-
-          <span class="suggestion-content">
-            <strong>About SNK</strong>
-            <small>SNK সম্পর্কে জানতে চাই</small>
+          <span class="usha-suggestion-icon">
+            ❤️
           </span>
 
-          <span class="suggestion-arrow">→</span>
+          <span class="usha-suggestion-title">
+            About SNK
+          </span>
 
         </button>
 
-      </div>
+      </section>
 
 
-      <!-- ================================================
+      <!-- ===================================================
            CHAT MESSAGES
-           ================================================ -->
+      ==================================================== -->
 
-      <div
+      <section
         id="ushaMessages"
         class="usha-messages"
         aria-live="polite"
-      ></div>
+        aria-label="USHA Chat Messages"
+      >
 
-    </section>
+        <!--
+          Messages will be added here
+          by usha.js
+        -->
+
+      </section>
+
+    </main>
 
 
-    <!-- ===================================================
-         INPUT AREA
-         =================================================== -->
+    <!-- =====================================================
+         FOOTER / INPUT
+    ====================================================== -->
 
     <footer class="usha-footer">
 
-      <div class="input-wrapper">
+      <div class="usha-input-container">
 
-        <textarea
-          id="ushaInput"
-          class="usha-input"
-          rows="1"
-          placeholder="Ask USHA anything..."
-          autocomplete="off"
-        ></textarea>
+        <div class="usha-input-wrap">
 
-        <button
-          id="ushaSend"
-          class="usha-send"
-          type="button"
-          aria-label="Send message"
-        >
-          <span>➤</span>
-        </button>
+          <textarea
+            id="ushaInput"
+            rows="1"
+            maxlength="1000"
+            placeholder="Ask USHA anything..."
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
 
-      </div>
 
-      <div class="footer-info">
-        <span>USHA can make mistakes. Check important information.</span>
+          <button
+            type="button"
+            id="ushaSend"
+            aria-label="Send message"
+            title="Send"
+          >
+            ➤
+          </button>
 
-        <button
-          id="ushaClear"
-          class="clear-chat"
-          type="button"
-        >
-          Clear chat
-        </button>
+        </div>
+
+
+        <div class="usha-clear">
+
+          <button
+            type="button"
+            id="ushaClear"
+          >
+            Clear chat
+          </button>
+
+        </div>
+
+
+        <div class="usha-footer-note">
+          USHA AI Mentor • SNK IT Institute
+        </div>
+
       </div>
 
     </footer>
 
-  </main>
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+      id="ushaToast"
+      class="usha-toast"
+      role="status"
+      aria-live="polite"
+    ></div>
+
+  </div>
 
 
-  <!-- =====================================================
-       JAVASCRIPT
-       ===================================================== -->
+  <!-- =======================================================
+       SCRIPT
+  ======================================================== -->
 
   <script src="usha.js"></script>
 
