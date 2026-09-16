@@ -1,2622 +1,3271 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SNK IT Institute | Learn. Build. Grow.</title>
+<title>SNK IT Institute | Learn. Build. Grow.</title>
 
-  <meta
-    name="description"
-    content="SNK IT Institute — Free Live Classes, Recorded Classes, Support and USHA AI Learning Assistant."
-  />
+<meta name="description"
+content="SNK IT Institute - Learn with live classes, recorded courses and USHA AI Mentor.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+/* =========================================================
+   SNK IT INSTITUTE
+   STEP 1 — USHA LEARNA-STYLE AI MENTOR UI
+========================================================= */
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-  />
+:root{
+    --bg:#050505;
+    --bg-soft:#0b0b0b;
+    --panel:#101010;
+    --panel-2:#151515;
+    --border:#242424;
+    --text:#f5f5f5;
+    --muted:#9a9a9a;
+    --yellow:#ffd400;
+    --green:#20d66b;
+    --danger:#ff5757;
+    --white:#ffffff;
+    --shadow:0 25px 80px rgba(0,0,0,.55);
+}
 
-  <style>
-    :root {
-      --bg: #05070c;
-      --bg-soft: #0a0e15;
-      --card: #0d121b;
-      --card-2: #111824;
-      --yellow: #f4c400;
-      --green: #0aad4b;
-      --white: #ffffff;
-      --text: #eef2f7;
-      --muted: #9ba6b5;
-      --border: rgba(255,255,255,.09);
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+html{
+    scroll-behavior:smooth;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+body{
+    font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: "Hind Siliguri", "Inter", sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+button,
+input,
+textarea{
+    font:inherit;
+}
 
-    button,
-    input {
-      font: inherit;
-    }
+button{
+    cursor:pointer;
+}
 
-    img {
-      max-width: 100%;
-      display: block;
-    }
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
-    .container {
-      width: min(1160px, calc(100% - 32px));
-      margin: auto;
-    }
+/* =========================================================
+   TOP PROMO
+========================================================= */
 
-    /* =========================
-       HEADER
-    ========================= */
+.promo{
+    background:linear-gradient(
+        90deg,
+        #161000,
+        #241d00,
+        #161000
+    );
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: rgba(5,7,12,.88);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
+    border-bottom:1px solid #3a3000;
 
-    .nav {
-      min-height: 72px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
+    padding:10px 18px;
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 19px;
-      white-space: nowrap;
-    }
+    text-align:center;
 
-    .logo img {
-      width: 42px;
-      height: 42px;
-      object-fit: contain;
-    }
+    font-size:14px;
+}
 
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
+.promo a{
+    color:var(--yellow);
+    font-weight:700;
+}
 
-    .nav-links a {
-      color: #c9d1dc;
-      padding: 9px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      transition: .25s;
-    }
+.promo strong{
+    color:#fff;
+}
 
-    .nav-links a:hover {
-      color: var(--white);
-      background: rgba(255,255,255,.06);
-    }
+/* =========================================================
+   NAVBAR
+========================================================= */
 
-    .nav-links .ask {
-      background: var(--green);
-      color: white;
-      font-weight: 700;
-    }
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
 
-    .nav-links .ask:hover {
-      background: #0cc956;
-    }
+    background:rgba(5,5,5,.88);
 
-    /* =========================
-       HERO
-    ========================= */
+    backdrop-filter:blur(18px);
 
-    .hero {
-      padding: 75px 0 55px;
-      position: relative;
-      overflow: hidden;
-    }
+    border-bottom:1px solid var(--border);
 
-    .hero::before {
-      content: "";
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: rgba(244,196,0,.07);
-      filter: blur(100px);
-      border-radius: 50%;
-      top: -250px;
-      left: -150px;
-      pointer-events: none;
-    }
+    padding:14px 5%;
+}
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 45px;
-      align-items: center;
-    }
+.nav-inner{
+    max-width:1250px;
+    margin:auto;
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border: 1px solid rgba(244,196,0,.25);
-      background: rgba(244,196,0,.08);
-      color: var(--yellow);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 17px;
-    }
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 
-    .badge span {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 12px var(--green);
-    }
+    gap:20px;
+}
 
-    h1 {
-      font-family: "Inter", sans-serif;
-      font-size: clamp(42px, 6vw, 70px);
-      line-height: 1.02;
-      letter-spacing: -2.5px;
-      margin-bottom: 20px;
-    }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
 
-    h1 span {
-      color: var(--yellow);
-    }
+.brand img{
+    width:45px;
+    height:45px;
+    object-fit:contain;
+    border-radius:12px;
+}
 
-    .hero-text {
-      color: var(--muted);
-      max-width: 600px;
-      font-size: 17px;
-      margin-bottom: 28px;
-    }
+.brand-text{
+    display:flex;
+    flex-direction:column;
+}
 
-    .hero-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
+.brand-text strong{
+    font-size:17px;
+}
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      min-height: 48px;
-      padding: 0 18px;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: .25s;
-      border: 1px solid transparent;
-    }
+.brand-text span{
+    font-size:11px;
+    color:var(--muted);
+}
 
-    .btn-yellow {
-      background: var(--yellow);
-      color: #111;
-    }
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
 
-    .btn-yellow:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(244,196,0,.18);
-    }
+.nav-links a{
+    color:#cfcfcf;
+    font-size:14px;
+    transition:.2s;
+}
 
-    .btn-dark {
-      background: rgba(255,255,255,.04);
-      border-color: var(--border);
-      color: var(--white);
-    }
+.nav-links a:hover{
+    color:var(--yellow);
+}
 
-    .btn-dark:hover {
-      background: rgba(255,255,255,.08);
-    }
+.nav-join{
+    background:var(--yellow);
+    color:#000 !important;
+    padding:9px 16px;
+    border-radius:10px;
+    font-weight:800;
+}
 
-    .hero-image {
-      position: relative;
-      display: flex;
-      justify-content: center;
-    }
+/* =========================================================
+   HERO
+========================================================= */
 
-    .hero-image::before {
-      content: "";
-      position: absolute;
-      inset: 15%;
-      background: rgba(10,173,75,.12);
-      filter: blur(70px);
-      border-radius: 50%;
-    }
+.hero{
+    max-width:1250px;
+    margin:auto;
 
-    .hero-image img {
-      position: relative;
-      width: min(500px, 100%);
-      max-height: 430px;
-      object-fit: contain;
-    }
+    padding:100px 5% 80px;
 
-    /* =========================
-       USHA BANNER
-    ========================= */
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
 
-    .usha-banner {
-      margin: 20px 0 60px;
-    }
+    gap:50px;
 
-    .usha-banner-card {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(10,173,75,.25);
-      background:
+    align-items:center;
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:7px 12px;
+
+    border:1px solid #333;
+    border-radius:999px;
+
+    background:#101010;
+
+    color:#bbb;
+
+    font-size:13px;
+
+    margin-bottom:20px;
+}
+
+.hero-badge i{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--green);
+    display:inline-block;
+}
+
+.hero h1{
+    font-size:clamp(45px,7vw,82px);
+    line-height:1.02;
+    letter-spacing:-3px;
+
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:var(--yellow);
+}
+
+.hero p{
+    color:#aaa;
+    font-size:18px;
+    max-width:650px;
+
+    margin-bottom:30px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:13px 20px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    font-weight:700;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    background:var(--yellow);
+    color:#000;
+}
+
+.btn-secondary{
+    background:#111;
+    color:#fff;
+}
+
+/* =========================================================
+   HERO CARD
+========================================================= */
+
+.hero-card{
+    border:1px solid var(--border);
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(255,212,0,.12),
+            transparent 45%
+        ),
+        #0d0d0d;
+
+    border-radius:26px;
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+}
+
+.hero-card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:30px;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:#aaa;
+    font-size:13px;
+}
+
+.status-dot{
+    width:8px;
+    height:8px;
+
+    background:var(--green);
+
+    border-radius:50%;
+}
+
+.ai-mini{
+    padding:8px 11px;
+
+    background:#171717;
+
+    border:1px solid #292929;
+
+    border-radius:10px;
+
+    font-size:12px;
+
+    color:var(--yellow);
+}
+
+.hero-ai{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    margin-bottom:20px;
+}
+
+.hero-ai img{
+    width:62px;
+    height:62px;
+
+    border-radius:18px;
+
+    border:1px solid #333;
+
+    background:#161616;
+}
+
+.hero-ai h3{
+    font-size:21px;
+}
+
+.hero-ai p{
+    font-size:13px;
+    margin:0;
+}
+
+.fake-message{
+    padding:15px;
+
+    border-radius:15px;
+
+    background:#151515;
+
+    border:1px solid #252525;
+
+    margin-top:12px;
+
+    color:#d7d7d7;
+
+    font-size:14px;
+}
+
+.fake-message.user{
+    background:#1c1c1c;
+    text-align:right;
+}
+
+/* =========================================================
+   QUICK ACCESS
+========================================================= */
+
+.section{
+    max-width:1250px;
+    margin:auto;
+
+    padding:75px 5%;
+}
+
+.section-head{
+    margin-bottom:30px;
+}
+
+.section-head small{
+    color:var(--yellow);
+    font-weight:800;
+}
+
+.section-head h2{
+    font-size:35px;
+    margin-top:5px;
+}
+
+.section-head p{
+    color:var(--muted);
+}
+
+.quick-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:15px;
+}
+
+.quick-card{
+    padding:23px;
+
+    background:#0e0e0e;
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    transition:.25s;
+}
+
+.quick-card:hover{
+    transform:translateY(-4px);
+    border-color:#444;
+}
+
+.quick-icon{
+    width:45px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:13px;
+
+    background:#191919;
+
+    margin-bottom:17px;
+
+    font-size:20px;
+}
+
+.quick-card h3{
+    margin-bottom:5px;
+}
+
+.quick-card p{
+    color:#888;
+    font-size:13px;
+}
+
+/* =========================================================
+   COURSE SECTION
+========================================================= */
+
+.course-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+}
+
+.course-card{
+    overflow:hidden;
+
+    border:1px solid var(--border);
+
+    background:#0e0e0e;
+
+    border-radius:20px;
+}
+
+.course-image{
+    height:170px;
+
+    background:
         linear-gradient(
-          120deg,
-          rgba(10,173,75,.10),
-          rgba(255,255,255,.025)
+            135deg,
+            #171717,
+            #0b0b0b
         );
-      border-radius: 24px;
-      padding: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      box-shadow: var(--shadow);
-    }
 
-    .usha-banner-left {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-    .usha-mini-icon {
-      width: 58px;
-      height: 58px;
-      padding: 7px;
-      border-radius: 17px;
-      background: rgba(10,173,75,.12);
-      border: 1px solid rgba(10,173,75,.25);
-    }
+    font-size:45px;
+}
 
-    .usha-banner h2 {
-      font-size: 22px;
-      margin-bottom: 2px;
-    }
+.course-body{
+    padding:22px;
+}
 
-    .usha-banner p {
-      color: var(--muted);
-      font-size: 14px;
-    }
+.course-body small{
+    color:var(--yellow);
+}
 
-    .usha-open-btn {
-      border: 0;
-      background: var(--green);
-      color: white;
-      padding: 12px 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 700;
-      transition: .25s;
-      white-space: nowrap;
-    }
+.course-body h3{
+    margin:7px 0;
+}
 
-    .usha-open-btn:hover {
-      transform: translateY(-2px);
-      background: #0cc956;
-    }
+.course-body p{
+    color:#8c8c8c;
+    font-size:13px;
 
-    /* =========================
-       SECTIONS
-    ========================= */
+    margin-bottom:18px;
+}
 
-    section {
-      scroll-margin-top: 90px;
-    }
+/* =========================================================
+   SOCIAL
+========================================================= */
 
-    .section {
-      padding: 65px 0;
-    }
+.social-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+    gap:15px;
+}
 
-    .section-title h2 {
-      font-family: "Inter", sans-serif;
-      font-size: clamp(27px, 4vw, 38px);
-      margin-bottom: 8px;
-    }
+.social-card{
+    padding:25px;
 
-    .section-title p {
-      color: var(--muted);
-    }
+    border:1px solid var(--border);
 
-    /* =========================
-       QUICK ACCESS
-    ========================= */
-
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
+    background:#0e0e0e;
 
-    .quick-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      padding: 24px;
-      border-radius: 18px;
-      transition: .25s;
-    }
+    border-radius:18px;
+}
 
-    .quick-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(244,196,0,.22);
-    }
+.social-card h3{
+    margin-bottom:5px;
+}
 
-    .quick-icon {
-      width: 45px;
-      height: 45px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      background: rgba(244,196,0,.1);
-      color: var(--yellow);
-      margin-bottom: 17px;
-      font-size: 19px;
-    }
+.social-card p{
+    color:#888;
+    font-size:13px;
 
-    .quick-card h3 {
-      margin-bottom: 4px;
-    }
+    margin-bottom:15px;
+}
 
-    .quick-card p {
-      color: var(--muted);
-      font-size: 14px;
-    }
+.social-card a{
+    color:var(--yellow);
+    font-weight:700;
+    font-size:14px;
+}
 
-    /* =========================
-       CONTENT CARDS
-    ========================= */
-
-    .content-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 28px;
-    }
+/* =========================================================
+   USHA SECTION
+========================================================= */
 
-    .content-card h3 {
-      font-size: 24px;
-      margin-bottom: 8px;
-    }
+.usha-section{
+    max-width:1250px;
+    margin:0 auto;
 
-    .content-card p {
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
+    padding:80px 5%;
+}
 
-    .content-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+.usha-banner{
+    position:relative;
+    overflow:hidden;
 
-    /* =========================
-       SOCIAL
-    ========================= */
-
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
+    border:1px solid #2c2c2c;
 
-    .social-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 17px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      transition: .25s;
-    }
+    border-radius:28px;
 
-    .social-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255,255,255,.16);
-    }
+    padding:45px;
 
-    .social-card i {
-      font-size: 22px;
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,.06);
-    }
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(255,212,0,.13),
+            transparent 35%
+        ),
+        #0c0c0c;
 
-    .social-card span {
-      color: var(--muted);
-      font-size: 13px;
-      display: block;
-    }
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    /* =========================
-       FOOTER
-    ========================= */
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 30px 0;
-      color: var(--muted);
-      text-align: center;
-      font-size: 14px;
-    }
+    gap:40px;
+}
 
-    /* =========================================================
-       USHA LEARNING ASSISTANT
-       Learna-inspired interaction — SNK original implementation
-    ========================================================= */
-
-    .usha-widget {
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      z-index: 2000;
-    }
+.usha-info{
+    max-width:700px;
+}
 
-    .usha-float {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      border: 2px solid rgba(10,173,75,.45);
-      background: #07120c;
-      box-shadow:
-        0 12px 35px rgba(0,0,0,.45),
-        0 0 0 7px rgba(10,173,75,.07);
-      cursor: pointer;
-      padding: 8px;
-      transition: .25s;
-      position: relative;
-    }
+.usha-label{
+    color:var(--yellow);
 
-    .usha-float:hover {
-      transform: scale(1.06);
-    }
+    font-size:13px;
 
-    .usha-float img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    font-weight:800;
 
-    .usha-online {
-      position: absolute;
-      right: -1px;
-      bottom: 1px;
-      width: 14px;
-      height: 14px;
-      background: var(--green);
-      border: 3px solid var(--bg);
-      border-radius: 50%;
-    }
+    text-transform:uppercase;
 
-    /* CHAT */
-
-    .usha-chat {
-      position: fixed;
-      right: 22px;
-      bottom: 95px;
-      width: min(420px, calc(100vw - 28px));
-      height: min(690px, calc(100vh - 115px));
-      background: #ffffff;
-      color: #111827;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 30px 90px rgba(0,0,0,.55);
-      border: 1px solid rgba(0,0,0,.08);
-      display: none;
-      flex-direction: column;
-    }
+    letter-spacing:1px;
+}
 
-    .usha-chat.active {
-      display: flex;
-      animation: chatIn .25s ease;
-    }
+.usha-info h2{
+    font-size:42px;
 
-    @keyframes chatIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px) scale(.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
+    margin:10px 0;
+}
 
-    .usha-chat-header {
-      background: #080b10;
-      color: white;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
+.usha-info p{
+    color:#999;
+}
 
-    .usha-profile {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
+.usha-open{
+    border:0;
 
-    .usha-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      padding: 5px;
-      background: rgba(10,173,75,.13);
-      border: 1px solid rgba(10,173,75,.3);
-    }
+    padding:14px 22px;
 
-    .usha-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    background:var(--yellow);
 
-    .usha-profile strong {
-      display: block;
-      font-size: 15px;
-    }
+    color:#000;
 
-    .usha-status {
-      color: #9fe7b8;
-      font-size: 11px;
-    }
+    border-radius:13px;
 
-    .usha-header-actions {
-      display: flex;
-      gap: 5px;
-    }
+    font-weight:900;
 
-    .usha-head-btn {
-      width: 35px;
-      height: 35px;
-      border: 0;
-      border-radius: 10px;
-      background: rgba(255,255,255,.07);
-      color: white;
-      cursor: pointer;
-    }
+    white-space:nowrap;
+}
 
-    .usha-head-btn:hover {
-      background: rgba(255,255,255,.13);
-    }
+/* =========================================================
+   FOOTER
+========================================================= */
 
-    /* Learning intro */
+footer{
+    border-top:1px solid var(--border);
 
-    .usha-learning-intro {
-      padding: 17px 17px 10px;
-      background: #f7faf8;
-      border-bottom: 1px solid #edf1ee;
-    }
+    padding:35px 5%;
 
-    .usha-learning-intro strong {
-      font-size: 15px;
-    }
+    text-align:center;
 
-    .usha-learning-intro p {
-      color: #687381;
-      font-size: 12px;
-      margin-top: 2px;
-    }
+    color:#777;
+
+    font-size:13px;
+}
+
+footer strong{
+    color:#ddd;
+}
+
+/* =========================================================
+   USHA OVERLAY
+========================================================= */
+
+.usha-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.72);
+
+    backdrop-filter:blur(7px);
+
+    z-index:900;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.25s;
+}
+
+.usha-overlay.active{
+    opacity:1;
+    visibility:visible;
+}
+
+/* =========================================================
+   USHA APP
+========================================================= */
+
+.usha-app{
+    position:fixed;
+
+    z-index:1000;
+
+    top:50%;
+    left:50%;
+
+    width:min(1180px,94vw);
+    height:min(760px,90vh);
+
+    transform:
+        translate(-50%,-47%)
+        scale(.97);
+
+    background:#080808;
+
+    border:1px solid #2b2b2b;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 40px 120px rgba(0,0,0,.8);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.25s;
+}
+
+.usha-app.active{
+    opacity:1;
+    visibility:visible;
+
+    transform:
+        translate(-50%,-50%)
+        scale(1);
+}
+
+/* =========================================================
+   USHA HEADER
+========================================================= */
+
+.usha-header{
+    height:64px;
+
+    border-bottom:1px solid #242424;
+
+    display:flex;
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 18px;
+
+    background:#0b0b0b;
+}
+
+.usha-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.usha-brand img{
+    width:38px;
+    height:38px;
+
+    border-radius:11px;
+
+    object-fit:cover;
+
+    border:1px solid #333;
+}
+
+.usha-brand-text{
+    display:flex;
+    flex-direction:column;
+
+    line-height:1.15;
+}
+
+.usha-brand-text strong{
+    font-size:15px;
+}
+
+.usha-brand-text span{
+    color:#777;
+
+    font-size:11px;
+
+    margin-top:3px;
+}
+
+.usha-header-right{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.support-status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    color:#aaa;
+
+    font-size:12px;
+}
+
+.support-status i{
+    width:7px;
+    height:7px;
+
+    background:var(--green);
+
+    border-radius:50%;
+}
+
+.usha-header-btn{
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1px solid #292929;
+
+    background:#141414;
+
+    color:#aaa;
+
+    border-radius:9px;
+}
+
+.usha-header-btn:hover{
+    color:#fff;
+}
+
+/* =========================================================
+   USHA LAYOUT
+========================================================= */
+
+.usha-layout{
+    display:grid;
+
+    grid-template-columns:240px 1fr;
+
+    height:calc(100% - 64px);
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.usha-sidebar{
+    border-right:1px solid #242424;
+
+    background:#0b0b0b;
+
+    padding:16px;
+
+    display:flex;
+    flex-direction:column;
+}
+
+.new-chat{
+    width:100%;
+
+    padding:12px 14px;
+
+    border:1px solid #303030;
+
+    background:#151515;
+
+    color:#fff;
+
+    border-radius:11px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+}
+
+.new-chat:hover{
+    background:#1b1b1b;
+}
+
+.sidebar-title{
+    color:#666;
+
+    text-transform:uppercase;
+
+    letter-spacing:.7px;
+
+    font-size:10px;
+
+    font-weight:800;
+
+    margin:10px 8px;
+}
+
+.sidebar-item{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:11px;
+
+    padding:10px 11px;
+
+    border:0;
+
+    background:transparent;
+
+    color:#aaa;
+
+    border-radius:9px;
+
+    text-align:left;
+
+    font-size:13px;
+
+    margin-bottom:3px;
+}
+
+.sidebar-item:hover,
+.sidebar-item.active{
+    background:#161616;
+    color:#fff;
+}
+
+.sidebar-item .side-icon{
+    width:25px;
+
+    text-align:center;
+
+    color:#777;
+}
+
+.sidebar-spacer{
+    flex:1;
+}
 
-    .usha-suggestions {
-      padding: 10px 15px 7px;
-      display: flex;
-      gap: 7px;
-      overflow-x: auto;
-      background: #f7faf8;
-      scrollbar-width: none;
+.sidebar-bottom{
+    border-top:1px solid #222;
+
+    padding-top:13px;
+}
+
+.clear-chat{
+    color:#888;
+}
+
+.clear-chat:hover{
+    color:#ff6565;
+}
+
+/* =========================================================
+   CHAT AREA
+========================================================= */
+
+.usha-main{
+    position:relative;
+
+    min-width:0;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,212,0,.035),
+            transparent 35%
+        ),
+        #080808;
+}
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.usha-welcome{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:40px 45px 130px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.welcome-inner{
+    width:min(760px,100%);
+
+    margin:auto;
+
+    text-align:center;
+}
+
+.welcome-avatar{
+    width:78px;
+    height:78px;
+
+    border-radius:22px;
+
+    border:1px solid #333;
+
+    background:#121212;
+
+    object-fit:cover;
+
+    margin-bottom:22px;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.4);
+}
+
+.welcome-inner h1{
+    font-size:34px;
+
+    letter-spacing:-1px;
+
+    margin-bottom:8px;
+}
+
+.welcome-inner h1 span{
+    color:var(--yellow);
+}
+
+.welcome-inner > p{
+    color:#888;
+
+    max-width:580px;
+
+    margin:0 auto 30px;
+
+    font-size:14px;
+}
+
+/* =========================================================
+   PROMPT GRID
+========================================================= */
+
+.prompt-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:11px;
+
+    text-align:left;
+}
+
+.prompt-card{
+    padding:16px;
+
+    border:1px solid #242424;
+
+    background:#101010;
+
+    color:#ddd;
+
+    border-radius:14px;
+
+    transition:.2s;
+}
+
+.prompt-card:hover{
+    border-color:#444;
+
+    background:#141414;
+
+    transform:translateY(-2px);
+}
+
+.prompt-card strong{
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:4px;
+}
+
+.prompt-card span{
+    display:block;
+
+    color:#777;
+
+    font-size:11px;
+}
+
+/* =========================================================
+   CHAT MESSAGES
+========================================================= */
+
+.chat-messages{
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:28px 45px 130px;
+
+    display:none;
+}
+
+.chat-messages.active{
+    display:block;
+}
+
+.message-wrap{
+    max-width:780px;
+
+    margin:0 auto 22px;
+
+    display:flex;
+
+    gap:12px;
+}
+
+.message-wrap.user{
+    justify-content:flex-end;
+}
+
+.message-avatar{
+    width:34px;
+    height:34px;
+
+    flex:0 0 34px;
+
+    border-radius:10px;
+
+    object-fit:cover;
+
+    border:1px solid #303030;
+}
+
+.message{
+    max-width:680px;
+
+    padding:13px 16px;
+
+    border-radius:15px;
+
+    font-size:14px;
+
+    white-space:pre-wrap;
+}
+
+.message.ai{
+    background:#111;
+
+    border:1px solid #242424;
+
+    color:#ddd;
+}
+
+.message.user{
+    background:#e9c400;
+
+    color:#050505;
+
+    font-weight:600;
+}
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+.typing{
+    display:flex;
+
+    gap:4px;
+
+    align-items:center;
+}
+
+.typing span{
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:#888;
+
+    animation:typing 1.1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+    0%,60%,100%{
+        transform:translateY(0);
+        opacity:.4;
     }
 
-    .usha-suggestions::-webkit-scrollbar {
-      display: none;
+    30%{
+        transform:translateY(-4px);
+        opacity:1;
     }
+}
+
+/* =========================================================
+   INPUT AREA
+========================================================= */
+
+.usha-input-area{
+    position:absolute;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    padding:18px 35px 20px;
+
+    background:
+        linear-gradient(
+            to top,
+            #080808 70%,
+            transparent
+        );
+}
+
+.input-box{
+    width:min(780px,100%);
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:8px;
+
+    padding:8px;
+
+    background:#121212;
+
+    border:1px solid #2b2b2b;
+
+    border-radius:17px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.45);
+}
+
+.input-box textarea{
+    flex:1;
+
+    min-height:42px;
+    max-height:130px;
+
+    resize:none;
+
+    border:0;
+
+    outline:0;
+
+    background:transparent;
+
+    color:#fff;
+
+    padding:10px 10px;
 
-    .suggestion {
-      flex: 0 0 auto;
-      border: 1px solid #dce8df;
-      background: white;
-      color: #26342c;
-      padding: 7px 11px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 12px;
-      transition: .2s;
+    font-size:14px;
+}
+
+.input-box textarea::placeholder{
+    color:#666;
+}
+
+.send-btn{
+    width:42px;
+    height:42px;
+
+    flex:0 0 42px;
+
+    border:0;
+
+    border-radius:12px;
+
+    background:var(--yellow);
+
+    color:#000;
+
+    font-size:17px;
+
+    font-weight:900;
+}
+
+.send-btn:hover{
+    filter:brightness(1.08);
+}
+
+.input-note{
+    text-align:center;
+
+    color:#555;
+
+    font-size:10px;
+
+    margin-top:7px;
+}
+
+/* =========================================================
+   FLOATING USHA BUTTON
+========================================================= */
+
+.usha-float{
+    position:fixed;
+
+    right:24px;
+    bottom:24px;
+
+    z-index:800;
+
+    width:62px;
+    height:62px;
+
+    border-radius:20px;
+
+    border:1px solid #444;
+
+    background:#111;
+
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.55);
+
+    overflow:hidden;
+
+    transition:.2s;
+}
+
+.usha-float:hover{
+    transform:translateY(-3px) scale(1.03);
+}
+
+.usha-float img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:900px){
+
+    .nav-links{
+        display:none;
     }
 
-    .suggestion:hover {
-      border-color: var(--green);
-      color: #087e38;
-      background: #f0fbf4;
+    .hero{
+        grid-template-columns:1fr;
+
+        padding-top:65px;
     }
 
-    /* Messages */
-
-    .usha-messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 18px 15px;
-      background: #ffffff;
-      scroll-behavior: smooth;
+    .quick-grid{
+        grid-template-columns:
+        repeat(2,1fr);
     }
 
-    .message-row {
-      display: flex;
-      margin-bottom: 13px;
+    .course-grid{
+        grid-template-columns:1fr;
     }
 
-    .message-row.user {
-      justify-content: flex-end;
+    .social-grid{
+        grid-template-columns:1fr;
     }
+
+    .usha-app{
+        width:100vw;
+        height:100vh;
 
-    .message {
-      max-width: 86%;
-      padding: 11px 13px;
-      border-radius: 15px;
-      font-size: 14px;
-      line-height: 1.55;
-      word-wrap: break-word;
+        max-height:none;
+
+        border-radius:0;
+
+        border:0;
     }
 
-    .message.bot {
-      background: #f1f5f3;
-      color: #17201b;
-      border-bottom-left-radius: 5px;
+    .usha-layout{
+        grid-template-columns:1fr;
     }
 
-    .message.user {
-      background: #0aad4b;
-      color: white;
-      border-bottom-right-radius: 5px;
+    .usha-sidebar{
+        display:none;
     }
 
-    .message a {
-      color: #087b39;
-      font-weight: 700;
-      text-decoration: underline;
+    .usha-welcome{
+        padding:30px 20px 125px;
     }
 
-    .message.user a {
-      color: white;
+    .chat-messages{
+        padding:25px 18px 130px;
     }
 
-    .message-time {
-      display: block;
-      margin-top: 5px;
-      font-size: 9px;
-      opacity: .55;
-      text-align: right;
+    .usha-input-area{
+        padding:15px 14px 17px;
     }
 
-    .typing {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 10px 13px;
-      border-radius: 15px;
-      background: #f1f5f3;
-      border-bottom-left-radius: 5px;
+    .prompt-grid{
+        grid-template-columns:1fr;
     }
 
-    .typing span {
-      width: 5px;
-      height: 5px;
-      background: #7d8982;
-      border-radius: 50%;
-      animation: typing .9s infinite;
+    .welcome-inner h1{
+        font-size:28px;
     }
 
-    .typing span:nth-child(2) {
-      animation-delay: .15s;
+    .support-status{
+        display:none;
     }
 
-    .typing span:nth-child(3) {
-      animation-delay: .3s;
+    .usha-info h2{
+        font-size:32px;
     }
 
-    @keyframes typing {
-      0%, 60%, 100% {
-        transform: translateY(0);
-      }
-      30% {
-        transform: translateY(-4px);
-      }
+    .usha-banner{
+        padding:30px;
+
+        flex-direction:column;
+        align-items:flex-start;
     }
+}
 
-    /* Input */
+@media(max-width:560px){
 
-    .usha-input-area {
-      border-top: 1px solid #e9eeeb;
-      padding: 10px;
-      background: white;
+    .promo{
+        font-size:12px;
     }
 
-    .usha-input-box {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      background: #f4f7f5;
-      border: 1px solid #e0e7e2;
-      border-radius: 14px;
-      padding: 5px;
+    .brand-text{
+        display:none;
     }
 
-    #ushaInput {
-      flex: 1;
-      min-width: 0;
-      border: 0;
-      outline: 0;
-      background: transparent;
-      padding: 9px 8px;
-      color: #111827;
-      font-size: 14px;
+    .hero h1{
+        font-size:48px;
     }
 
-    #ushaInput::placeholder {
-      color: #8b9590;
+    .hero p{
+        font-size:15px;
     }
 
-    #sendUsha {
-      width: 40px;
-      height: 40px;
-      border: 0;
-      border-radius: 11px;
-      background: var(--green);
-      color: white;
-      cursor: pointer;
-      flex-shrink: 0;
+    .quick-grid{
+        grid-template-columns:1fr;
     }
 
-    #sendUsha:hover {
-      background: #088f3d;
+    .section{
+        padding:55px 5%;
     }
 
-    .usha-footer-note {
-      text-align: center;
-      color: #98a09b;
-      font-size: 9px;
-      margin-top: 6px;
+    .usha-header{
+        height:58px;
     }
 
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 900px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        padding-top: 50px;
-      }
-
-      .hero-image {
-        order: -1;
-      }
-
-      .quick-grid,
-      .social-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .usha-brand img{
+        width:34px;
+        height:34px;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        width: min(100% - 22px, 1160px);
-      }
-
-      .hero {
-        padding: 42px 0 35px;
-      }
-
-      h1 {
-        letter-spacing: -1.5px;
-      }
-
-      .hero-text {
-        font-size: 15px;
-      }
-
-      .hero-buttons {
-        flex-direction: column;
-      }
-
-      .hero-buttons .btn {
-        width: 100%;
-      }
-
-      .usha-banner-card {
-        padding: 18px;
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .usha-banner-left {
-        align-items: flex-start;
-      }
-
-      .usha-open-btn {
-        width: 100%;
-      }
-
-      .quick-grid,
-      .social-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 48px 0;
-      }
-
-      .content-card {
-        padding: 20px;
-      }
-
-      .usha-widget {
-        right: 14px;
-        bottom: 14px;
-      }
-
-      .usha-float {
-        width: 58px;
-        height: 58px;
-      }
-
-      .usha-chat {
-        right: 7px;
-        bottom: 80px;
-        width: calc(100vw - 14px);
-        height: calc(100vh - 95px);
-        max-height: none;
-        border-radius: 20px;
-      }
+    .usha-float{
+        width:57px;
+        height:57px;
+
+        right:17px;
+        bottom:17px;
     }
-  </style>
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================== -->
+<!-- =====================================================
+     PROMO
+===================================================== -->
 
-  <header>
-    <div class="container nav">
-
-      <a href="#" class="logo">
-        <img
-          src="https://github.com/yourdocuments/products/blob/main/snk%20itlogo%20tn.svg?raw=true"
-          alt="SNK IT Institute"
-        >
-        <span>SNK IT Institute</span>
-      </a>
-
-      <nav class="nav-links">
-        <a href="#home">Home</a>
-        <a href="#live">Live Class</a>
-        <a href="#recorded">Recorded</a>
-        <a href="#social">Social</a>
-        <a href="#support">Support</a>
-        <a
-          href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-          target="_blank"
-        >
-          Join Live
-        </a>
-
-        <a href="javascript:void(0)" class="ask" onclick="openUsha()">
-          <i class="fa-solid fa-sparkles"></i>
-          Ask USHA
-        </a>
-      </nav>
-
-    </div>
-  </header>
+<div class="promo">
+    🎉 <strong>36% Discount</strong>
+    — Shopping Mela-তে বিশেষ ছাড় —
+    <a
+        href="https://yourdocuments.github.io/shopingmela/"
+        target="_blank"
+        rel="noopener"
+    >
+        SHOPING36
+    </a>
+</div>
 
 
-  <!-- =========================
-       HOME
-  ========================== -->
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
 
-  <main id="home">
+<header class="navbar">
 
-    <section class="hero">
-      <div class="container hero-grid">
+    <div class="nav-inner">
 
-        <div>
-
-          <div class="badge">
-            <span></span>
-            SNK IT INSTITUTE
-          </div>
-
-          <h1>
-            Learn.<br>
-            <span>Build.</span><br>
-            Grow.
-          </h1>
-
-          <p class="hero-text">
-            Learn practical IT skills through live classes, recorded lessons
-            and friendly student support — all in one place.
-          </p>
-
-          <div class="hero-buttons">
-
-            <a
-              class="btn btn-yellow"
-              href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-              target="_blank"
-            >
-              <i class="fa-solid fa-video"></i>
-              Join Live Class
-            </a>
-
-            <a
-              class="btn btn-dark"
-              href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
-              target="_blank"
-            >
-              <i class="fa-solid fa-play"></i>
-              Recorded Classes
-            </a>
-
-          </div>
-
-        </div>
-
-        <div class="hero-image">
-
-          <img
-            src="https://github.com/yourdocuments/products/blob/main/Ushacover.svg?raw=true"
-            alt="USHA AI Assistant"
-          >
-
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- =========================
-         USHA BANNER
-    ========================== -->
-
-    <section class="usha-banner">
-
-      <div class="container">
-
-        <div class="usha-banner-card">
-
-          <div class="usha-banner-left">
+        <a class="brand" href="#home">
 
             <img
-              class="usha-mini-icon"
-              src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-              alt="USHA"
+                src="https://github.com/yourdocuments/products/blob/main/snk%20itlogo%20tn.svg?raw=true"
+                alt="SNK IT Institute"
+            >
+
+            <div class="brand-text">
+
+                <strong>SNK IT Institute</strong>
+
+                <span>Learn. Build. Grow.</span>
+
+            </div>
+
+        </a>
+
+
+        <nav class="nav-links">
+
+            <a href="#home">Home</a>
+
+            <a href="#live">Live Class</a>
+
+            <a href="#recorded">Recorded</a>
+
+            <a href="#social">Social</a>
+
+            <a
+                href="https://wa.me/8801636363801"
+                target="_blank"
+                rel="noopener"
+            >
+                Support
+            </a>
+
+            <a
+                href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+                target="_blank"
+                rel="noopener"
+                class="nav-join"
+            >
+                Join Live
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main id="home">
+
+<section class="hero">
+
+    <div>
+
+        <div class="hero-badge">
+            <i></i>
+            AI-powered learning with USHA
+        </div>
+
+        <h1>
+            Learn.<br>
+            Build.<br>
+            <span>Grow.</span>
+        </h1>
+
+        <p>
+            Learn practical IT skills through live classes,
+            recorded lessons and your personal AI learning
+            mentor — USHA.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a
+                href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary"
+            >
+                Join Live Class
+            </a>
+
+            <button
+                class="btn btn-secondary"
+                onclick="openUsha()"
+            >
+                Ask USHA
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="hero-card">
+
+        <div class="hero-card-top">
+
+            <div class="status">
+                <span class="status-dot"></span>
+                USHA is online
+            </div>
+
+            <div class="ai-mini">
+                AI Mentor
+            </div>
+
+        </div>
+
+
+        <div class="hero-ai">
+
+            <img
+                src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+                alt="USHA"
             >
 
             <div>
-              <h2>Meet USHA — SNK AI Learning Assistant</h2>
-
-              <p>
-                Course, class, recorded lesson, support — ask USHA anything.
-              </p>
+                <h3>Meet USHA</h3>
+                <p>Your personal learning assistant</p>
             </div>
 
-          </div>
-
-          <button
-            class="usha-open-btn"
-            onclick="openUsha()"
-          >
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            Ask USHA
-          </button>
-
         </div>
 
-      </div>
 
-    </section>
-
-
-    <!-- =========================
-         QUICK ACCESS
-    ========================== -->
-
-    <section class="section">
-
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Quick Access</h2>
-          <p>Everything you need to start learning.</p>
+        <div class="fake-message user">
+            How can I start learning?
         </div>
 
-        <div class="quick-grid">
+        <div class="fake-message">
+            Hi! I'm USHA 👋<br>
+            I can help you find courses,
+            live classes, recorded lessons
+            and learning resources.
+        </div>
 
-          <a
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICK ACCESS
+===================================================== -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <small>QUICK ACCESS</small>
+
+        <h2>Start Learning</h2>
+
+        <p>
+            Everything you need to continue your learning journey.
+        </p>
+
+    </div>
+
+
+    <div class="quick-grid">
+
+        <a
             class="quick-card"
+            id="live"
             href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
             target="_blank"
-          >
-            <div class="quick-icon">
-              <i class="fa-solid fa-video"></i>
-            </div>
+            rel="noopener"
+        >
+
+            <div class="quick-icon">🎥</div>
 
             <h3>Live Class</h3>
-            <p>Join the live Zoom class.</p>
-          </a>
+
+            <p>
+                Join the current live learning session.
+            </p>
+
+        </a>
 
 
-          <a
+        <a
             class="quick-card"
             href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
             target="_blank"
-          >
-            <div class="quick-icon">
-              <i class="fa-solid fa-graduation-cap"></i>
-            </div>
+            rel="noopener"
+        >
+
+            <div class="quick-icon">▶</div>
 
             <h3>Free Classes</h3>
-            <p>Learn from free recorded lessons.</p>
-          </a>
+
+            <p>
+                Access free recorded learning content.
+            </p>
+
+        </a>
 
 
-          <a
+        <a
             class="quick-card"
+            id="recorded"
             href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
             target="_blank"
-          >
-            <div class="quick-icon">
-              <i class="fa-solid fa-crown"></i>
-            </div>
+            rel="noopener"
+        >
+
+            <div class="quick-icon">📚</div>
 
             <h3>Paid Classes</h3>
-            <p>Explore advanced learning content.</p>
-          </a>
+
+            <p>
+                Explore structured paid learning resources.
+            </p>
+
+        </a>
 
 
-          <a
+        <a
             class="quick-card"
             href="https://wa.me/8801636363801"
             target="_blank"
-          >
-            <div class="quick-icon">
-              <i class="fa-brands fa-whatsapp"></i>
-            </div>
+            rel="noopener"
+        >
+
+            <div class="quick-icon">💬</div>
 
             <h3>Support</h3>
-            <p>Contact SNK support directly.</p>
-          </a>
 
-        </div>
+            <p>
+                Get direct help from the SNK team.
+            </p>
 
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         LIVE CLASS
-    ========================== -->
-
-    <section class="section" id="live">
-
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Live Class</h2>
-          <p>Join SNK live learning sessions.</p>
-        </div>
-
-        <div class="content-card">
-
-          <h3>
-            <i class="fa-solid fa-video" style="color:#f4c400;"></i>
-            Join Our Live Class
-          </h3>
-
-          <p>
-            ক্লাস শুরু হলে Zoom link থেকে সরাসরি live class-এ join করুন।
-          </p>
-
-          <div class="content-actions">
-
-            <a
-              class="btn btn-yellow"
-              href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
-              target="_blank"
-            >
-              <i class="fa-solid fa-video"></i>
-              Join Zoom
-            </a>
-
-            <button
-              class="btn btn-dark"
-              onclick="askUsha('আজকের live class সম্পর্কে বলো')"
-            >
-              <i class="fa-solid fa-robot"></i>
-              Ask USHA
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         RECORDED
-    ========================== -->
-
-    <section class="section" id="recorded">
-
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Recorded Classes</h2>
-          <p>Learn at your own pace.</p>
-        </div>
-
-        <div class="content-card">
-
-          <h3>
-            <i class="fa-solid fa-play" style="color:#f4c400;"></i>
-            Recorded Learning
-          </h3>
-
-          <p>
-            Missed a class? Recorded lessons থেকে নিজের সময় অনুযায়ী শিখুন।
-          </p>
-
-          <div class="content-actions">
-
-            <a
-              class="btn btn-yellow"
-              href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
-              target="_blank"
-            >
-              <i class="fa-solid fa-play"></i>
-              Free Playlist
-            </a>
-
-            <a
-              class="btn btn-dark"
-              href="https://www.youtube.com/playlist?list=PLfz6zuYhx-uU"
-              target="_blank"
-            >
-              <i class="fa-solid fa-lock"></i>
-              Paid Playlist
-            </a>
-
-            <button
-              class="btn btn-dark"
-              onclick="askUsha('recorded class কোথায় পাবো?')"
-            >
-              <i class="fa-solid fa-robot"></i>
-              Ask USHA
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SUPPORT
-    ========================== -->
-
-    <section class="section" id="support">
-
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Student Support</h2>
-          <p>Need help? We are here for you.</p>
-        </div>
-
-        <div class="content-card">
-
-          <h3>
-            <i
-              class="fa-brands fa-whatsapp"
-              style="color:#0aad4b;"
-            ></i>
-            SNK Support
-          </h3>
-
-          <p>
-            ভর্তি, class, course অথবা অন্য কোনো বিষয়ে সাহায্যের জন্য
-            WhatsApp support-এ যোগাযোগ করুন।
-          </p>
-
-          <div class="content-actions">
-
-            <a
-              class="btn btn-yellow"
-              href="https://wa.me/8801636363801"
-              target="_blank"
-            >
-              <i class="fa-brands fa-whatsapp"></i>
-              WhatsApp Support
-            </a>
-
-            <button
-              class="btn btn-dark"
-              onclick="askUsha('আমি support চাই')"
-            >
-              <i class="fa-solid fa-robot"></i>
-              Ask USHA
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SOCIAL
-    ========================== -->
-
-    <section class="section" id="social">
-
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Stay Connected</h2>
-          <p>Follow SNK across our social platforms.</p>
-        </div>
-
-        <div class="social-grid">
-
-          <a
-            class="social-card"
-            href="https://www.facebook.com/snkitinstitute"
-            target="_blank"
-          >
-            <i class="fa-brands fa-facebook"></i>
-
-            <div>
-              <strong>Facebook</strong>
-              <span>SNK IT Institute</span>
-            </div>
-          </a>
-
-
-          <a
-            class="social-card"
-            href="https://www.youtube.com/@snkguideup"
-            target="_blank"
-          >
-            <i class="fa-brands fa-youtube"></i>
-
-            <div>
-              <strong>YouTube</strong>
-              <span>@snkguideup</span>
-            </div>
-          </a>
-
-
-          <a
-            class="social-card"
-            href="https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x"
-            target="_blank"
-          >
-            <i class="fa-brands fa-whatsapp"></i>
-
-            <div>
-              <strong>WhatsApp Channel</strong>
-              <span>Join SNK Channel</span>
-            </div>
-          </a>
-
-
-          <a
-            class="social-card"
-            href="https://www.facebook.com/groups/shopingnmela"
-            target="_blank"
-          >
-            <i class="fa-solid fa-bag-shopping"></i>
-
-            <div>
-              <strong>Shopping Mela</strong>
-              <span>Join Group</span>
-            </div>
-          </a>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer>
-
-    <div class="container">
-
-      <p>
-        © <span id="year"></span> SNK IT Institute. All rights reserved.
-      </p>
+        </a>
 
     </div>
 
-  </footer>
+</section>
 
 
-  <!-- =====================================================
-       USHA FLOATING ASSISTANT
-  ====================================================== -->
+<!-- =====================================================
+     COURSE SECTION
+===================================================== -->
 
-  <div class="usha-widget">
+<section class="section">
 
-    <button
-      class="usha-float"
-      onclick="toggleUsha()"
-      aria-label="Open USHA"
-    >
+    <div class="section-head">
 
-      <img
+        <small>LEARNING</small>
+
+        <h2>Learn Your Way</h2>
+
+        <p>
+            Choose live learning, recorded lessons or AI assistance.
+        </p>
+
+    </div>
+
+
+    <div class="course-grid">
+
+        <div class="course-card">
+
+            <div class="course-image">
+                🎥
+            </div>
+
+            <div class="course-body">
+
+                <small>LIVE</small>
+
+                <h3>Live Learning</h3>
+
+                <p>
+                    Join live Zoom classes and learn directly
+                    with the instructor.
+                </p>
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Join Now
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="course-card">
+
+            <div class="course-image">
+                ▶
+            </div>
+
+            <div class="course-body">
+
+                <small>FREE</small>
+
+                <h3>Recorded Classes</h3>
+
+                <p>
+                    Learn at your own pace with recorded lessons.
+                </p>
+
+                <a
+                    class="btn btn-secondary"
+                    href="https://www.youtube.com/playlist?list=PLJe-RU9VQd38"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Watch
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="course-card">
+
+            <div class="course-image">
+                🤖
+            </div>
+
+            <div class="course-body">
+
+                <small>AI MENTOR</small>
+
+                <h3>USHA AI</h3>
+
+                <p>
+                    Ask questions and get instant learning guidance
+                    from your AI mentor.
+                </p>
+
+                <button
+                    class="btn btn-primary"
+                    onclick="openUsha()"
+                >
+                    Ask USHA
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     USHA BANNER
+===================================================== -->
+
+<section class="usha-section">
+
+    <div class="usha-banner">
+
+        <div class="usha-info">
+
+            <div class="usha-label">
+                SNK AI ASSISTANT
+            </div>
+
+            <h2>
+                Meet USHA — Your AI Mentor
+            </h2>
+
+            <p>
+                Need help choosing a course, joining a live class,
+                finding recorded lessons or understanding where
+                to start? Ask USHA.
+            </p>
+
+        </div>
+
+
+        <button
+            class="usha-open"
+            onclick="openUsha()"
+        >
+            Ask USHA →
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SOCIAL
+===================================================== -->
+
+<section
+    class="section"
+    id="social"
+>
+
+    <div class="section-head">
+
+        <small>CONNECT</small>
+
+        <h2>Follow SNK</h2>
+
+        <p>
+            Stay connected with classes, updates and learning content.
+        </p>
+
+    </div>
+
+
+    <div class="social-grid">
+
+        <div class="social-card">
+
+            <h3>Facebook</h3>
+
+            <p>
+                Follow SNK IT Institute for updates.
+            </p>
+
+            <a
+                href="https://www.facebook.com/snkitinstitute"
+                target="_blank"
+                rel="noopener"
+            >
+                Open Facebook →
+            </a>
+
+        </div>
+
+
+        <div class="social-card">
+
+            <h3>YouTube</h3>
+
+            <p>
+                Watch free and paid learning content.
+            </p>
+
+            <a
+                href="https://www.youtube.com/@snkguideup"
+                target="_blank"
+                rel="noopener"
+            >
+                Open YouTube →
+            </a>
+
+        </div>
+
+
+        <div class="social-card">
+
+            <h3>WhatsApp Channel</h3>
+
+            <p>
+                Get important learning announcements.
+            </p>
+
+            <a
+                href="https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x"
+                target="_blank"
+                rel="noopener"
+            >
+                Open Channel →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <strong>SNK IT Institute</strong>
+
+    <br>
+
+    Learn. Build. Grow.
+
+    <br><br>
+
+    © 2026 SNK IT Institute. All rights reserved.
+
+</footer>
+
+
+<!-- =====================================================
+     USHA OVERLAY
+===================================================== -->
+
+<div
+    class="usha-overlay"
+    id="ushaOverlay"
+    onclick="overlayClose(event)"
+></div>
+
+
+<!-- =====================================================
+     USHA APP
+===================================================== -->
+
+<div
+    class="usha-app"
+    id="ushaApp"
+    role="dialog"
+    aria-modal="true"
+    aria-label="USHA AI Mentor"
+>
+
+
+    <!-- HEADER -->
+
+    <header class="usha-header">
+
+        <div class="usha-brand">
+
+            <img
+                src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
+                alt="USHA"
+            >
+
+            <div class="usha-brand-text">
+
+                <strong>usha.ai</strong>
+
+                <span>Your AI Mentor</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="usha-header-right">
+
+            <div class="support-status">
+
+                <i></i>
+
+                support
+
+            </div>
+
+
+            <button
+                class="usha-header-btn"
+                onclick="clearUshaChat()"
+                title="Clear chat"
+                aria-label="Clear chat"
+            >
+                ↺
+            </button>
+
+
+            <button
+                class="usha-header-btn"
+                onclick="closeUsha()"
+                title="Close"
+                aria-label="Close USHA"
+            >
+                ✕
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN LAYOUT -->
+
+    <div class="usha-layout">
+
+
+        <!-- SIDEBAR -->
+
+        <aside class="usha-sidebar">
+
+            <button
+                class="new-chat"
+                onclick="newUshaChat()"
+            >
+                <span>＋</span>
+                New Chat
+            </button>
+
+
+            <div class="sidebar-title">
+                Learning
+            </div>
+
+
+            <button
+                class="sidebar-item active"
+                onclick="showWelcome()"
+            >
+
+                <span class="side-icon">⌂</span>
+
+                Home
+
+            </button>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('How can I join the live class?')"
+            >
+
+                <span class="side-icon">🎥</span>
+
+                Live Class
+
+            </button>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('Where can I find free classes?')"
+            >
+
+                <span class="side-icon">▶</span>
+
+                Free Classes
+
+            </button>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('Where can I find recorded classes?')"
+            >
+
+                <span class="side-icon">📚</span>
+
+                Recorded
+
+            </button>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('How can I contact SNK support?')"
+            >
+
+                <span class="side-icon">💬</span>
+
+                Support
+
+            </button>
+
+
+            <div class="sidebar-title">
+                Quick Ask
+            </div>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('How do I start learning?')"
+            >
+
+                <span class="side-icon">✨</span>
+
+                Start Learning
+
+            </button>
+
+
+            <button
+                class="sidebar-item"
+                onclick="askUsha('Tell me about SNK IT Institute.')"
+            >
+
+                <span class="side-icon">ℹ</span>
+
+                About SNK
+
+            </button>
+
+
+            <div class="sidebar-spacer"></div>
+
+
+            <div class="sidebar-bottom">
+
+                <button
+                    class="sidebar-item clear-chat"
+                    onclick="clearUshaChat()"
+                >
+
+                    <span class="side-icon">⌫</span>
+
+                    Clear History
+
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CHAT -->
+
+        <main class="usha-main">
+
+
+            <!-- WELCOME -->
+
+            <section
+                class="usha-welcome"
+                id="ushaWelcome"
+            >
+
+                <div class="welcome-inner">
+
+                    <img
+                        class="welcome-avatar"
+                        src="https://github.com/yourdocuments/products/blob/main/Ushacover.svg?raw=true"
+                        alt="USHA AI Mentor"
+                    >
+
+
+                    <h1>
+                        Hello, I'm
+                        <span>USHA</span>
+                    </h1>
+
+
+                    <p>
+                        Your AI learning mentor from SNK IT Institute.
+                        Ask me about courses, live classes, recorded
+                        lessons, support and how to start learning.
+                    </p>
+
+
+                    <div class="prompt-grid">
+
+                        <button
+                            class="prompt-card"
+                            onclick="askUsha('How can I start learning at SNK?')"
+                        >
+
+                            <strong>
+                                🚀 How do I start learning?
+                            </strong>
+
+                            <span>
+                                Get a simple learning roadmap
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="prompt-card"
+                            onclick="askUsha('How can I join the live class?')"
+                        >
+
+                            <strong>
+                                🎥 How can I join live class?
+                            </strong>
+
+                            <span>
+                                Get the Zoom class information
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="prompt-card"
+                            onclick="askUsha('Where can I watch free classes?')"
+                        >
+
+                            <strong>
+                                ▶ Where are the free classes?
+                            </strong>
+
+                            <span>
+                                Find the free YouTube lessons
+                            </span>
+
+                        </button>
+
+
+                        <button
+                            class="prompt-card"
+                            onclick="askUsha('How can I contact support?')"
+                        >
+
+                            <strong>
+                                💬 How can I get support?
+                            </strong>
+
+                            <span>
+                                Contact the SNK support team
+                            </span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CHAT MESSAGES -->
+
+            <section
+                class="chat-messages"
+                id="chatMessages"
+            ></section>
+
+
+            <!-- INPUT -->
+
+            <div class="usha-input-area">
+
+                <div class="input-box">
+
+                    <textarea
+                        id="ushaInput"
+                        rows="1"
+                        placeholder="Ask USHA anything..."
+                        aria-label="Ask USHA anything"
+                    ></textarea>
+
+
+                    <button
+                        class="send-btn"
+                        onclick="sendMessage()"
+                        aria-label="Send message"
+                    >
+                        ↑
+                    </button>
+
+                </div>
+
+
+                <div class="input-note">
+                    USHA can help you navigate SNK learning resources.
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     FLOATING BUTTON
+===================================================== -->
+
+<button
+    class="usha-float"
+    onclick="openUsha()"
+    aria-label="Open USHA AI Mentor"
+    title="Ask USHA"
+>
+
+    <img
         src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
         alt="USHA"
-      >
+    >
 
-      <span class="usha-online"></span>
+</button>
 
-    </button>
 
-  </div>
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
+<script>
 
-  <!-- =====================================================
-       USHA CHAT
-  ====================================================== -->
+/* =========================================================
+   USHA STATE
+========================================================= */
 
-  <div
-    class="usha-chat"
-    id="ushaChat"
-    aria-hidden="true"
-  >
+const USHA_STORAGE_KEY = "snkUshaChatHistory";
 
-    <!-- Header -->
+let ushaHistory = [];
 
-    <div class="usha-chat-header">
 
-      <div class="usha-profile">
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
-        <div class="usha-avatar">
+const ushaApp =
+    document.getElementById("ushaApp");
 
-          <img
-            src="https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true"
-            alt="USHA"
-          >
+const ushaOverlay =
+    document.getElementById("ushaOverlay");
 
-        </div>
+const ushaWelcome =
+    document.getElementById("ushaWelcome");
 
-        <div>
-          <strong>USHA</strong>
-          <div class="usha-status">
-            ● SNK Learning Assistant
-          </div>
-        </div>
+const chatMessages =
+    document.getElementById("chatMessages");
 
-      </div>
+const ushaInput =
+    document.getElementById("ushaInput");
 
 
-      <div class="usha-header-actions">
+/* =========================================================
+   OPEN USHA
+========================================================= */
 
-        <button
-          class="usha-head-btn"
-          onclick="clearUshaChat()"
-          title="Clear chat"
-        >
-          <i class="fa-solid fa-trash"></i>
-        </button>
+function openUsha(){
 
-        <button
-          class="usha-head-btn"
-          onclick="closeUsha()"
-          title="Close"
-        >
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+    ushaApp.classList.add("active");
 
-      </div>
+    ushaOverlay.classList.add("active");
 
-    </div>
-
-
-    <!-- Learning intro -->
-
-    <div class="usha-learning-intro">
-
-      <strong>What would you like to learn?</strong>
-
-      <p>
-        Course, class, recorded lesson বা support সম্পর্কে আমাকে জিজ্ঞেস করুন।
-      </p>
-
-    </div>
-
-
-    <!-- Suggested questions -->
-
-    <div class="usha-suggestions" id="ushaSuggestions">
-
-      <button
-        class="suggestion"
-        onclick="askUsha('আমি একদম beginner, কোথা থেকে শুরু করবো?')"
-      >
-        Beginner Guide
-      </button>
-
-      <button
-        class="suggestion"
-        onclick="askUsha('Free course সম্পর্কে বলো')"
-      >
-        Free Course
-      </button>
-
-      <button
-        class="suggestion"
-        onclick="askUsha('Live class কখন?')"
-      >
-        Live Class
-      </button>
-
-      <button
-        class="suggestion"
-        onclick="askUsha('Recorded class কোথায়?')"
-      >
-        Recorded
-      </button>
-
-      <button
-        class="suggestion"
-        onclick="askUsha('Support চাই')"
-      >
-        Support
-      </button>
-
-    </div>
-
-
-    <!-- Messages -->
-
-    <div
-      class="usha-messages"
-      id="ushaMessages"
-    ></div>
-
-
-    <!-- Input -->
-
-    <div class="usha-input-area">
-
-      <div class="usha-input-box">
-
-        <input
-          id="ushaInput"
-          type="text"
-          autocomplete="off"
-          placeholder="USHA-কে প্রশ্ন করুন..."
-        />
-
-        <button
-          id="sendUsha"
-          onclick="sendMessage()"
-          aria-label="Send"
-        >
-          <i class="fa-solid fa-arrow-up"></i>
-        </button>
-
-      </div>
-
-      <div class="usha-footer-note">
-        USHA • SNK Learning Assistant
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       JAVASCRIPT
-  ====================================================== -->
-
-  <script>
-
-    /* =========================
-       YEAR
-    ========================== */
-
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-
-
-    /* =========================
-       LINKS
-    ========================== */
-
-    const USHA_LINKS = {
-
-      free:
-        "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
-
-      paid:
-        "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
-
-      zoom:
-        "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
-
-      whatsapp:
-        "https://wa.me/8801636363801",
-
-      facebook:
-        "https://www.facebook.com/snkitinstitute",
-
-      youtube:
-        "https://www.youtube.com/@snkguideup",
-
-      channel:
-        "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x",
-
-      shopping:
-        "https://yourdocuments.github.io/shopingmela/",
-
-      shoppingGroup:
-        "https://www.facebook.com/groups/shopingnmela"
-
-    };
-
-
-    /* =========================
-       ELEMENTS
-    ========================== */
-
-    const ushaChat =
-      document.getElementById("ushaChat");
-
-    const ushaMessages =
-      document.getElementById("ushaMessages");
-
-    const ushaInput =
-      document.getElementById("ushaInput");
-
-
-    /* =========================
-       STORAGE
-    ========================== */
-
-    const CHAT_STORAGE_KEY =
-      "snkUshaChatHistory_v2";
-
-
-    /* =========================
-       ESCAPE HTML
-    ========================== */
-
-    function escapeHTML(text) {
-
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /* =========================
-       LINK SAFE FORMAT
-    ========================== */
-
-    function link(url, label) {
-
-      return `
-        <a
-          href="${url}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ${label}
-        </a>
-      `;
-
-    }
-
-
-    /* =========================
-       TIME
-    ========================== */
-
-    function getTime() {
-
-      return new Date().toLocaleTimeString(
-        "bn-BD",
-        {
-          hour: "numeric",
-          minute: "2-digit"
-        }
-      );
-
-    }
-
-
-    /* =========================
-       SAVE CHAT
-    ========================== */
-
-    function saveChat() {
-
-      const messages =
-        [...ushaMessages.querySelectorAll(".message")]
-        .map(message => {
-
-          const isUser =
-            message.classList.contains("user");
-
-          const clone =
-            message.cloneNode(true);
-
-          const time =
-            clone.querySelector(".message-time");
-
-          if (time) {
-            time.remove();
-          }
-
-          return {
-            role: isUser ? "user" : "bot",
-            text: clone.innerHTML
-          };
-
-        });
-
-      localStorage.setItem(
-        CHAT_STORAGE_KEY,
-        JSON.stringify(messages)
-      );
-
-    }
-
-
-    /* =========================
-       ADD MESSAGE
-    ========================== */
-
-    function addMessage(
-      text,
-      type = "bot",
-      save = true
-    ) {
-
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "message-row " + type;
-
-
-      const bubble =
-        document.createElement("div");
-
-      bubble.className =
-        "message " + type;
-
-
-      bubble.innerHTML = `
-        ${text}
-        <span class="message-time">
-          ${getTime()}
-        </span>
-      `;
-
-
-      row.appendChild(bubble);
-
-      ushaMessages.appendChild(row);
-
-      ushaMessages.scrollTop =
-        ushaMessages.scrollHeight;
-
-
-      if (save) {
-        saveChat();
-      }
-
-    }
-
-
-    /* =========================
-       LOAD CHAT
-    ========================== */
-
-    function loadChat() {
-
-      const saved =
-        localStorage.getItem(CHAT_STORAGE_KEY);
-
-      if (!saved) {
-
-        addMessage(
-          `
-          আসসালামু আলাইকুম! 👋<br><br>
-          আমি <strong>USHA</strong> — SNK IT Institute-এর
-          Learning Assistant।<br><br>
-          আপনি কী শিখতে চান বা কোন বিষয়ে সাহায্য চান,
-          আমাকে বলুন। আমি step-by-step guide করার চেষ্টা করব।
-          `,
-          "bot",
-          false
-        );
-
-        return;
-
-      }
-
-
-      try {
-
-        const messages =
-          JSON.parse(saved);
-
-        messages.forEach(item => {
-
-          addMessage(
-            item.text,
-            item.role,
-            false
-          );
-
-        });
-
-      } catch {
-
-        localStorage.removeItem(
-          CHAT_STORAGE_KEY
-        );
-
-        addMessage(
-          "আসসালামু আলাইকুম! 👋 আমি USHA। কী শিখতে চান?",
-          "bot",
-          false
-        );
-
-      }
-
-    }
-
-
-    /* =========================
-       CLEAR CHAT
-    ========================== */
-
-    function clearUshaChat() {
-
-      const confirmed =
-        confirm("USHA chat history clear করবেন?");
-
-      if (!confirmed) {
-        return;
-      }
-
-      localStorage.removeItem(
-        CHAT_STORAGE_KEY
-      );
-
-      ushaMessages.innerHTML = "";
-
-      addMessage(
-        `
-        Chat cleared. 👋<br><br>
-        আমি আবার প্রস্তুত। আপনি কী শিখতে চান?
-        `,
-        "bot"
-      );
-
-    }
-
-
-    /* =========================
-       OPEN / CLOSE
-    ========================== */
-
-    function openUsha() {
-
-      ushaChat.classList.add("active");
-
-      ushaChat.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-
-      setTimeout(() => {
-
-        ushaInput.focus();
-
-      }, 100);
-
-    }
-
-
-    function closeUsha() {
-
-      ushaChat.classList.remove("active");
-
-      ushaChat.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-    }
-
-
-    function toggleUsha() {
-
-      if (
-        ushaChat.classList.contains("active")
-      ) {
-
-        closeUsha();
-
-      } else {
-
-        openUsha();
-
-      }
-
-    }
-
-
-    /* =========================
-       NORMALIZE
-    ========================== */
-
-    function normalizeText(text) {
-
-      return String(text)
-        .toLowerCase()
-        .replace(/[।!?！？,،]/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
-
-    }
-
-
-    /* =========================
-       KEYWORD CHECK
-    ========================== */
-
-    function hasAny(text, words) {
-
-      return words.some(word =>
-        text.includes(word)
-      );
-
-    }
-
-
-    /* =========================
-       SMART USHA REPLY
-    ========================== */
-
-    function getUshaReply(input) {
-
-      const text =
-        normalizeText(input);
-
-
-      /* Greeting */
-
-      if (
-        hasAny(text, [
-          "hello",
-          "hi",
-          "hey",
-          "হাই",
-          "হ্যালো",
-          "আসসালামু",
-          "salam"
-        ])
-      ) {
-
-        return `
-          হ্যালো! 👋<br><br>
-          আমি <strong>USHA</strong>।
-          আপনি চাইলে আমাকে course, class, recorded lesson,
-          Zoom বা support সম্পর্কে প্রশ্ন করতে পারেন।
-        `;
-
-      }
-
-
-      /* Beginner */
-
-      if (
-        hasAny(text, [
-          "beginner",
-          "new",
-          "শুরু",
-          "কোথা থেকে",
-          "কি দিয়ে শুরু",
-          "শিখতে চাই",
-          "শুরু করব"
-        ])
-      ) {
-
-        return `
-          আপনি যদি একদম beginner হন, তাহলে এভাবে শুরু করতে পারেন:
-          <br><br>
-
-          <strong>1.</strong> Free class দিয়ে basic concept শুরু করুন।<br>
-          <strong>2.</strong> Live class-এ প্রশ্ন করুন।<br>
-          <strong>3.</strong> Recorded lesson আবার practice করুন।<br>
-          <strong>4.</strong> সমস্যা হলে Support-এ যোগাযোগ করুন।
-          <br><br>
-
-          Free learning শুরু করতে:
-          ${link(USHA_LINKS.free, "Free Classes")}
-        `;
-
-      }
-
-
-      /* Free Course */
-
-      if (
-        hasAny(text, [
-          "free course",
-          "free class",
-          "ফ্রি কোর্স",
-          "ফ্রি ক্লাস",
-          "বিনামূল্যে",
-          "free"
-        ])
-      ) {
-
-        return `
-          অবশ্যই! 🎓<br><br>
-
-          SNK-এর free recorded classes এখানে পাবেন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.free,
-            "▶ Open Free Classes"
-          )}
-
-          <br><br>
-
-          আপনি চাইলে আমাকে আপনার learning level বলতেও পারেন।
-          আমি কোনভাবে শুরু করবেন সেটা বুঝিয়ে দিতে পারি।
-        `;
-
-      }
-
-
-      /* Paid Course */
-
-      if (
-        hasAny(text, [
-          "paid",
-          "premium",
-          "পেইড",
-          "পেইড কোর্স",
-          "টাকা",
-          "মূল্য",
-          "দাম"
-        ])
-      ) {
-
-        return `
-          Paid learning content-এর জন্য এই playlist দেখুন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.paid,
-            "▶ Paid Classes"
-          )}
-
-          <br><br>
-
-          নির্দিষ্ট course fee জানতে চাইলে
-          SNK Support-এ যোগাযোগ করুন।
-          <br><br>
-
-          ${link(
-            USHA_LINKS.whatsapp,
-            "💬 WhatsApp Support"
-          )}
-        `;
-
-      }
-
-
-      /* Live Class */
-
-      if (
-        hasAny(text, [
-          "live",
-          "লাইভ",
-          "আজকের ক্লাস",
-          "live class",
-          "ক্লাস কখন",
-          "ক্লাস হবে"
-        ])
-      ) {
-
-        return `
-          Live class-এ join করতে এই Zoom link ব্যবহার করুন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.zoom,
-            "🎥 Join Live Class"
-          )}
-
-          <br><br>
-
-          Class schedule বা specific timing জানতে
-          SNK Support-এ যোগাযোগ করুন।
-        `;
-
-      }
-
-
-      /* Zoom */
-
-      if (
-        hasAny(text, [
-          "zoom",
-          "জুম",
-          "zoom link",
-          "জুম লিংক"
-        ])
-      ) {
-
-        return `
-          অবশ্যই! 🎥<br><br>
-
-          SNK Live Class Zoom:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.zoom,
-            "Open Zoom Class"
-          )}
-        `;
-
-      }
-
-
-      /* Recorded */
-
-      if (
-        hasAny(text, [
-          "recorded",
-          "record",
-          "রেকর্ড",
-          "রেকর্ডেড",
-          "ভিডিও ক্লাস",
-          "ভিডিও"
-        ])
-      ) {
-
-        return `
-          Recorded classes নিজের সময় অনুযায়ী দেখতে পারবেন। 📚
-          <br><br>
-
-          Free:
-          ${link(
-            USHA_LINKS.free,
-            "Free Playlist"
-          )}
-
-          <br><br>
-
-          Paid:
-          ${link(
-            USHA_LINKS.paid,
-            "Paid Playlist"
-          )}
-        `;
-
-      }
-
-
-      /* Certificate */
-
-      if (
-        hasAny(text, [
-          "certificate",
-          "সার্টিফিকেট",
-          "সনদ"
-        ])
-      ) {
-
-        return `
-          Certificate সম্পর্কে নির্দিষ্ট তথ্য
-          course-এর উপর নির্ভর করতে পারে।
-          <br><br>
-
-          আপনি সরাসরি SNK Support-এ জিজ্ঞেস করতে পারেন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.whatsapp,
-            "💬 Ask Support"
-          )}
-        `;
-
-      }
-
-
-      /* Admission / Enrollment */
-
-      if (
-        hasAny(text, [
-          "admission",
-          "ভর্তি",
-          "enroll",
-          "enrollment",
-          "যোগ দিতে",
-          "join করতে চাই"
-        ])
-      ) {
-
-        return `
-          SNK course-এ join করার বিষয়ে সাহায্য করতে পারি। 🎓
-          <br><br>
-
-          আপনি যদি নতুন হন, আগে Free Classes দেখে
-          learning শুরু করতে পারেন।
-          <br><br>
-
-          ${link(
-            USHA_LINKS.free,
-            "Start Free Learning"
-          )}
-
-          <br><br>
-
-          Admission সংক্রান্ত নির্দিষ্ট তথ্যের জন্য:
-          <br>
-
-          ${link(
-            USHA_LINKS.whatsapp,
-            "💬 Contact Support"
-          )}
-        `;
-
-      }
-
-
-      /* WhatsApp */
-
-      if (
-        hasAny(text, [
-          "whatsapp",
-          "হোয়াটসঅ্যাপ",
-          "হোয়াটসঅ্যাপ",
-          "support",
-          "সাপোর্ট",
-          "যোগাযোগ"
-        ])
-      ) {
-
-        return `
-          অবশ্যই। SNK Support-এর সাথে WhatsApp-এ যোগাযোগ করুন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.whatsapp,
-            "💬 WhatsApp Support"
-          )}
-        `;
-
-      }
-
-
-      /* Facebook */
-
-      if (
-        hasAny(text, [
-          "facebook",
-          "ফেসবুক"
-        ])
-      ) {
-
-        return `
-          SNK IT Institute-এর Facebook page:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.facebook,
-            "Open Facebook Page"
-          )}
-        `;
-
-      }
-
-
-      /* YouTube */
-
-      if (
-        hasAny(text, [
-          "youtube",
-          "ইউটিউব"
-        ])
-      ) {
-
-        return `
-          SNK YouTube channel:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.youtube,
-            "Open YouTube"
-          )}
-        `;
-
-      }
-
-
-      /* Shopping */
-
-      if (
-        hasAny(text, [
-          "shopping",
-          "shopping mela",
-          "শপিং",
-          "শপিং মেলা",
-          "offer",
-          "অফার",
-          "discount",
-          "ডিসকাউন্ট",
-          "coupon",
-          "কুপন"
-        ])
-      ) {
-
-        return `
-          Shopping Mela সম্পর্কে জানতে এখানে যেতে পারেন:
-          <br><br>
-
-          ${link(
-            USHA_LINKS.shopping,
-            "🛍️ Shopping Mela"
-          )}
-
-          <br><br>
-
-          Shopping Mela community:
-          <br>
-
-          ${link(
-            USHA_LINKS.shoppingGroup,
-            "Join Facebook Group"
-          )}
-        `;
-
-      }
-
-
-      /* Help */
-
-      if (
-        hasAny(text, [
-          "help",
-          "সাহায্য",
-          "কি করতে পারো",
-          "তুমি কি করতে পারো",
-          "what can you do"
-        ])
-      ) {
-
-        return `
-          আমি আপনাকে এসব বিষয়ে guide করতে পারি:
-          <br><br>
-
-          🎓 Free Course<br>
-          🎥 Live Class<br>
-          📚 Recorded Classes<br>
-          🔗 Zoom<br>
-          💬 Support<br>
-          ▶ YouTube<br>
-          🛍️ Shopping Mela
-          <br><br>
-
-          শুধু আপনার প্রশ্নটি লিখুন।
-        `;
-
-      }
-
-
-      /* Thanks */
-
-      if (
-        hasAny(text, [
-          "thanks",
-          "thank",
-          "ধন্যবাদ",
-          "থ্যাংক"
-        ])
-      ) {
-
-        return `
-          আপনাকেও ধন্যবাদ! 😊<br><br>
-          শেখার পথে যেকোনো সময় আমাকে প্রশ্ন করতে পারেন।
-        `;
-
-      }
-
-
-      /* Default */
-
-      return `
-        আপনার প্রশ্নটি আমি বুঝতে চেষ্টা করছি। 😊
-        <br><br>
-
-        আপনি একটু সহজভাবে এভাবে লিখতে পারেন:
-        <br><br>
-
-        • আমি beginner, কীভাবে শুরু করবো?<br>
-        • Free course কোথায়?<br>
-        • Live class-এর Zoom link চাই<br>
-        • Recorded class কোথায়?<br>
-        • Support-এর সাথে কথা বলতে চাই
-        <br><br>
-
-        অথবা আপনার নিজের প্রশ্নটি লিখুন।
-      `;
-
-    }
-
-
-    /* =========================
-       TYPING INDICATOR
-    ========================== */
-
-    function showTyping() {
-
-      const row =
-        document.createElement("div");
-
-      row.className =
-        "message-row";
-
-      row.id =
-        "ushaTyping";
-
-
-      row.innerHTML = `
-        <div class="typing">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      `;
-
-      ushaMessages.appendChild(row);
-
-      ushaMessages.scrollTop =
-        ushaMessages.scrollHeight;
-
-    }
-
-
-    function removeTyping() {
-
-      const typing =
-        document.getElementById("ushaTyping");
-
-      if (typing) {
-        typing.remove();
-      }
-
-    }
-
-
-    /* =========================
-       SEND MESSAGE
-    ========================== */
-
-    async function sendMessage() {
-
-      const raw =
-        ushaInput.value.trim();
-
-      if (!raw) {
-        return;
-      }
-
-      const safeText =
-        escapeHTML(raw);
-
-      addMessage(
-        safeText,
-        "user"
-      );
-
-      ushaInput.value = "";
-
-      showTyping();
-
-
-      const delay =
-        500 + Math.floor(
-          Math.random() * 700
-        );
-
-
-      await new Promise(resolve =>
-        setTimeout(resolve, delay)
-      );
-
-
-      removeTyping();
-
-
-      const reply =
-        getUshaReply(raw);
-
-      addMessage(
-        reply,
-        "bot"
-      );
-
-    }
-
-
-    /* =========================
-       ASK USHA
-    ========================== */
-
-    function askUsha(question) {
-
-      openUsha();
-
-      setTimeout(() => {
-
-        ushaInput.value =
-          question;
-
-        sendMessage();
-
-      }, 150);
-
-    }
-
-
-    /* =========================
-       ENTER KEY
-    ========================== */
-
-    ushaInput.addEventListener(
-      "keydown",
-      function(event) {
-
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey
-        ) {
-
-          event.preventDefault();
-
-          sendMessage();
-
-        }
-
-      }
-    );
-
-
-    /* =========================
-       ESCAPE CLOSE
-    ========================== */
-
-    document.addEventListener(
-      "keydown",
-      function(event) {
-
-        if (event.key === "Escape") {
-          closeUsha();
-        }
-
-      }
-    );
-
-
-    /* =========================
-       START
-    ========================== */
+    document.body.style.overflow = "hidden";
 
     loadChat();
 
-  </script>
+    setTimeout(() => {
+
+        ushaInput.focus();
+
+    },250);
+}
+
+
+/* =========================================================
+   CLOSE USHA
+========================================================= */
+
+function closeUsha(){
+
+    ushaApp.classList.remove("active");
+
+    ushaOverlay.classList.remove("active");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =========================================================
+   OVERLAY CLOSE
+========================================================= */
+
+function overlayClose(event){
+
+    if(event.target === ushaOverlay){
+
+        closeUsha();
+
+    }
+
+}
+
+
+/* =========================================================
+   ESC CLOSE
+========================================================= */
+
+document.addEventListener("keydown", function(event){
+
+    if(event.key === "Escape"){
+
+        if(ushaApp.classList.contains("active")){
+
+            closeUsha();
+
+        }
+
+    }
+
+});
+
+
+/* =========================================================
+   TEXTAREA ENTER
+========================================================= */
+
+ushaInput.addEventListener("keydown", function(event){
+
+    if(event.key === "Enter" && !event.shiftKey){
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+});
+
+
+/* =========================================================
+   TEXTAREA AUTO HEIGHT
+========================================================= */
+
+ushaInput.addEventListener("input", function(){
+
+    this.style.height = "auto";
+
+    this.style.height =
+        Math.min(this.scrollHeight,130) + "px";
+
+});
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+function sendMessage(){
+
+    const text =
+        ushaInput.value.trim();
+
+    if(!text){
+
+        return;
+
+    }
+
+    ushaInput.value = "";
+
+    ushaInput.style.height = "auto";
+
+    showChatArea();
+
+    addMessage(
+        "user",
+        text
+    );
+
+    saveHistory();
+
+    showTyping();
+
+
+    setTimeout(() => {
+
+        removeTyping();
+
+        const reply =
+            getUshaReply(text);
+
+        addMessage(
+            "ai",
+            reply
+        );
+
+        saveHistory();
+
+    },700 + Math.random() * 700);
+
+}
+
+
+/* =========================================================
+   ASK USHA
+========================================================= */
+
+function askUsha(question){
+
+    showChatArea();
+
+    addMessage(
+        "user",
+        question
+    );
+
+    saveHistory();
+
+    showTyping();
+
+    setTimeout(() => {
+
+        removeTyping();
+
+        const reply =
+            getUshaReply(question);
+
+        addMessage(
+            "ai",
+            reply
+        );
+
+        saveHistory();
+
+    },650);
+
+}
+
+
+/* =========================================================
+   SHOW CHAT AREA
+========================================================= */
+
+function showChatArea(){
+
+    ushaWelcome.style.display = "none";
+
+    chatMessages.classList.add("active");
+
+}
+
+
+/* =========================================================
+   SHOW WELCOME
+========================================================= */
+
+function showWelcome(){
+
+    ushaWelcome.style.display = "flex";
+
+    chatMessages.classList.remove("active");
+
+}
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+function newUshaChat(){
+
+    ushaHistory = [];
+
+    localStorage.removeItem(
+        USHA_STORAGE_KEY
+    );
+
+    chatMessages.innerHTML = "";
+
+    showWelcome();
+
+    ushaInput.focus();
+
+}
+
+
+/* =========================================================
+   CLEAR CHAT
+========================================================= */
+
+function clearUshaChat(){
+
+    const confirmed =
+        confirm(
+            "Clear USHA chat history?"
+        );
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+    newUshaChat();
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    sender,
+    text
+){
+
+    const wrap =
+        document.createElement("div");
+
+    wrap.className =
+        "message-wrap " + sender;
+
+
+    if(sender === "ai"){
+
+        const avatar =
+            document.createElement("img");
+
+        avatar.className =
+            "message-avatar";
+
+        avatar.src =
+            "https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true";
+
+        avatar.alt =
+            "USHA";
+
+        wrap.appendChild(avatar);
+
+    }
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message " + sender;
+
+    bubble.textContent =
+        text;
+
+
+    wrap.appendChild(bubble);
+
+
+    chatMessages.appendChild(wrap);
+
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+
+    ushaHistory.push({
+
+        sender:sender,
+
+        text:text,
+
+        time:Date.now()
+
+    });
+
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+========================================================= */
+
+function showTyping(){
+
+    const wrap =
+        document.createElement("div");
+
+    wrap.className =
+        "message-wrap ai";
+
+    wrap.id =
+        "ushaTyping";
+
+
+    const avatar =
+        document.createElement("img");
+
+    avatar.className =
+        "message-avatar";
+
+    avatar.src =
+        "https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true";
+
+    avatar.alt =
+        "USHA";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message ai";
+
+
+    const typing =
+        document.createElement("div");
+
+    typing.className =
+        "typing";
+
+
+    typing.innerHTML =
+        "<span></span><span></span><span></span>";
+
+
+    bubble.appendChild(typing);
+
+    wrap.appendChild(avatar);
+
+    wrap.appendChild(bubble);
+
+    chatMessages.appendChild(wrap);
+
+
+    chatMessages.scrollTop =
+        chatMessages.scrollHeight;
+
+}
+
+
+/* =========================================================
+   REMOVE TYPING
+========================================================= */
+
+function removeTyping(){
+
+    const typing =
+        document.getElementById(
+            "ushaTyping"
+        );
+
+    if(typing){
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE HISTORY
+========================================================= */
+
+function saveHistory(){
+
+    try{
+
+        localStorage.setItem(
+            USHA_STORAGE_KEY,
+            JSON.stringify(
+                ushaHistory
+            )
+        );
+
+    }catch(error){
+
+        console.warn(
+            "USHA history could not be saved.",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD HISTORY
+========================================================= */
+
+function loadChat(){
+
+    try{
+
+        const saved =
+            localStorage.getItem(
+                USHA_STORAGE_KEY
+            );
+
+        if(!saved){
+
+            return;
+
+        }
+
+        ushaHistory =
+            JSON.parse(saved);
+
+        if(
+            !Array.isArray(
+                ushaHistory
+            )
+        ){
+
+            ushaHistory = [];
+
+            return;
+
+        }
+
+
+        if(
+            ushaHistory.length > 0
+        ){
+
+            ushaWelcome.style.display =
+                "none";
+
+            chatMessages.classList.add(
+                "active"
+            );
+
+            chatMessages.innerHTML = "";
+
+
+            ushaHistory.forEach(item => {
+
+                if(
+                    item &&
+                    item.sender &&
+                    item.text
+                ){
+
+                    addMessageFromHistory(
+                        item.sender,
+                        item.text
+                    );
+
+                }
+
+            });
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "Could not load USHA history.",
+            error
+        );
+
+        ushaHistory = [];
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD HISTORY MESSAGE
+========================================================= */
+
+function addMessageFromHistory(
+    sender,
+    text
+){
+
+    const wrap =
+        document.createElement("div");
+
+    wrap.className =
+        "message-wrap " + sender;
+
+
+    if(sender === "ai"){
+
+        const avatar =
+            document.createElement("img");
+
+        avatar.className =
+            "message-avatar";
+
+        avatar.src =
+            "https://github.com/yourdocuments/products/blob/main/ushaicon.svg?raw=true";
+
+        avatar.alt =
+            "USHA";
+
+        wrap.appendChild(avatar);
+
+    }
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "message " + sender;
+
+    bubble.textContent =
+        text;
+
+
+    wrap.appendChild(bubble);
+
+    chatMessages.appendChild(wrap);
+
+}
+
+
+/* =========================================================
+   USHA SMART REPLY ENGINE
+========================================================= */
+
+function getUshaReply(message){
+
+    const text =
+        message.toLowerCase();
+
+
+    /* -----------------------------------------------
+       GREETING
+    ----------------------------------------------- */
+
+    if(
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey") ||
+        text.includes("হাই") ||
+        text.includes("হ্যালো")
+    ){
+
+        return `
+Hello! 👋
+
+I'm USHA, your AI learning mentor from SNK IT Institute.
+
+I can help you with:
+
+• Live classes
+• Free courses
+• Recorded classes
+• Learning guidance
+• SNK support
+
+What would you like to learn?
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       LIVE CLASS
+    ----------------------------------------------- */
+
+    if(
+        text.includes("live") ||
+        text.includes("zoom") ||
+        text.includes("লাইভ")
+    ){
+
+        return `
+You can join the SNK live class through Zoom. 🎥
+
+Click the "Join Live" button on the website to enter the live class.
+
+If you need technical help, you can also contact SNK Support through WhatsApp.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       FREE COURSE
+    ----------------------------------------------- */
+
+    if(
+        text.includes("free") ||
+        text.includes("ফ্রি") ||
+        text.includes("বিনামূল্যে")
+    ){
+
+        return `
+SNK IT Institute provides free learning resources through YouTube. 📚
+
+You can access the free classes from the "Free Classes" section of this website.
+
+Start with the lessons that match your current skill level.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       RECORDED
+    ----------------------------------------------- */
+
+    if(
+        text.includes("record") ||
+        text.includes("recorded") ||
+        text.includes("রেকর্ড")
+    ){
+
+        return `
+You can watch recorded learning content through the SNK YouTube playlists. ▶️
+
+Open the "Recorded Classes" or "Free Classes" section to continue learning at your own pace.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       PAID
+    ----------------------------------------------- */
+
+    if(
+        text.includes("paid") ||
+        text.includes("course price") ||
+        text.includes("পেইড") ||
+        text.includes("কোর্স")
+    ){
+
+        return `
+SNK IT Institute also provides structured paid learning programs.
+
+For current course information, admission and support, please contact the SNK team directly.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       SUPPORT
+    ----------------------------------------------- */
+
+    if(
+        text.includes("support") ||
+        text.includes("contact") ||
+        text.includes("whatsapp") ||
+        text.includes("সাপোর্ট") ||
+        text.includes("যোগাযোগ")
+    ){
+
+        return `
+You can contact SNK IT Institute support through WhatsApp. 💬
+
+The Support button on the website will take you directly to the SNK support team.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       START LEARNING
+    ----------------------------------------------- */
+
+    if(
+        text.includes("start") ||
+        text.includes("begin") ||
+        text.includes("শুরু") ||
+        text.includes("কীভাবে শিখ")
+    ){
+
+        return `
+A simple way to start:
+
+1. Choose a topic you want to learn.
+2. Start with the available free classes.
+3. Join the live class when available.
+4. Practice what you learn.
+5. Ask USHA whenever you need guidance. 🚀
+
+You don't need to learn everything at once.
+Start with one skill and build from there.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       CERTIFICATE
+    ----------------------------------------------- */
+
+    if(
+        text.includes("certificate") ||
+        text.includes("সার্টিফিকেট")
+    ){
+
+        return `
+For certificate-related information, please contact SNK IT Institute Support.
+
+The support team can provide the current certificate requirements and process.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       ABOUT SNK
+    ----------------------------------------------- */
+
+    if(
+        text.includes("about snk") ||
+        text.includes("snk it") ||
+        text.includes("snk institute")
+    ){
+
+        return `
+SNK IT Institute is focused on practical learning through live classes, recorded lessons and accessible IT education.
+
+You can use this website to access learning resources and connect with the SNK team.
+`;
+
+    }
+
+
+    /* -----------------------------------------------
+       DEFAULT
+    ----------------------------------------------- */
+
+    return `
+I understand your question. 🤖
+
+I'm currently designed to help you navigate SNK IT Institute's learning resources.
+
+You can ask me things like:
+
+• How can I join the live class?
+• Where can I find free classes?
+• Where can I watch recorded lessons?
+• How can I contact support?
+• How do I start learning?
+
+Try asking me one of these and I'll guide you.
+`;
+
+}
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        /*
+         * We intentionally do not open USHA automatically.
+         * The user can open it using the Ask USHA button
+         * or floating USHA icon.
+         */
+
+    }
+);
+
+</script>
 
 </body>
 </html>
