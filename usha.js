@@ -1,1006 +1,873 @@
-
-// ============================================================
-// USHA AI — SNK IT Institute
-// Step 5.4 — Real AI Connection
-// ============================================================
-
-"use strict";
-
-/* ============================================================
-   USHA LINKS
-============================================================ */
-
-const USHA_LINKS = {
-  snk: "https://snkitinstitute.github.io/",
-  freeCourse: "https://snkguideup.github.io/",
-  zoom: "https://us05web.zoom.us/j/84311190995?pwd=d0j0VRyKL6Zxg5qN6rIaxAJb9Dk8rf.1",
-  whatsapp: "https://wa.me/8801636363801",
-  freePlaylist: "https://www.youtube.com/playlist?list=PLJe-RU9VQd38",
-  paidPlaylist: "https://www.youtube.com/playlist?list=PLfz6zuYhx-uU",
-  facebook: "https://www.facebook.com/snkitinstitute",
-  youtube: "https://www.youtube.com/@snkguideup",
-  whatsappChannel: "https://whatsapp.com/channel/0029VbD6LlH6RGJJ1QsBN93x",
-  shopping: "https://yourdocuments.github.io/shopingmela/",
-  shoppingGroup: "https://www.facebook.com/groups/shopingnmela"
-};
-
-
-/* ============================================================
-   STORAGE
-============================================================ */
-
-const CHAT_STORAGE_KEY = "ushaAIChatHistory_v3";
-const RECENT_STORAGE_KEY = "ushaAIRecentQuestions_v3";
-
-
-/* ============================================================
-   DOM HELPERS
-============================================================ */
-
-function getElement(id) {
-  return document.getElementById(id);
-}
-
-const chatOverlay = getElement("chatOverlay");
-const chatInput = getElement("chatInput");
-const mainQuestion = getElement("mainQuestion");
-const messages = getElement("messages");
-const typingIndicator = getElement("typingIndicator");
-const recentSection = getElement("recentSection");
-const recentList = getElement("recentList");
-
-
-/* ============================================================
-   OPEN / CLOSE CHAT
-============================================================ */
-
-function openUshaChat(question = "") {
-
-  if (!chatOverlay) return;
-
-  chatOverlay.classList.add("active");
-
-  document.body.classList.add("usha-chat-open");
-
-  setTimeout(() => {
-
-    if (question && chatInput) {
-      chatInput.value = question;
-      autoResize(chatInput);
-      chatInput.focus();
-    } else if (chatInput) {
-      chatInput.focus();
-    }
-
-  }, 100);
-
-}
-
-
-function closeUshaChat() {
-
-  if (!chatOverlay) return;
-
-  chatOverlay.classList.remove("active");
-
-  document.body.classList.remove("usha-chat-open");
-
-}
-
-
-/* ============================================================
-   CLEAR CHAT
-============================================================ */
-
-function clearUshaChat() {
-
-  if (!messages) return;
-
-  localStorage.removeItem(CHAT_STORAGE_KEY);
-
-  messages.innerHTML = "";
-
-  addHTMLMessage(
-    "assistant",
-    `
-      <div class="usha-message-card">
-        <strong>Hello! I'm USHA 👋</strong>
-        <p>
-          I'm your AI Learning Assistant from SNK IT Institute.
-        </p>
-        <p>
-          Ask me anything about HTML, CSS, JavaScript,
-          web development, computer basics, or learning plans.
-        </p>
-      </div>
-    `,
-    null
-  );
-
-}
-
-
-/* ============================================================
-   ESCAPE HTML
-============================================================ */
-
-function escapeHTML(value) {
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-
-/* ============================================================
-   FORMAT TEXT
-============================================================ */
-
-function formatText(text) {
-
-  if (!text) return "";
-
-  let safe = escapeHTML(text);
-
-  safe = safe.replace(
-    /\*\*(.*?)\*\*/g,
-    "<strong>$1</strong>"
-  );
-
-  safe = safe.replace(
-    /`([^`]+)`/g,
-    "<code>$1</code>"
-  );
-
-  safe = safe.replace(
-    /\n/g,
-    "<br>"
-  );
-
-  return safe;
-}
-
-
-/* ============================================================
-   CURRENT TIME
-============================================================ */
-
-function getCurrentTime() {
-
-  return new Date().toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-}
-
-
-/* ============================================================
-   ADD NORMAL MESSAGE
-============================================================ */
-
-function addMessage(role, text, save = true) {
-
-  if (!messages) return;
-
-  const wrapper = document.createElement("div");
-
-  wrapper.className =
-    `message ${role === "user" ? "user-message" : "assistant-message"}`;
-
-  const bubble = document.createElement("div");
-
-  bubble.className = "message-bubble";
-
-  bubble.innerHTML = formatText(text);
-
-  const time = document.createElement("div");
-
-  time.className = "message-time";
-
-  time.textContent = getCurrentTime();
-
-  wrapper.appendChild(bubble);
-  wrapper.appendChild(time);
-
-  messages.appendChild(wrapper);
-
-  if (save) {
-    saveChatMessage(role, text);
+/* =========================================================
+   USHA AI MENTOR - FULL JAVASCRIPT
+   SNK IT Institute
+   ========================================================= */
+
+(function () {
+  "use strict";
+
+  /* =========================================================
+     CONFIG
+     ========================================================= */
+
+  const STORAGE_KEY = "ushaChatHistory";
+
+  const DEFAULT_MESSAGE =
+    "Hi! আমি USHA 👋 তোমার AI learning mentor। " +
+    "তুমি আমাকে course, class, coding, website বা learning নিয়ে যেকোনো প্রশ্ন করতে পারো।";
+
+  /* =========================================================
+     DOM ELEMENTS
+     ========================================================= */
+
+  const ushaPanel =
+    document.getElementById("ushaPanel") ||
+    document.querySelector(".usha-panel") ||
+    document.querySelector("#ushaChat");
+
+  const ushaButton =
+    document.getElementById("ushaButton") ||
+    document.querySelector(".usha-floating-btn") ||
+    document.querySelector(".usha-float");
+
+  const closeButton =
+    document.getElementById("ushaClose") ||
+    document.querySelector(".usha-close");
+
+  const clearButton =
+    document.getElementById("ushaClear") ||
+    document.querySelector(".usha-clear");
+
+  const messageArea =
+    document.getElementById("ushaMessages") ||
+    document.querySelector(".usha-messages") ||
+    document.querySelector(".chat-messages");
+
+  const input =
+    document.getElementById("ushaInput") ||
+    document.querySelector(".usha-input") ||
+    document.querySelector("textarea");
+
+  const sendButton =
+    document.getElementById("ushaSend") ||
+    document.querySelector(".usha-send") ||
+    document.querySelector(".send-btn");
+
+  const suggestionContainer =
+    document.getElementById("ushaSuggestions") ||
+    document.querySelector(".usha-suggestions");
+
+  /* =========================================================
+     HELPER
+     ========================================================= */
+
+  function safeText(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
   }
 
-  scrollMessagesToBottom();
-
-}
-
-
-/* ============================================================
-   ADD HTML MESSAGE
-============================================================ */
-
-function addHTMLMessage(role, html, saveText = null) {
-
-  if (!messages) return;
-
-  const wrapper = document.createElement("div");
-
-  wrapper.className =
-    `message ${role === "user" ? "user-message" : "assistant-message"}`;
-
-  const bubble = document.createElement("div");
-
-  bubble.className = "message-bubble";
-
-  bubble.innerHTML = html;
-
-  const time = document.createElement("div");
-
-  time.className = "message-time";
-
-  time.textContent = getCurrentTime();
-
-  wrapper.appendChild(bubble);
-  wrapper.appendChild(time);
-
-  messages.appendChild(wrapper);
-
-  if (saveText) {
-    saveChatMessage(role, saveText);
+  function normalizeText(text) {
+    return String(text)
+      .toLowerCase()
+      .trim()
+      .replace(/[!?.,،。]/g, " ")
+      .replace(/\s+/g, " ");
   }
 
-  scrollMessagesToBottom();
+  /* =========================================================
+     OPEN USHA
+     ========================================================= */
 
-}
+  window.openUsha = function () {
+    if (!ushaPanel) return;
 
+    ushaPanel.classList.add("active");
+    ushaPanel.classList.add("open");
 
-/* ============================================================
-   SCROLL
-============================================================ */
+    document.body.classList.add("usha-open");
 
-function scrollMessagesToBottom() {
+    setTimeout(function () {
+      if (input) {
+        input.focus();
+      }
+    }, 250);
+  };
 
-  if (!messages) return;
+  /* =========================================================
+     CLOSE USHA
+     ========================================================= */
 
-  requestAnimationFrame(() => {
-    messages.scrollTop = messages.scrollHeight;
-  });
+  window.closeUsha = function () {
+    if (!ushaPanel) return;
 
-}
+    ushaPanel.classList.remove("active");
+    ushaPanel.classList.remove("open");
 
+    document.body.classList.remove("usha-open");
+  };
 
-/* ============================================================
-   SAVE CHAT
-============================================================ */
+  /* =========================================================
+     TOGGLE USHA
+     ========================================================= */
 
-function saveChatMessage(role, text) {
-
-  if (!text) return;
-
-  try {
-
-    const history =
-      JSON.parse(
-        localStorage.getItem(CHAT_STORAGE_KEY) || "[]"
-      );
-
-    history.push({
-      role,
-      content: text,
-      timestamp: Date.now()
-    });
-
-    const trimmed = history.slice(-30);
-
-    localStorage.setItem(
-      CHAT_STORAGE_KEY,
-      JSON.stringify(trimmed)
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Could not save chat history:",
-      error
-    );
-
-  }
-
-}
-
-
-/* ============================================================
-   LOAD CHAT HISTORY
-============================================================ */
-
-function loadChatHistory() {
-
-  if (!messages) return;
-
-  messages.innerHTML = "";
-
-  let history = [];
-
-  try {
-
-    history =
-      JSON.parse(
-        localStorage.getItem(CHAT_STORAGE_KEY) || "[]"
-      );
-
-  } catch (error) {
-
-    history = [];
-
-  }
-
-
-  if (!Array.isArray(history) || history.length === 0) {
-
-    addHTMLMessage(
-      "assistant",
-      `
-        <div class="usha-message-card">
-          <strong>Hello! I'm USHA 👋</strong>
-
-          <p>
-            I'm your AI Learning Assistant from
-            SNK IT Institute.
-          </p>
-
-          <p>
-            Ask me anything about HTML, CSS,
-            JavaScript, web development,
-            computer basics, or study planning.
-          </p>
-        </div>
-      `,
-      null
-    );
-
-    return;
-  }
-
-
-  history.forEach(item => {
+  window.toggleUsha = function () {
+    if (!ushaPanel) return;
 
     if (
-      !item ||
-      !item.role ||
-      typeof item.content !== "string"
+      ushaPanel.classList.contains("active") ||
+      ushaPanel.classList.contains("open")
     ) {
-      return;
+      closeUsha();
+    } else {
+      openUsha();
     }
+  };
 
-    addMessage(
-      item.role,
-      item.content,
-      false
-    );
+  /* =========================================================
+     ADD MESSAGE
+     ========================================================= */
 
-  });
+  function addMessage(text, sender, save = true) {
+    if (!messageArea) return;
 
-}
+    const message = document.createElement("div");
 
+    message.className =
+      sender === "user"
+        ? "usha-message user-message"
+        : "usha-message usha-message";
 
-/* ============================================================
-   NORMALIZE TEXT
-============================================================ */
+    const bubble = document.createElement("div");
+    bubble.className = "usha-bubble";
 
-function normalizeText(text) {
+    bubble.innerHTML = safeText(text).replace(/\n/g, "<br>");
 
-  return String(text || "")
-    .toLowerCase()
-    .trim();
+    message.appendChild(bubble);
+    messageArea.appendChild(message);
 
-}
+    scrollMessages();
 
-
-/* ============================================================
-   RECENT QUESTIONS
-============================================================ */
-
-function saveRecentQuestion(question) {
-
-  const cleanQuestion =
-    String(question || "").trim();
-
-  if (!cleanQuestion) return;
-
-  try {
-
-    let recent =
-      JSON.parse(
-        localStorage.getItem(RECENT_STORAGE_KEY) || "[]"
-      );
-
-    if (!Array.isArray(recent)) {
-      recent = [];
+    if (save) {
+      saveMessage(text, sender);
     }
-
-    recent =
-      recent.filter(
-        item =>
-          normalizeText(item) !==
-          normalizeText(cleanQuestion)
-      );
-
-    recent.unshift(cleanQuestion);
-
-    recent = recent.slice(0, 8);
-
-    localStorage.setItem(
-      RECENT_STORAGE_KEY,
-      JSON.stringify(recent)
-    );
-
-    renderRecentQuestions();
-
-  } catch (error) {
-
-    console.error(
-      "Could not save recent question:",
-      error
-    );
-
   }
 
-}
+  /* =========================================================
+     SCROLL MESSAGE AREA
+     ========================================================= */
 
+  function scrollMessages() {
+    if (!messageArea) return;
 
-function renderRecentQuestions() {
-
-  if (!recentList) return;
-
-  let recent = [];
-
-  try {
-
-    recent =
-      JSON.parse(
-        localStorage.getItem(RECENT_STORAGE_KEY) || "[]"
-      );
-
-  } catch (error) {
-
-    recent = [];
-
+    setTimeout(function () {
+      messageArea.scrollTop = messageArea.scrollHeight;
+    }, 50);
   }
 
-  if (!Array.isArray(recent) || recent.length === 0) {
+  /* =========================================================
+     SAVE MESSAGE
+     ========================================================= */
 
-    if (recentSection) {
-      recentSection.style.display = "none";
-    }
-
-    return;
-  }
-
-  if (recentSection) {
-    recentSection.style.display = "";
-  }
-
-  recentList.innerHTML = "";
-
-  recent.forEach(question => {
-
-    const button =
-      document.createElement("button");
-
-    button.type = "button";
-
-    button.className = "recent-question";
-
-    button.textContent = question;
-
-    button.addEventListener(
-      "click",
-      () => quickQuestion(question)
-    );
-
-    recentList.appendChild(button);
-
-  });
-
-}
-
-
-/* ============================================================
-   TYPING INDICATOR
-============================================================ */
-
-function showTyping() {
-
-  if (!typingIndicator) return;
-
-  typingIndicator.classList.add("active");
-
-  scrollMessagesToBottom();
-
-}
-
-
-function hideTyping() {
-
-  if (!typingIndicator) return;
-
-  typingIndicator.classList.remove("active");
-
-}
-
-
-/* ============================================================
-   REAL AI REQUEST
-============================================================ */
-
-async function askRealAI(message) {
-
-  let history = [];
-
-  try {
-
-    history =
-      JSON.parse(
-        localStorage.getItem(CHAT_STORAGE_KEY) || "[]"
+  function saveMessage(text, sender) {
+    try {
+      const history = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
       );
 
-  } catch (error) {
-
-    history = [];
-
-  }
-
-
-  const cleanHistory =
-    Array.isArray(history)
-      ? history
-          .filter(item =>
-            item &&
-            (item.role === "user" ||
-             item.role === "assistant") &&
-            typeof item.content === "string"
-          )
-          .slice(-12)
-          .map(item => ({
-            role: item.role,
-            content: item.content
-          }))
-      : [];
-
-
-  const response =
-    await fetch("/api/usha", {
-
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        message: message,
-        history: cleanHistory
-      })
-
-    });
-
-
-  let data = {};
-
-  try {
-
-    data = await response.json();
-
-  } catch (error) {
-
-    throw new Error(
-      "Invalid response from USHA server."
-    );
-
-  }
-
-
-  if (!response.ok || !data.success) {
-
-    throw new Error(
-      data.error ||
-      "USHA could not answer right now."
-    );
-
-  }
-
-
-  return data.answer;
-
-}
-
-
-/* ============================================================
-   SEND MESSAGE
-============================================================ */
-
-async function sendMessage(customQuestion = "") {
-
-  const typedQuestion =
-    customQuestion ||
-    (chatInput ? chatInput.value : "");
-
-  const question =
-    String(typedQuestion || "").trim();
-
-  if (!question) return;
-
-
-  openUshaChat();
-
-
-  // Clear input
-  if (chatInput) {
-    chatInput.value = "";
-    autoResize(chatInput);
-  }
-
-
-  // Show user message
-  addMessage(
-    "user",
-    question,
-    true
-  );
-
-
-  // Save recent question
-  saveRecentQuestion(question);
-
-
-  // Show AI thinking
-  showTyping();
-
-
-  try {
-
-    const answer =
-      await askRealAI(question);
-
-    hideTyping();
-
-
-    addMessage(
-      "assistant",
-      answer,
-      true
-    );
-
-
-  } catch (error) {
-
-    console.error(
-      "USHA AI error:",
-      error
-    );
-
-    hideTyping();
-
-
-    addHTMLMessage(
-      "assistant",
-      `
-        <div class="usha-error-card">
-          <strong>USHA is temporarily unavailable.</strong>
-
-          <p>
-            I couldn't connect to the AI service right now.
-            Please try again in a moment.
-          </p>
-
-          <small>
-            If this is the first setup, please check the
-            backend deployment and API configuration.
-          </small>
-        </div>
-      `,
-      "USHA is temporarily unavailable. I couldn't connect to the AI service right now."
-    );
-
-  }
-
-}
-
-
-/* ============================================================
-   QUICK QUESTION
-============================================================ */
-
-function quickQuestion(question) {
-
-  if (!question) return;
-
-  openUshaChat();
-
-  setTimeout(() => {
-    sendMessage(question);
-  }, 150);
-
-}
-
-
-/* ============================================================
-   MAIN QUESTION
-============================================================ */
-
-function askMainQuestion() {
-
-  if (!mainQuestion) return;
-
-  const question =
-    mainQuestion.value.trim();
-
-  if (!question) {
-
-    mainQuestion.focus();
-
-    return;
-  }
-
-  mainQuestion.value = "";
-
-  autoResize(mainQuestion);
-
-  quickQuestion(question);
-
-}
-
-
-/* ============================================================
-   AUTO RESIZE
-============================================================ */
-
-function autoResize(textarea) {
-
-  if (!textarea) return;
-
-  textarea.style.height = "auto";
-
-  textarea.style.height =
-    Math.min(
-      textarea.scrollHeight,
-      220
-    ) + "px";
-
-}
-
-
-/* ============================================================
-   OPEN EXTERNAL LINK
-============================================================ */
-
-function openExternalLink(url) {
-
-  if (!url) return;
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ============================================================
-   KEYBOARD SHORTCUTS
-============================================================ */
-
-function handleEnterKey(event) {
-
-  if (event.key !== "Enter") return;
-
-  if (event.shiftKey) return;
-
-  event.preventDefault();
-
-  sendMessage();
-
-}
-
-
-/* ============================================================
-   INITIALIZE
-============================================================ */
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    // Load chat
-    loadChatHistory();
-
-    // Render recent questions
-    renderRecentQuestions();
-
-
-    // Main Ask button
-    const askButton =
-      getElement("askButton");
-
-    if (askButton) {
-
-      askButton.addEventListener(
-        "click",
-        askMainQuestion
-      );
-
-    }
-
-
-    // Chat send button
-    const sendChat =
-      getElement("sendChat");
-
-    if (sendChat) {
-
-      sendChat.addEventListener(
-        "click",
-        () => sendMessage()
-      );
-
-    }
-
-
-    // Close chat
-    const closeChat =
-      getElement("closeChat");
-
-    if (closeChat) {
-
-      closeChat.addEventListener(
-        "click",
-        closeUshaChat
-      );
-
-    }
-
-
-    // Clear chat
-    const clearChat =
-      getElement("clearChat");
-
-    if (clearChat) {
-
-      clearChat.addEventListener(
-        "click",
-        clearUshaChat
-      );
-
-    }
-
-
-    // Main textarea
-    if (mainQuestion) {
-
-      mainQuestion.addEventListener(
-        "input",
-        () => autoResize(mainQuestion)
-      );
-
-      mainQuestion.addEventListener(
-        "keydown",
-        handleEnterKey
-      );
-
-    }
-
-
-    // Chat textarea
-    if (chatInput) {
-
-      chatInput.addEventListener(
-        "input",
-        () => autoResize(chatInput)
-      );
-
-      chatInput.addEventListener(
-        "keydown",
-        handleEnterKey
-      );
-
-    }
-
-
-    // Quick question buttons
-    document
-      .querySelectorAll("[data-usha-question]")
-      .forEach(button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const question =
-              button.getAttribute(
-                "data-usha-question"
-              );
-
-            if (question) {
-              quickQuestion(question);
-            }
-
-        });
-
+      history.push({
+        text: text,
+        sender: sender,
+        time: new Date().toISOString()
       });
 
+      /*
+       * Keep last 100 messages
+       */
+      const limitedHistory = history.slice(-100);
 
-    // External resource links
-    document
-      .querySelectorAll("[data-usha-link]")
-      .forEach(element => {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(limitedHistory)
+      );
+    } catch (error) {
+      console.warn("USHA localStorage error:", error);
+    }
+  }
 
-        element.addEventListener(
-          "click",
-          () => {
+  /* =========================================================
+     LOAD CHAT HISTORY
+     ========================================================= */
 
-            const url =
-              element.getAttribute(
-                "data-usha-link"
-              );
+  function loadChat() {
+    if (!messageArea) return;
 
-            if (url) {
-              openExternalLink(url);
-            }
+    messageArea.innerHTML = "";
 
-          }
-        );
+    try {
+      const history = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
 
-      });
-
-
-    // Escape closes chat
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if (event.key === "Escape") {
-          closeUshaChat();
-        }
-
+      if (!history.length) {
+        addMessage(DEFAULT_MESSAGE, "usha", false);
+        return;
       }
-    );
 
+      history.forEach(function (item) {
+        if (!item || !item.text) return;
 
-    // Click outside chat window
-    if (chatOverlay) {
+        addMessage(
+          item.text,
+          item.sender === "user" ? "user" : "usha",
+          false
+        );
+      });
 
-      chatOverlay.addEventListener(
-        "click",
-        event => {
+      scrollMessages();
+    } catch (error) {
+      console.warn("USHA history load error:", error);
 
-          if (
-            event.target === chatOverlay
-          ) {
-            closeUshaChat();
-          }
+      addMessage(DEFAULT_MESSAGE, "usha", false);
+    }
+  }
 
-        }
-      );
+  /* =========================================================
+     CLEAR CHAT
+     ========================================================= */
 
+  window.clearUshaChat = function () {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.warn("Unable to clear USHA chat:", error);
     }
 
+    if (messageArea) {
+      messageArea.innerHTML = "";
+      addMessage(DEFAULT_MESSAGE, "usha", false);
+    }
+  };
+
+  /* =========================================================
+     TYPING INDICATOR
+     ========================================================= */
+
+  function showTyping() {
+    if (!messageArea) return;
+
+    removeTyping();
+
+    const typing = document.createElement("div");
+
+    typing.id = "ushaTyping";
+    typing.className = "usha-message usha-message";
+
+    typing.innerHTML = `
+      <div class="usha-bubble usha-typing">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    `;
+
+    messageArea.appendChild(typing);
+
+    scrollMessages();
   }
-);
 
+  function removeTyping() {
+    const typing = document.getElementById("ushaTyping");
 
-/* ============================================================
-   GLOBAL EXPORTS
-============================================================ */
+    if (typing) {
+      typing.remove();
+    }
+  }
 
-window.openUshaChat = openUshaChat;
-window.closeUshaChat = closeUshaChat;
-window.clearUshaChat = clearUshaChat;
-window.sendMessage = sendMessage;
-window.quickQuestion = quickQuestion;
-window.askMainQuestion = askMainQuestion;
-window.openExternalLink = openExternalLink;
-window.USHA_LINKS = USHA_LINKS;
-```
+  /* =========================================================
+     SHAH NEIL KHAN / SNK INTENT
+     ========================================================= */
+
+  function isShahNeilKhanQuestion(lower) {
+    const patterns = [
+      "shah neil khan কে",
+      "shah neil khan কি",
+      "shah neil khan সম্পর্কে",
+      "shah neil khan কে সে",
+      "shah neil khan",
+      "শাহ নীল খান কে",
+      "শাহ নীল খান কি",
+      "শাহ নীল খান সম্পর্কে",
+      "শাহ নীল খান",
+      "shah neil কে",
+      "শাহ নীল কে",
+      "who is shah neil khan",
+      "who is shah neil",
+      "who is snk",
+      "snk কে",
+      "snk কি",
+      "snk সম্পর্কে",
+      "snk কে সে",
+      "snk person",
+      "snk founder",
+      "snk sir কে",
+      "snk স্যার কে"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     "TOMAR KI?" / RELATION WITH SHAH NEIL KHAN
+     ========================================================= */
+
+  function isTomarQuestion(lower) {
+    const patterns = [
+      "তোমার কি শাহ নীল খান",
+      "তোমার কি shah neil khan",
+      "তোমার কি snk",
+      "snk তোমার কি",
+      "শাহ নীল খান তোমার কি",
+      "shah neil khan তোমার কি",
+      "snk কে তোমার",
+      "শাহ নীল খান কে তোমার",
+      "shah neil khan কে তোমার",
+      "তোমার কাছে snk",
+      "তোমার কাছে শাহ নীল খান"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     USHA ABOUT HERSELF
+     ========================================================= */
+
+  function isUshaQuestion(lower) {
+    const patterns = [
+      "usha কে",
+      "usha কি",
+      "usha সম্পর্কে",
+      "তুমি কে",
+      "তুমি কি",
+      "who are you",
+      "what is usha",
+      "who is usha",
+      "usha ai",
+      "usha assistant",
+      "usha mentor"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     GREETING
+     ========================================================= */
+
+  function isGreeting(lower) {
+    const patterns = [
+      "hi",
+      "hello",
+      "hey",
+      "হাই",
+      "হ্যালো",
+      "আসসালামু আলাইকুম",
+      "assalamualaikum",
+      "good morning",
+      "good evening",
+      "good afternoon"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower === pattern || lower.startsWith(pattern + " ");
+    });
+  }
+
+  /* =========================================================
+     COURSE QUESTIONS
+     ========================================================= */
+
+  function isCourseQuestion(lower) {
+    const patterns = [
+      "course",
+      "কোর্স",
+      "কোন কোর্স",
+      "free course",
+      "ফ্রি কোর্স",
+      "paid course",
+      "পেইড কোর্স",
+      "শিখতে চাই",
+      "কি শিখবো",
+      "what can i learn",
+      "learning"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     LIVE CLASS QUESTIONS
+     ========================================================= */
+
+  function isLiveClassQuestion(lower) {
+    const patterns = [
+      "live class",
+      "লাইভ ক্লাস",
+      "জুম ক্লাস",
+      "zoom class",
+      "zoom",
+      "ক্লাস কখন",
+      "class time",
+      "join live",
+      "লাইভে কিভাবে",
+      "কিভাবে join",
+      "ক্লাসে join"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     RECORDED CLASS QUESTIONS
+     ========================================================= */
+
+  function isRecordedQuestion(lower) {
+    const patterns = [
+      "recorded",
+      "recorded class",
+      "রেকর্ডেড",
+      "রেকর্ড ক্লাস",
+      "ভিডিও ক্লাস",
+      "video class",
+      "playlist"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     WEBSITE / CODING QUESTIONS
+     ========================================================= */
+
+  function isCodingQuestion(lower) {
+    const patterns = [
+      "html",
+      "css",
+      "javascript",
+      "js",
+      "coding",
+      "code",
+      "কোড",
+      "ওয়েবসাইট",
+      "website",
+      "web design",
+      "web development",
+      "programming",
+      "প্রোগ্রামিং"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     SUPPORT QUESTIONS
+     ========================================================= */
+
+  function isSupportQuestion(lower) {
+    const patterns = [
+      "support",
+      "সাপোর্ট",
+      "যোগাযোগ",
+      "contact",
+      "help",
+      "সাহায্য",
+      "whatsapp",
+      "হোয়াটসঅ্যাপ"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     THANK YOU
+     ========================================================= */
+
+  function isThanks(lower) {
+    const patterns = [
+      "thanks",
+      "thank you",
+      "ধন্যবাদ",
+      "থ্যাংকস",
+      "অনেক ধন্যবাদ"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     GOODBYE
+     ========================================================= */
+
+  function isGoodbye(lower) {
+    const patterns = [
+      "bye",
+      "goodbye",
+      "বিদায়",
+      "আবার কথা হবে",
+      "পরে কথা হবে"
+    ];
+
+    return patterns.some(function (pattern) {
+      return lower.includes(pattern);
+    });
+  }
+
+  /* =========================================================
+     MAIN USHA REPLY ENGINE
+     ========================================================= */
+
+  function getUshaReply(userText) {
+    const lower = normalizeText(userText);
+
+    /*
+     * IMPORTANT:
+     * Shah Neil Khan / SNK intent comes first.
+     */
+
+    if (isTomarQuestion(lower)) {
+      return "Shah Neil Khan? 😊 সে আমার খুব পছন্দের একজন। ❤️ আর SNK আমার কাছে খুবই special!";
+    }
+
+    if (isShahNeilKhanQuestion(lower)) {
+      return "Shah Neil Khan? 😊 সে আমার খুব পছন্দের একজন। ❤️ আর SNK আমার কাছে খুবই special!";
+    }
+
+    /* -------------------------------------------------------
+       USHA
+       ------------------------------------------------------- */
+
+    if (isUshaQuestion(lower)) {
+      return "আমি USHA — SNK-এর AI learning mentor। 🤖💛 তোমার learning, course, coding আর website journey-তে আমি তোমার সাথে আছি।";
+    }
+
+    /* -------------------------------------------------------
+       GREETING
+       ------------------------------------------------------- */
+
+    if (isGreeting(lower)) {
+      return "Hello! 👋 আমি USHA। আজ কী শিখতে চাও? 😊";
+    }
+
+    /* -------------------------------------------------------
+       COURSE
+       ------------------------------------------------------- */
+
+    if (isCourseQuestion(lower)) {
+      return "SNK IT Institute-এ বিভিন্ন learning opportunity আছে। 🎓 তুমি চাইলে Free Classes, Paid Classes বা Recorded Classes থেকে শুরু করতে পারো।";
+    }
+
+    /* -------------------------------------------------------
+       LIVE CLASS
+       ------------------------------------------------------- */
+
+    if (isLiveClassQuestion(lower)) {
+      return "Live Class-এ অংশ নিতে Join Live অপশন ব্যবহার করো। 💻📚 ক্লাস Zoom-এর মাধ্যমে হতে পারে।";
+    }
+
+    /* -------------------------------------------------------
+       RECORDED
+       ------------------------------------------------------- */
+
+    if (isRecordedQuestion(lower)) {
+      return "Recorded Classes-এর জন্য Recorded section অথবা available YouTube playlist দেখতে পারো। 🎥 চাইলে আমি তোমাকে কীভাবে শুরু করবে সেটাও বুঝিয়ে দিতে পারি।";
+    }
+
+    /* -------------------------------------------------------
+       CODING
+       ------------------------------------------------------- */
+
+    if (isCodingQuestion(lower)) {
+      return "Coding শিখতে হলে HTML → CSS → JavaScript এইভাবে শুরু করতে পারো। 💻✨ চাইলে আমি beginner level থেকে step-by-step শেখাতে পারি।";
+    }
+
+    /* -------------------------------------------------------
+       SUPPORT
+       ------------------------------------------------------- */
+
+    if (isSupportQuestion(lower)) {
+      return "সাহায্যের জন্য SNK IT Institute-এর Support option ব্যবহার করতে পারো। 💬 প্রয়োজন হলে WhatsApp support-এ যোগাযোগ করাও যেতে পারে।";
+    }
+
+    /* -------------------------------------------------------
+       THANK YOU
+       ------------------------------------------------------- */
+
+    if (isThanks(lower)) {
+      return "You're welcome! 😊❤️ যখনই প্রয়োজন হবে, USHA তোমার পাশে আছে।";
+    }
+
+    /* -------------------------------------------------------
+       GOODBYE
+       ------------------------------------------------------- */
+
+    if (isGoodbye(lower)) {
+      return "ঠিক আছে 😊 আবার এসো। তোমার learning journey-এর জন্য অনেক শুভকামনা! 💛";
+    }
+
+    /* -------------------------------------------------------
+       DEFAULT SMART RESPONSE
+       ------------------------------------------------------- */
+
+    const defaultReplies = [
+      "Interesting! 😊 একটু বিস্তারিত বলো, তাহলে আমি ভালোভাবে সাহায্য করতে পারব।",
+      "বুঝতে পারছি। 💛 তুমি চাইলে বিষয়টা সহজ করে step-by-step আলোচনা করতে পারি।",
+      "অবশ্যই! 😊 তোমার প্রশ্নটা আরেকটু বিস্তারিত লিখলে আমি আরও নির্দিষ্টভাবে উত্তর দিতে পারব।",
+      "আমি তোমাকে learning, coding, website এবং course-related বিষয়ে সাহায্য করতে পারি। 🚀"
+    ];
+
+    const randomIndex = Math.floor(
+      Math.random() * defaultReplies.length
+    );
+
+    return defaultReplies[randomIndex];
+  }
+
+  /* =========================================================
+     SEND MESSAGE
+     ========================================================= */
+
+  window.sendMessage = function () {
+    if (!input) return;
+
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    /*
+     * User message
+     */
+    addMessage(text, "user", true);
+
+    /*
+     * Clear input
+     */
+    input.value = "";
+
+    /*
+     * Show typing
+     */
+    showTyping();
+
+    /*
+     * Small AI-style delay
+     */
+    const delay =
+      Math.floor(Math.random() * 700) + 700;
+
+    setTimeout(function () {
+      removeTyping();
+
+      const reply = getUshaReply(text);
+
+      addMessage(reply, "usha", true);
+    }, delay);
+  };
+
+  /* =========================================================
+     ASK USHA
+     * Used by suggestion buttons
+     * ========================================================= */
+
+  window.askUsha = function (question) {
+    if (!input) return;
+
+    input.value = question;
+
+    openUsha();
+
+    setTimeout(function () {
+      sendMessage();
+    }, 150);
+  };
+
+  /* =========================================================
+     ENTER KEY
+     ========================================================= */
+
+  function handleInputKeydown(event) {
+    if (!event) return;
+
+    /*
+     * Enter = Send
+     * Shift + Enter = New line
+     */
+
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+
+      sendMessage();
+    }
+  }
+
+  /* =========================================================
+     SUGGESTION BUTTONS
+     ========================================================= */
+
+  function setupSuggestions() {
+    if (!suggestionContainer) return;
+
+    const buttons =
+      suggestionContainer.querySelectorAll(
+        "button, [data-question]"
+      );
+
+    buttons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        const question =
+          button.getAttribute("data-question") ||
+          button.textContent.trim();
+
+        if (question) {
+          askUsha(question);
+        }
+      });
+    });
+  }
+
+  /* =========================================================
+     FLOATING BUTTON
+     ========================================================= */
+
+  function setupFloatingButton() {
+    if (!ushaButton) return;
+
+    ushaButton.addEventListener("click", function () {
+      toggleUsha();
+    });
+  }
+
+  /* =========================================================
+     CLOSE BUTTON
+     ========================================================= */
+
+  function setupCloseButton() {
+    if (!closeButton) return;
+
+    closeButton.addEventListener("click", function () {
+      closeUsha();
+    });
+  }
+
+  /* =========================================================
+     CLEAR BUTTON
+     ========================================================= */
+
+  function setupClearButton() {
+    if (!clearButton) return;
+
+    clearButton.addEventListener("click", function () {
+      clearUshaChat();
+    });
+  }
+
+  /* =========================================================
+     SEND BUTTON
+     ========================================================= */
+
+  function setupSendButton() {
+    if (!sendButton) return;
+
+    sendButton.addEventListener("click", function () {
+      sendMessage();
+    });
+  }
+
+  /* =========================================================
+     INPUT
+     ========================================================= */
+
+  function setupInput() {
+    if (!input) return;
+
+    input.addEventListener(
+      "keydown",
+      handleInputKeydown
+    );
+  }
+
+  /* =========================================================
+     ESC KEY
+     ========================================================= */
+
+  function setupEscapeKey() {
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeUsha();
+      }
+    });
+  }
+
+  /* =========================================================
+     PREVENT CHAT CLICK FROM CLOSING
+     ========================================================= */
+
+  if (ushaPanel) {
+    ushaPanel.addEventListener("click", function (event) {
+      event.stopPropagation();
+    });
+  }
+
+  /* =========================================================
+     INITIALIZE
+     ========================================================= */
+
+  function initUsha() {
+    setupFloatingButton();
+    setupCloseButton();
+    setupClearButton();
+    setupSendButton();
+    setupInput();
+    setupSuggestions();
+    setupEscapeKey();
+
+    loadChat();
+
+    console.log("USHA AI Mentor initialized successfully.");
+  }
+
+  /* =========================================================
+     DOM READY
+     ========================================================= */
+
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      initUsha
+    );
+  } else {
+    initUsha();
+  }
+
+})();
